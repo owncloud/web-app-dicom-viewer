@@ -109,7 +109,7 @@ import { Resource } from '@ownclouders/web-client/src' // 'web-client/src'
 import DicomControls from './components/DicomControls.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
 import uids from './helper/uids'
-import { formatDateFromISO } from '@ownclouders/web-pkg/src/helpers' //'web-pkg/src/helpers'
+//import { formatDateFromISO } from '@ownclouders/web-pkg/src/helpers' //'web-pkg/src/helpers'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
@@ -670,10 +670,13 @@ export default defineComponent({
       //patientInformation
       this.patientInformation.patientName = this.vipInformation.patientName
       this.patientInformation.patientID = patientID
+      /*
       this.patientInformation.patientBirthday = this.formatDate(
         this.vipInformation.patientBirthdate,
         longDateTimeFormat
       )
+      */
+      this.patientInformation.patientBirthday = this.vipInformation.patientBirthdate
       this.patientInformation.patientSex = patientSex
       this.patientInformation.patientWeight = patientWeight
 
@@ -682,20 +685,21 @@ export default defineComponent({
       this.studyInformation.protocolName = protocolName
       this.studyInformation.accessionNumber = accessionNumber
       this.studyInformation.studyID = studyID
-      this.studyInformation.studyDate = this.formatDate(studyDate, longDateTimeFormat)
-      this.studyInformation.studyTime = this.formatTime(studyTime, longDateTimeFormat)
+      this.studyInformation.studyDate = studyDate //this.formatDate(studyDate, longDateTimeFormat)
+      this.studyInformation.studyTime = studyTime //this.formatTime(studyTime, longDateTimeFormat)
 
       // seriesInformation
       this.seriesInformation.seriesDescription = seriesDescription
       this.seriesInformation.seriesNumber = seriesNumber
       this.seriesInformation.modality = modality
       this.seriesInformation.bodyPart = bodyPart //: Body Part Examined? or Body Part Thickness?
-      this.seriesInformation.seriesDate = this.formatDate(seriesDate, longDateTimeFormat)
-      this.seriesInformation.seriesTime = this.formatTime(seriesTime, longDateTimeFormat)
+      this.seriesInformation.seriesDate = seriesDate //this.formatDate(seriesDate, longDateTimeFormat)
+      this.seriesInformation.seriesTime = seriesTime //this.formatTime(seriesTime, longDateTimeFormat)
 
       // instanceInformation
       this.instanceInformation.instanceNumber = instanceNumber
       this.instanceInformation.acquisitionNumber = acquisitionNumber
+      /*
       this.instanceInformation.acquisitionDate = this.formatDate(
         acquisitionDate,
         longDateTimeFormat
@@ -712,8 +716,13 @@ export default defineComponent({
         instanceCreationTime,
         longDateTimeFormat
       )
-      this.instanceInformation.contentDate = this.formatDate(contentDate, longDateTimeFormat)
-      this.instanceInformation.contentTime = this.formatTime(contentTime, longDateTimeFormat)
+      */
+      this.instanceInformation.acquisitionDate = acquisitionDate
+      this.instanceInformation.acquisitionTime = acquisitionTime
+      this.instanceInformation.instanceCreationDate = instanceCreationDate 
+      this.instanceInformation.instanceCreationTime = instanceCreationTime
+      this.instanceInformation.contentDate = contentDate //this.formatDate(contentDate, longDateTimeFormat)
+      this.instanceInformation.contentTime = contentTime //this.formatTime(contentTime, longDateTimeFormat)
 
       // imageInformation
       this.imageInformation.photometricInterpretation = photometricInterpretation
@@ -821,6 +830,7 @@ export default defineComponent({
       this.viewportCameraParallelScale = camera.parallelScale
     },
     // functions for styling data
+    /*
     formatDateAndTime(date: string, time: string) {
       // transforming date and time into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
       if (date != undefined && time != undefined && date.length >= 8 && time.length >= 6) {
@@ -889,6 +899,7 @@ export default defineComponent({
         return upperFirst(formattedTime)
       }
     },
+    */
     formatLabel(label: string) {
       // formatting camelcase labels into easily readible labels by adding a gap befor each upper case letter
       // there is no space added if there are multiple upper case letters in a row (e.g. ID)
