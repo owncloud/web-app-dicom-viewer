@@ -1,6 +1,6 @@
 import translations from '../l10n/translations.json'
-import { AppWrapperRoute } from 'web-pkg/src/components/AppTemplates/AppWrapperRoute'
-import DicomViewer from './App.vue'
+import { AppWrapperRoute } from '@ownclouders/web-pkg'
+import App from './App.vue'
 //import * as app from './App.vue'
 //const { default: App, mimeTypes, appId } = app as any
 
@@ -12,7 +12,7 @@ function $gettext(msg) {
 const routes = [
   {
     path: '/:driveAliasAndItem(.*)?',
-    component: AppWrapperRoute(DicomViewer, {
+    component: AppWrapperRoute(App, {
       applicationId: 'dicom-viewer',
       urlForResourceOptions: {
         //disposition: 'inline'
