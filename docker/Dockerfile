@@ -6,6 +6,7 @@ LABEL maintainer="ownCloud GmbH <devops@owncloud.com>" \
   org.opencontainers.image.vendor="ownCloud GmbH" \
   org.opencontainers.image.authors="ownCloud GmbH" \
   org.opencontainers.image.description="ownCloud Web DICOM Viewer" \
+  org.opencontainers.image.licenses="AGPL-3.0" \
   org.opencontainers.image.documentation="https://github.com/owncloud/web-app-dicom-viewer" \
   org.opencontainers.image.url="https://hub.docker.com/r/owncloud/web-app-dicom-viewer" \
   org.opencontainers.image.source="https://github.com/owncloud/web-app-dicom-viewer"
