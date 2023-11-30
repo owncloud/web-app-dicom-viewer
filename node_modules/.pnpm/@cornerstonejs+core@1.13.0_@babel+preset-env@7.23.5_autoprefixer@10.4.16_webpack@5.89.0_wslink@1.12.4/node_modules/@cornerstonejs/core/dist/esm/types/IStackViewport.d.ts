@@ -1,0 +1,44 @@
+import CPUFallbackColormapData from './CPUFallbackColormapData';
+import CPUIImageData from './CPUIImageData';
+import ICamera from './ICamera';
+import IImageData from './IImageData';
+import { IViewport } from './IViewport';
+import Point2 from './Point2';
+import Point3 from './Point3';
+import { Scaling } from './ScalingParameters';
+import StackViewportProperties from './StackViewportProperties';
+import { ColormapRegistration } from './Colormap';
+import IImage from './IImage';
+export default interface IStackViewport extends IViewport {
+    modality: string;
+    scaling: Scaling;
+    resize: () => void;
+    getFrameOfReferenceUID: () => string;
+    setProperties({ voiRange, invert, interpolationType, rotation }: StackViewportProperties, suppressEvents?: boolean): void;
+    getProperties: () => StackViewportProperties;
+    canvasToWorld: (canvasPos: Point2) => Point3;
+    worldToCanvas: (worldPos: Point3) => Point2;
+    getCurrentImageIdIndex: () => number;
+    getImageIds: () => string[];
+    hasImageId: (imageId: string) => boolean;
+    hasImageURI: (imageURI: string) => boolean;
+    getCurrentImageId: () => string;
+    customRenderViewportToCanvas: () => {
+        canvas: HTMLCanvasElement;
+        element: HTMLDivElement;
+        viewportId: string;
+        renderingEngineId: string;
+    };
+    getImageData(): IImageData | CPUIImageData;
+    getCornerstoneImage: () => IImage;
+    resetProperties(): void;
+    getCamera(): ICamera;
+    setCamera(cameraInterface: ICamera): void;
+    setStack(imageIds: Array<string>, currentImageIdIndex?: number): Promise<string>;
+    resetCamera(resetPan?: boolean, resetZoom?: boolean): boolean;
+    setImageIdIndex(imageIdIndex: number): Promise<string>;
+    calibrateSpacing(imageId: string): void;
+    getRenderer(): any;
+    setColormap(colormap: CPUFallbackColormapData | ColormapRegistration): void;
+    unsetColormap(): void;
+}

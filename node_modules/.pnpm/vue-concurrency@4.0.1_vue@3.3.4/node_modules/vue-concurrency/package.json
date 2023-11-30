@@ -1,0 +1,65 @@
+{
+  "name": "vue-concurrency",
+  "version": "4.0.1",
+  "description": "A library for encapsulating asynchronous operations and managing concurrency for Vue + Composition API",
+  "source": "src/index.ts",
+  "module": "dist/index.module.js",
+  "main": "dist/index.js",
+  "files": [
+    "src",
+    "dist",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "microbundle build --tsconfig tsconfig.build.json --external vue,caf",
+    "dev": "microbundle watch",
+    "test": "jest",
+    "prepublishOnly": "npm run build",
+    "test:coverage": "jest --coverage",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "release": "release-it"
+  },
+  "keywords": [
+    "vue",
+    "composition api",
+    "vuejs",
+    "generators",
+    "concurrency",
+    "task",
+    "async",
+    "hooks"
+  ],
+  "author": "Martin Malinda",
+  "repository": "github:martinmalinda/vue-concurrency",
+  "homepage": "https://vue-concurrency.netlify.app/",
+  "license": "MIT",
+  "dependencies": {
+    "caf": "^15.0.1"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.20 || ^2.7.0"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^7.24.3",
+    "@testing-library/jest-dom": "^5.7.0",
+    "@types/jest": "^25.2.2",
+    "jest": "^26.6.3",
+    "microbundle": "^0.14.2",
+    "release-it": "^13.6.2",
+    "ts-jest": "^26.5.6",
+    "typescript": "4.9.3",
+    "vue-template-compiler": "^2.7.13",
+    "vue": "^2.7.13",
+    "vue-demi": "0.13.11",
+    "vuepress": "^1.5.0",
+    "vuepress-plugin-typescript": "^0.2.0"
+  },
+  "release-it": {
+    "github": {
+      "tokenRef": "RELEASE_IT_GITHUB_TOKEN_VC",
+      "release": true
+    }
+  },
+  "sideEffects": false
+}

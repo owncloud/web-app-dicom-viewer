@@ -1,0 +1,11 @@
+.uppy-is-drag-over::after {
+  position: fixed;
+  top: 7px;
+  right: 7px;
+  bottom: 7px;
+  left: 7px;
+  z-index: 10000;
+  background-color: rgba(234, 234, 234, 0.5);
+  border: 5px dashed #bbb;
+  content: "";
+}

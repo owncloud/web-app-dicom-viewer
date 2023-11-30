@@ -1,0 +1,16 @@
+{
+  "name": "@transloadit/prettier-bytes",
+  "license": "MIT",
+  "version": "0.0.9",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/transloadit/monolib.git",
+    "directory": "packages/prettier-bytes"
+  },
+  "main": "./prettierBytes.js",
+  "gitHead": "1d649aa77fbabed471420f73f9433954452743bd"
+}

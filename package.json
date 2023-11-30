@@ -1,0 +1,43 @@
+{
+  "name": "web-app-dicom-viewer",
+  "version": "0.0.0",
+  "description": "ownCloud Web DICOM Viewer",
+  "license": "AGPL-3.0",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint src --ext vue --ext js --ext ts --color",
+    "build": "pnpm vite build",
+    "build:w": "pnpm vite build --watch --mode development"
+  },
+  "devDependencies": {
+    "@ownclouders/eslint-config": "0.0.1",
+    "@ownclouders/extension-sdk": "0.0.5-alpha.1",
+    "@ownclouders/prettier-config": "0.0.1",
+    "@ownclouders/tsconfig": "0.0.5-alpha.1",
+    "@types/leaflet": "^1.8.0",
+    "@types/node": "^20.2.3",
+    "eslint": "8.31.0",
+    "prettier": "2.6.2",
+    "typescript": "4.9.5",
+    "vite": "4.1.1",
+    "vite-plugin-static-copy": "^0.13.0",
+    "vue": "3.3.4"
+  },
+  "dependencies": {
+    "@cornerstonejs/core": "^1.13.0",
+    "@cornerstonejs/dicom-image-loader": "^1.13.0",
+    "dicom-parser": "^1.8.21"
+  },
+  "peerDependencies": {
+    "@ownclouders/web-pkg": "0.0.5-alpha.1",
+    "lodash-es": "^4.17.21",
+    "luxon": "^2.4.0",
+    "vue3-gettext": "^2.3.3",
+    "vuex": "4.1.0"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": ["design-system*"]
+    }
+  }
+}
