@@ -174,7 +174,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { useGettext } from 'vue3-gettext'
-import { Resource } from 'web-client/src'
+import { Resource } from '@ownclouders/web-client/src' // 'web-client/src'
 
 export default defineComponent({
   name: 'DicomControls',

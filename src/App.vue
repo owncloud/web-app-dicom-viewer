@@ -104,12 +104,12 @@ import type { PropType } from 'vue'
 import { useGettext } from 'vue3-gettext'
 
 // other imports
-import { Resource } from 'web-client/src'
+import { Resource } from '@ownclouders/web-client/src' // 'web-client/src'
 //import { useDownloadFile } from 'web-pkg/src/composables/download/useDownloadFile'
 import DicomControls from './components/DicomControls.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
 import uids from './helper/uids'
-import { formatDateFromISO } from 'web-pkg/src/helpers'
+import { formatDateFromISO } from '@ownclouders/web-pkg/src/helpers' //'web-pkg/src/helpers'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
