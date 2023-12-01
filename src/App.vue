@@ -15,20 +15,35 @@
         >
           <div class="oc-pr-s oc-font-semibold">
             <span>{{ vipInformation.patientName || 'patient name not defined' }}</span>
+            <!--
+            hide section because format date and time function is currently deactivated
             <span>
               (*{{
                 formatDate(vipInformation.patientBirthdate, true) || 'birthdate not defined'
+              }})</span
+            >
+            -->
+            <span>
+              (*{{
+                vipInformation.patientBirthdate || 'birthdate not defined'
               }})</span
             >
           </div>
           <div class="oc-pr-s oc-font-semibold">
             <span>{{ vipInformation.institutionName || 'institution name not defined' }}</span
             >,
+            <!--
+            hide section because format date and time function is currently deactivated
             <span>{{
               formatDateAndTime(
                 vipInformation.instanceCreationDate,
                 vipInformation.instanceCreationTime
               ) || 'instance creation date and time not defined'
+            }}</span>
+            -->
+            <span>{{
+                vipInformation.instanceCreationDate + ', ' + 
+                vipInformation.instanceCreationTime || 'instance creation date and time not defined'
             }}</span>
           </div>
         </div>
@@ -700,6 +715,7 @@ export default defineComponent({
       this.instanceInformation.instanceNumber = instanceNumber
       this.instanceInformation.acquisitionNumber = acquisitionNumber
       /*
+      uncommented because format date and time function is currently deactivated
       this.instanceInformation.acquisitionDate = this.formatDate(
         acquisitionDate,
         longDateTimeFormat
@@ -831,6 +847,7 @@ export default defineComponent({
     },
     // functions for styling data
     /*
+    disabled because import for formatDateFromISO import needs to be fixed
     formatDateAndTime(date: string, time: string) {
       // transforming date and time into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
       if (date != undefined && time != undefined && date.length >= 8 && time.length >= 6) {
