@@ -14,6 +14,7 @@
     "@ownclouders/extension-sdk": "0.0.5-alpha.1",
     "@ownclouders/prettier-config": "0.0.1",
     "@ownclouders/tsconfig": "0.0.5-alpha.1",
+    "@types/jest": "29.5.1",
     "@types/leaflet": "^1.8.0",
     "@types/node": "^20.2.3",
     "eslint": "8.31.0",
