@@ -1,6 +1,6 @@
 import MetadataSidebar from '../../../src/components/MetadataSidebar.vue'
-//import { defaultPlugins, shallowMount } from 'web-test-helpers' // check import
-import { shallowMount } from '@vue/test-utils'
+// import { defaultPlugins, shallowMount } from 'web-test-helpers' // check import
+import { shallowMount } from '@vue/test-utils' // temporary workaround for web-test-helpers
 
 const selectors = {
   controlsBack: '.header__back',

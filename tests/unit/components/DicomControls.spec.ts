@@ -1,7 +1,7 @@
 import { Resource } from '@ownclouders/web-client/src' 
 import DicomControls from '../../../src/components/DicomControls.vue'
-// import { defaultPlugins, shallowMount } from 'web-test-helpers'
-import { mount, shallowMount } from '@vue/test-utils'
+// import { defaultPlugins, shallowMount } from 'web-test-helpers' // check import
+import { mount, shallowMount } from '@vue/test-utils' // temporary workaround for web-test-helpers
 import { mock } from 'jest-mock-extended'
 
 const selectors = {
