@@ -5,7 +5,8 @@ export default defineConfig({
   plugins: [vue()],
   test: {
     globals: true, 
-    environment: 'happy-dom',
+    //environment: 'happy-dom',
+    environment: 'jsdom',
     reporters: ['verbose'],
   }
 })
