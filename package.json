@@ -17,6 +17,7 @@
     "@ownclouders/tsconfig": "0.0.5-alpha.1",
     "@types/jest": "29.5.1",
     "@types/node": "^20.2.3",
+    "@vitejs/plugin-vue": "4.5.2",
     "@vue/test-utils": "v2.4.0-alpha.0",
     "eslint": "8.31.0",
     "prettier": "2.6.2",
