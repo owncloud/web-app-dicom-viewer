@@ -20,6 +20,7 @@
     "prettier": "2.6.2",
     "typescript": "5.3.3",
     "vite": "5.0.8",
+    "vitest": "^1.1.0",
     "vue": "3.3.4"
   },
   "dependencies": {
@@ -28,8 +29,8 @@
     "dicom-parser": "^1.8.21"
   },
   "peerDependencies": {
-    "@ownclouders/web-pkg": "0.0.5-alpha.1",
     "@ownclouders/web-client": "0.0.1",
+    "@ownclouders/web-pkg": "0.0.5-alpha.1",
     "lodash-es": "^4.17.21",
     "luxon": "^2.4.0",
     "vue3-gettext": "^2.3.3",
@@ -40,7 +41,9 @@
       "mime": "^3.0.0"
     },
     "peerDependencyRules": {
-      "ignoreMissing": ["design-system*"]
+      "ignoreMissing": [
+        "design-system*"
+      ]
     }
   }
 }
