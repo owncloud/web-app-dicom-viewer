@@ -7,8 +7,9 @@
   "scripts": {
     "lint": "eslint src --ext vue --ext js --ext ts --color",
     "build": "pnpm vite build",
-    "build:w": "pnpm vite build --watch --mode development"
-  },
+    "build:w": "pnpm vite build --watch --mode development",
+    "test": "vitest"
+  }, 
   "devDependencies": {
     "@ownclouders/eslint-config": "0.0.1",
     "@ownclouders/extension-sdk": "0.0.5-alpha.2",
