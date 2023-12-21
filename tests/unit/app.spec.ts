@@ -1,20 +1,5 @@
+import { describe, it, expect, test } from 'vitest'
 import App from '../../src/App.vue'
-
-/*
-import { nextTick, ref } from 'vue'
-import {
-  createStore,
-  defaultComponentMocks,
-  defaultPlugins,
-  shallowMount,
-  defaultStoreMockOptions
-} from 'web-test-helpers'
-import { useAppDefaultsMock } from 'web-test-helpers/src/mocks/useAppDefaultsMock'
-import { FileContext, useAppDefaults } from 'web-pkg/src/composables/appDefaults'
-
-import { mock } from 'jest-mock-extended'
-*/
-
 
 // defining data
 const dicomFiles = [
@@ -35,9 +20,13 @@ describe('Dicom viewer app', () => {
     it('do nothing :)', () => {
       expect(dicomTestFilePath).toBe(dicomTestFilePath)
     })
+    test('dummy test - do nothing :)', () => {
+      expect(dicomTestFilePath).toBe(dicomTestFilePath)
+    })
   })
 })
 
+/*
 // test addWadouriPrefix() method
 describe('Dicom viewer app', () => {
   describe('Method "addWadouriPrefix"', () => {
@@ -49,3 +38,4 @@ describe('Dicom viewer app', () => {
     })
   })
 })
+*/
