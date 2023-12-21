@@ -18,6 +18,7 @@
     "@ownclouders/tsconfig": "0.0.5-alpha.1",
     "@types/jest": "29.5.1",
     "@types/node": "^20.2.3",
+    "@vue/compiler-sfc": "3.3.8",
     "@vue/test-utils": "v2.4.0-alpha.0",
     "@vue/vue3-jest": "29.2.4",
     "eslint": "8.31.0",
