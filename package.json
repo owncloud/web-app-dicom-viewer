@@ -23,6 +23,7 @@
     "@vue/test-utils": "v2.4.0-alpha.0",
     "eslint": "8.31.0",
     "happy-dom": "12.10.3", 
+    "jest-mock-extended": "3.0.4",
     "jsdom": "23.0.1",
     "prettier": "2.6.2",
     "typescript": "5.3.3",
@@ -37,10 +38,13 @@
     "dicom-parser": "^1.8.21"
   },
   "peerDependencies": {
+    "@casl/ability": "^6.3.3",
+    "@casl/vue": "^2.2.1",
     "@ownclouders/web-client": "0.0.1",
     "@ownclouders/web-pkg": "0.0.5-alpha.9",
     "lodash-es": "^4.17.21",
     "luxon": "^2.4.0",
+    "pinia": "2.1.4",
     "vuex": "4.1.0"
   },
   "pnpm": {
