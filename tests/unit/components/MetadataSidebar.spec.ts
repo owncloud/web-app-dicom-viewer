@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils' 
-import { mock } from 'vitest-mock-extended' //import { mock } from 'jest-mock-extended'
+import { mock } from 'vitest-mock-extended' // import { mock } from 'jest-mock-extended'
 import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
 
 import MetadataSidebar from '../../../src/components/MetadataSidebar.vue'

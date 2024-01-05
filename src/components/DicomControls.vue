@@ -35,6 +35,7 @@
       -->
 
       <!-- zoom -->
+      <!-- 
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageShrinkDescription"
@@ -68,8 +69,10 @@
           <oc-icon fill-type="line" name="zoom-in" variation="inherit" />
         </oc-button>
       </div>
+      -->
 
       <!-- rotation -->
+      <!-- 
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageRotateLeftDescription"
@@ -92,8 +95,10 @@
           <oc-icon fill-type="line" name="clockwise" variation="inherit" />
         </oc-button>
       </div>
+      -->
 
       <!-- flip -->
+      <!--
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageFlipHorizontalDescription"
@@ -116,8 +121,10 @@
           <oc-icon fill-type="line" name="flip-vertical" variation="inherit" />
         </oc-button>
       </div>
+      -->
 
       <!-- invert -->
+      <!-- 
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageInvertDescription"
@@ -128,11 +135,12 @@
           @click="$emit('toggleInversion')"
         >
           <oc-icon fill-type="fill" name="contrast" variation="inherit" />
-          <!-- alternative icon: "speaker-2" -->
         </oc-button>
       </div>
+      -->
 
       <!-- reset -->
+      <!-- 
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageResetDescription"
@@ -143,11 +151,11 @@
           @click="$emit('resetViewport')"
         >
           <oc-icon fill-type="line" name="arrow-go-back" variation="inherit" />
-          <!-- alternative icon: "loop-left" -->
         </oc-button>
       </div>
-
+      -->
       <!-- metadata -->
+      <!-- 
       <div class="oc-flex-middle oc-flex oc-mr-m">
         <oc-button
           v-oc-tooltip="
@@ -168,16 +176,18 @@
           />
         </oc-button>
       </div>
+      -->
     </div>
   </div>
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
-import { useGettext } from 'vue3-gettext'
-import { Resource } from '@ownclouders/web-client/src' // 'web-client/src'
+//import { useGettext } from 'vue3-gettext'
+//import { Resource } from '@ownclouders/web-client/src' // 'web-client/src'
 
 export default defineComponent({
   name: 'DicomControls',
+  /*
   props: {
     files: {
       type: Array as PropType<Resource[]>,
@@ -203,6 +213,7 @@ export default defineComponent({
       type: Boolean
     }
   },
+  
   emits: [
     'setZoom',
     'setRotation',
@@ -214,26 +225,35 @@ export default defineComponent({
     'toggleNext',
     'togglePrevious'
   ],
+  */
   setup(props, { emit }) {
-    const { $gettext } = useGettext()
+    //const { $gettext } = useGettext()
 
+    /*
     const currentZoomDisplayValue = computed(() => {
       return `${(props.currentImageZoom * 100).toFixed(0)}%`
     })
+    */
 
     const ariaHiddenFileCount = computed(() => {
-      return $gettext('%{ displayIndex } of %{ availableMediaFiles }', {
+      return 'xxx'
+      /*$gettext('%{ displayIndex } of %{ availableMediaFiles }', {
         displayIndex: (props.activeIndex + 1).toString(),
         availableMediaFiles: props.files.length.toString()
       })
+      */
     })
     const screenreaderFileCount = computed(() => {
-      return $gettext('Media file %{ displayIndex } of %{ availableMediaFiles }', {
+      return 'xxx'
+      /*
+      $gettext('Media file %{ displayIndex } of %{ availableMediaFiles }', {
         displayIndex: (props.activeIndex + 1).toString(),
-        availableMediaFiles: props.files.length.toString()
+        availableMediaFiles: props.files.length.toString() 
       })
+      */
     })
 
+    /*
     const calculateZoom = (zoom, factor) => {
       return Math.round(zoom * factor * 20) / 20
     }
@@ -253,32 +273,35 @@ export default defineComponent({
     const imageShowMetadata = () => {
       emit('toggleShowMetadata')
     }
+    */
 
+    /*
     return {
-      currentZoomDisplayValue,
+      //currentZoomDisplayValue,
       screenreaderFileCount,
       ariaHiddenFileCount,
-      enterFullScreenDescription: $gettext('Enter full screen mode'),
-      exitFullScreenDescription: $gettext('Exit full screen mode'),
-      imageShrinkDescription: $gettext('Shrink the image'),
-      imageZoomDescription: $gettext('Enlarge the image'),
-      imageOriginalSizeDescription: $gettext('Show the image at its normal size'),
-      imageRotateLeftDescription: $gettext('Rotate the image 90 degrees to the left'),
-      imageRotateRightDescription: $gettext('Rotate the image 90 degrees to the right'),
-      previousDescription: $gettext('Show previous DICOM file in folder'),
-      nextDescription: $gettext('Show next DICOM file in folder'),
-      imageFlipHorizontalDescription: $gettext('Flip the image horizontally'),
-      imageFlipVerticalDescription: $gettext('Flip the image vertically'),
-      imageInvertDescription: $gettext('Invert the colours of the image'),
-      imageResetDescription: $gettext('Reset all image manipulations'),
-      imageShowMetadataDescription: $gettext('Show DICOM metadata'),
-      imageHideMetadataDescription: $gettext('Hide DICOM metadata'),
-      imageShrink,
-      imageZoom,
-      imageRotateLeft,
-      imageRotateRight,
-      imageShowMetadata
+      enterFullScreenDescription: 'Enter full screen mode', //$gettext('Enter full screen mode'),
+      exitFullScreenDescription: 'Exit full screen mode', //$gettext('Exit full screen mode'),
+      imageShrinkDescription: 'Shrink the image', // $gettext('Shrink the image'),
+      imageZoomDescription: 'description', // $gettext('Enlarge the image'),
+      imageOriginalSizeDescription: 'description', //$gettext('Show the image at its normal size'),
+      imageRotateLeftDescription: 'description', //$gettext('Rotate the image 90 degrees to the left'),
+      imageRotateRightDescription: 'description', //$gettext('Rotate the image 90 degrees to the right'),
+      previousDescription: 'description', //$gettext('Show previous DICOM file in folder'),
+      nextDescription: 'description', //$gettext('Show next DICOM file in folder'),
+      imageFlipHorizontalDescription: 'description', //$gettext('Flip the image horizontally'),
+      imageFlipVerticalDescription: 'description', //$gettext('Flip the image vertically'),
+      imageInvertDescription: 'description', //$gettext('Invert the colours of the image'),
+      imageResetDescription: 'description', // $gettext('Reset all image manipulations'),
+      imageShowMetadataDescription: 'description', //$gettext('Show DICOM metadata'),
+      imageHideMetadataDescription: 'description', //$gettext('Hide DICOM metadata'),
+      //imageShrink,
+      //imageZoom,
+      //imageRotateLeft,
+      //imageRotateRight,
+      //imageShowMetadata
     }
+    */
   }
 })
 </script>

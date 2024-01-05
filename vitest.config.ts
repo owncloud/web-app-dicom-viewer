@@ -1,4 +1,5 @@
-import { defineConfig } from "vitest/config" // 'vite'
+//import { defineConfig } from "vitest/config" // 'vite'
+import { configDefaults, defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
@@ -8,6 +9,8 @@ export default defineConfig({
     //environment: 'happy-dom',
     environment: 'jsdom',
     reporters: ['verbose'],
+    // clearMocks: true,
+    // see https://supportcenter.devexpress.com/ticket/details/t1090297/vitest-setup-doesn-t-work-with-devextreme-vue-components
     server: {
       deps: {
         inline: [
@@ -16,10 +19,14 @@ export default defineConfig({
           'd3-array',
           'd3-scale',
           'd3-time',
-          'internmap'
+          'internmap', 
+          'vue3-gettext'
         ]
       }
     },
+    
+    //exclude: [...configDefaults.exclude],
+
     /*
     // solution suggested by CLI, might be related to this issue: https://github.com/koebel/web/pull/2/files
     
@@ -38,10 +45,9 @@ export default defineConfig({
           }
         }
       }
-    }*/
+    }
+    
+    // https://stackoverflow.com/questions/77126321/how-to-get-vitest-working-with-require-of-es-module
+    */
   }
 })
-
-
-
-    

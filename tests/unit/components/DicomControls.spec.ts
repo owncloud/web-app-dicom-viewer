@@ -1,5 +1,6 @@
 import { Resource } from '@ownclouders/web-client/src' 
 import { mount, shallowMount } from '@vue/test-utils' 
+// import {render} from '@testing-library/vue'
 import { mock } from 'vitest-mock-extended' // import { mock } from 'jest-mock-extended'
 import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
 
@@ -29,6 +30,11 @@ describe('DicomControls component', () => {
     })
   })
 })
+
+// trying vue-testing library
+// https://testing-library.com/docs/vue-testing-library/api
+// const {debug} = render(DicomControls)
+// debug()
 
 //const mountWrapper = mount(DicomControls)
 //const shallowMountWrapper = shallowMount(DicomControls)
