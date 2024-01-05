@@ -1,7 +1,9 @@
 import { Resource } from '@ownclouders/web-client/src' 
-import DicomControls from '../../../src/components/DicomControls.vue'
 import { mount, shallowMount } from '@vue/test-utils' 
-//import { mock } from 'jest-mock-extended'
+import { mock } from 'vitest-mock-extended' // import { mock } from 'jest-mock-extended'
+import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
+
+import DicomControls from '../../../src/components/DicomControls.vue'
 
 const selectors = {
   controlsPrevious: '.preview-controls-previous',
@@ -27,6 +29,10 @@ describe('DicomControls component', () => {
     })
   })
 })
+
+//const mountWrapper = mount(DicomControls)
+//const shallowMountWrapper = shallowMount(DicomControls)
+//const { wrapper } = getWrapper()
 
 /*
 describe('DicomControls component', () => {
@@ -192,19 +198,20 @@ describe('DicomControls component', () => {
   })
 })
 
+
 function getWrapper(props = {}) {
   return {
     wrapper: shallowMount(DicomControls, {
       props: {
-        //files: [mock<Resource>()],
+        files: [mock<Resource>()],
         activeIndex: 0,
         ...props
       },
       global: {
-        //TODO: solve import for defaultPlugins
-        //plugins: [...defaultPlugins()]
+        plugins: [...defaultPlugins()]
       }
     })
   }
 }
+
 */

@@ -1,5 +1,8 @@
-import MetadataSidebar from '../../../src/components/MetadataSidebar.vue'
 import { mount, shallowMount } from '@vue/test-utils' 
+import { mock } from 'vitest-mock-extended' //import { mock } from 'jest-mock-extended'
+import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
+
+import MetadataSidebar from '../../../src/components/MetadataSidebar.vue'
 
 const selectors = {
   controlsBack: '.header__back',
@@ -21,10 +24,6 @@ describe('MetadataSidebar component', () => {
   describe('mount component', () => {
     it('should exist', () => {
       const { wrapper } = getWrapper()
-      // const wrapper = shallowMount(MetadataSidebar)
-      // const wrapper = mount(MetadataSidebar)
-      // const wrapper = shallowMount(MetadataSidebar, { propsData: { } })
-      // const wrapper = mount(MetadataSidebar, { props: { } })
       expect(wrapper.exists()).toBeTruthy()
     })
     it('should have the id "dicom-metadata-sidebar"', () => {
@@ -33,7 +32,7 @@ describe('MetadataSidebar component', () => {
     })
   })
 })
-*/
+
 /*
 describe('MetadataSidebar component', () => {
   describe('navigation elements', () => {
@@ -72,13 +71,12 @@ function getWrapper(props = {}) {
     wrapper: shallowMount(MetadataSidebar, {
       props: {
         ...props
-      }
-      ,
+      },
       global: {
-        //TODO: solve import for defaultPlugins
-        //plugins: [...defaultPlugins()]
+        plugins: [...defaultPlugins()]
       }
     })
   }
 }
+
 */
