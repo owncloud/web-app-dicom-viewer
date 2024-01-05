@@ -26,9 +26,10 @@
     "jsdom": "23.0.1",
     "prettier": "2.6.2",
     "typescript": "5.3.3",
-    "vite": "5.0.8",
+    "vite": "^5.0.0", 
     "vitest": "^1.1.0",
-    "vue": "3.3.4"
+    "vue": "3.3.4", 
+    "vue3-gettext": "2.5.0-alpha.1"
   },
   "dependencies": {
     "@cornerstonejs/core": "^1.13.0",
@@ -37,10 +38,9 @@
   },
   "peerDependencies": {
     "@ownclouders/web-client": "0.0.1",
-    "@ownclouders/web-pkg": "0.0.5-alpha.1",
+    "@ownclouders/web-pkg": "0.0.5-alpha.9",
     "lodash-es": "^4.17.21",
     "luxon": "^2.4.0",
-    "vue3-gettext": "^2.3.3",
     "vuex": "4.1.0"
   },
   "pnpm": {
