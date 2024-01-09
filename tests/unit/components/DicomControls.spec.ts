@@ -21,20 +21,6 @@ const selectors = {
 }
 
 // test cases
-// dummy test case
-describe('DicomControls component', () => {
-  describe('dummy test', () => {
-    it('do nothing :)', () => {
-      expect(1).toBe(1)
-    })
-  })
-})
-
-//const mountWrapper = mount(DicomControls)
-//const shallowMountWrapper = shallowMount(DicomControls)
-//const { wrapper } = getWrapper()
-
-/*
 describe('DicomControls component', () => {
   describe('mount component', () => {
     it('should exist', () => {
@@ -46,7 +32,8 @@ describe('DicomControls component', () => {
       expect(wrapper.get('.preview-controls')).toBeTruthy()
     })
   })
-  describe('file navigation', () => {
+  // file navigation buttons are currently disabled
+  describe.skip('file navigation', () => {
     describe('previous button', () => {
       it('should exist', () => {
         const { wrapper } = getWrapper()
@@ -198,7 +185,6 @@ describe('DicomControls component', () => {
   })
 })
 
-
 function getWrapper(props = {}) {
   return {
     wrapper: shallowMount(DicomControls, {
@@ -214,4 +200,3 @@ function getWrapper(props = {}) {
   }
 }
 
-*/

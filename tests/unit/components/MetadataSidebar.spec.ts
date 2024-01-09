@@ -10,16 +10,6 @@ const selectors = {
 }
 
 // test cases
-// dummy test case
-describe('MetadataSidebar component', () => {
-  describe('dummy test', () => {
-    it('do nothing :)', () => {
-      expect(1).toBe(1)
-    })
-  })
-})
-
-/*
 describe('MetadataSidebar component', () => {
   describe('mount component', () => {
     it('should exist', () => {
@@ -33,7 +23,6 @@ describe('MetadataSidebar component', () => {
   })
 })
 
-/*
 describe('MetadataSidebar component', () => {
   describe('navigation elements', () => {
     describe('back button', () => {
@@ -65,7 +54,6 @@ describe('MetadataSidebar component', () => {
   })
 })
 
-
 function getWrapper(props = {}) {
   return {
     wrapper: shallowMount(MetadataSidebar, {
@@ -78,5 +66,3 @@ function getWrapper(props = {}) {
     })
   }
 }
-
-*/
