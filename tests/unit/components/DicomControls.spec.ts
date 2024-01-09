@@ -20,8 +20,13 @@ const selectors = {
   controlsShowMetadata: '.preview-controls-show-metadata'
 }
 
+const defaultScreenSize = window.innerWidth
+const smallScreen = 600 // smaller than 640
+const wideScreen = 1200 // wider than 640
+
 // test cases
 describe('DicomControls component', () => {
+  afterEach(() => resizeWindowSize(defaultScreenSize))
   describe('mount component', () => {
     it('should exist', () => {
       const { wrapper } = getWrapper()
@@ -32,7 +37,7 @@ describe('DicomControls component', () => {
       expect(wrapper.get('.preview-controls')).toBeTruthy()
     })
   })
-  // file navigation buttons are currently disabled
+  // file navigation buttons are currently disabled, therefore this section is skipped
   describe.skip('file navigation', () => {
     describe('previous button', () => {
       it('should exist', () => {
@@ -75,15 +80,21 @@ describe('DicomControls component', () => {
         expect(wrapper.find(selectors.controlsImageOriginalSize).exists()).toBeTruthy()
       })
       it('should be visible if screen size is not small screen', () => {
-        const { wrapper } = getWrapper({ isSmallScreen: false })
+        const { wrapper } = getWrapper()
+        resizeWindowSize(wideScreen)
         expect(wrapper.find(selectors.controlsImageOriginalSize).isVisible()).toBeTruthy()
       })
+      // TODO figure out why this test is failing
+      // seems to be an issue of https://github.com/vuejs/vue-test-utils/issues/2073
       it('should not be visible if screen size is small screen', () => {
-        const { wrapper } = getWrapper({ isSmallScreen: true })
+        const { wrapper } = getWrapper()
+        resizeWindowSize(smallScreen)
+        // element should exist but not be visible (css display none)
+        expect(wrapper.find(selectors.controlsImageOriginalSize).exists()).toBeTruthy()
         expect(wrapper.find(selectors.controlsImageOriginalSize).isVisible()).toBeFalsy()
       })
       it('should emit "setZoom"-event on click', async () => {
-        const { wrapper } = getWrapper({ isSmallScreen: false })
+        const { wrapper } = getWrapper()
         await wrapper.find(selectors.controlsImageOriginalSize).trigger('click')
         expect(wrapper.emitted('setZoom').length).toBe(1)
       })
@@ -195,8 +206,13 @@ function getWrapper(props = {}) {
       },
       global: {
         plugins: [...defaultPlugins()]
-      }
+      }, 
+      // attachTo: document.body
     })
   }
 }
 
+const resizeWindowSize = (width) => {
+  window.innerWidth = width
+  window.dispatchEvent(new Event('resize'))
+}

@@ -9,8 +9,13 @@ const selectors = {
   controlsClose: '.header__close'
 }
 
+const defaultScreenSize = window.innerWidth
+const smallScreenSize = 600 // smaller than 640
+const wideScreenSize = 1200 // wider than 640
+
 // test cases
 describe('MetadataSidebar component', () => {
+  afterEach(() => resizeWindowSize(defaultScreenSize))
   describe('mount component', () => {
     it('should exist', () => {
       const { wrapper } = getWrapper()
@@ -21,23 +26,26 @@ describe('MetadataSidebar component', () => {
       expect(wrapper.get('#dicom-metadata-sidebar')).toBeTruthy()
     })
   })
-})
-
-describe('MetadataSidebar component', () => {
   describe('navigation elements', () => {
     describe('back button', () => {
       it('should exist if screen size is small screen', () => {
-        const { wrapper } = getWrapper({ isSmallScreen: true })
+        const { wrapper } = getWrapper()
+        resizeWindowSize(smallScreenSize)
         expect(wrapper.find(selectors.controlsBack).exists()).toBeTruthy()
       })
       it('should emit "closeMetadataSidebar"-event on click if screen size is small screen', async () => {
-        const { wrapper } = getWrapper({ isSmallScreen: true })
+        const { wrapper } = getWrapper()
+        resizeWindowSize(smallScreenSize)
         await wrapper.find(selectors.controlsBack).trigger('click')
         expect(wrapper.emitted('closeMetadataSidebar').length).toBe(1)
       })
+      // TODO figure out why this test is failing
       it('should not exist if screen size is not small screen', () => {
-        const { wrapper } = getWrapper({ isSmallScreen: false })
-        expect(wrapper.find(selectors.controlsBack).exists()).toBeFalsy()
+        const { wrapper } = getWrapper()
+        resizeWindowSize(wideScreenSize)
+        // element should exist but not be visible (css display none)
+        expect(wrapper.find(selectors.controlsBack).exists()).toBeTruthy()
+        expect(wrapper.find(selectors.controlsBack).isVisible()).toBeFalsy()
       })
     })
     describe('close button', () => {
@@ -65,4 +73,9 @@ function getWrapper(props = {}) {
       }
     })
   }
+}
+
+const resizeWindowSize = (width) => {
+  window.innerWidth = width
+  window.dispatchEvent(new Event('resize'))
 }
