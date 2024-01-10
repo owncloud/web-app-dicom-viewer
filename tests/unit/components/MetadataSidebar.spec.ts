@@ -59,10 +59,47 @@ describe('MetadataSidebar component', () => {
         expect(wrapper.emitted('closeMetadataSidebar').length).toBe(1)
       })
     })
-    // additional test cases
-    describe('pass props into the Metadata Sidebar component', () => {
-      it.todo('display some patient data (name, id, birthday, ...)')
+    describe('pass patient metadata props into the Metadata Sidebar component', () => {
+      const patientName = 'Albert Einstein'
+      const patientID = '1089'
+      const patientBirthday = 'Mar 14, 1879' // '18790314'
+
+      const mockedPatientMetadata = {
+        isMetadataExtracted: true,
+        patientInformation : {
+          patientName: patientName,
+          patientID: patientID ,
+          patientBirthday: patientBirthday
+          }, 
+        studyInformation: {},
+        seriesInformation: {},
+        instanceInformation: {},
+        imageInformation: {},
+        equipmentInformation: {},
+        scanningInformation: {},
+        uidsInformation: {},
+        otherInformation: {}
+      }
+
+      it('should display the patients name in the content section of the sidebar', () => {
+        const { wrapper } = getWrapper(mockedPatientMetadata)
+        expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientName)
+      })
+      it('should display the patients ID in the content section of the sidebar', () => {
+        const { wrapper } = getWrapper(mockedPatientMetadata)
+        expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientID)
+      })
+      it('should display the patients name in the content section of the sidebar', () => {
+        const { wrapper } = getWrapper(mockedPatientMetadata)
+        expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientName)
+      })
       it.todo('other props? e.g. when isMetadataExtracted=false it should not display the metadata table #dicom-metadata-sidebar-content')
+      /*
+      it('should not display the metadata table if "isMetadataExtracted" is false', () => {
+        const { wrapper } = getWrapper({ isMetadataExtracted: false })
+        expect(wrapper.get('#dicom-metadata-sidebar-content').isVisible()).toBeFalsy()
+      })
+      */ 
     })
   })
 })
