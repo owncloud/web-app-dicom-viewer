@@ -59,7 +59,19 @@ describe('MetadataSidebar component', () => {
         expect(wrapper.emitted('closeMetadataSidebar').length).toBe(1)
       })
     })
-    describe('pass patient metadata props into the Metadata Sidebar component', () => {
+    describe('metadata sidebar content div section', () => {
+      it('should exist if "isMetadataExtracted" is true', () => {
+        const { wrapper } = getWrapper({ isMetadataExtracted: true })
+        console.log(wrapper.html())
+        expect(wrapper.find('div #dicom-metadata-sidebar-content').exists()).toBeTruthy()
+      })
+      it('should not exist if "isMetadataExtracted" is false', () => {
+        const { wrapper } = getWrapper({ isMetadataExtracted: false })
+        console.log(wrapper.html())
+        expect(wrapper.find('div #dicom-metadata-sidebar-content').exists()).toBeFalsy()
+      })
+    })
+    describe('passing patient metadata as props into the metadata sidebar', () => {
       const patientName = 'Albert Einstein'
       const patientID = '1089'
       const patientBirthday = 'Mar 14, 1879' // '18790314'
@@ -93,13 +105,6 @@ describe('MetadataSidebar component', () => {
         const { wrapper } = getWrapper(mockedPatientMetadata)
         expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientName)
       })
-      it.todo('other props? e.g. when isMetadataExtracted=false it should not display the metadata table #dicom-metadata-sidebar-content')
-      /*
-      it('should not display the metadata table if "isMetadataExtracted" is false', () => {
-        const { wrapper } = getWrapper({ isMetadataExtracted: false })
-        expect(wrapper.get('#dicom-metadata-sidebar-content').isVisible()).toBeFalsy()
-      })
-      */ 
     })
   })
 })
