@@ -104,6 +104,7 @@
           @click="$emit('setHorizontalFlip')"
         >
           <oc-icon fill-type="line" name="flip-horizontal" variation="inherit" />
+          <!-- alternative icon: "arrow-left-right" -->
         </oc-button>
         <oc-button
           v-oc-tooltip="imageFlipVerticalDescription"
@@ -114,6 +115,7 @@
           @click="$emit('setVerticalFlip')"
         >
           <oc-icon fill-type="line" name="flip-vertical" variation="inherit" />
+          <!-- alternative icon: "arrow-up-down" -->
         </oc-button>
       </div>
 
@@ -128,7 +130,6 @@
           @click="$emit('toggleInversion')"
         >
           <oc-icon fill-type="fill" name="contrast" variation="inherit" />
-          <!-- alternative icon: "speaker-2" -->
         </oc-button>
       </div>
 
@@ -143,7 +144,6 @@
           @click="$emit('resetViewport')"
         >
           <oc-icon fill-type="line" name="arrow-go-back" variation="inherit" />
-          <!-- alternative icon: "loop-left" -->
         </oc-button>
       </div>
 
