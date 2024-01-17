@@ -103,7 +103,8 @@
           :aria-label="imageFlipHorizontalDescription"
           @click="$emit('setHorizontalFlip')"
         >
-          <oc-icon fill-type="line" name="flip-horizontal" variation="inherit" />
+          <oc-icon fill-type="line" name="arrow-left-right" variation="inherit" />
+          <!-- "arrow-left-right" is used as placeholder until "flip-horizontal" is included in web's design-system -->
         </oc-button>
         <oc-button
           v-oc-tooltip="imageFlipVerticalDescription"
@@ -113,7 +114,8 @@
           :aria-label="imageFlipVerticalDescription"
           @click="$emit('setVerticalFlip')"
         >
-          <oc-icon fill-type="line" name="flip-vertical" variation="inherit" />
+          <oc-icon fill-type="line" name="arrow-up-down" variation="inherit" />
+          <!-- "arrow-left-right" is used as placeholder until "flip-vertical" is included in web's design-system -->
         </oc-button>
       </div>
 
@@ -128,7 +130,6 @@
           @click="$emit('toggleInversion')"
         >
           <oc-icon fill-type="fill" name="contrast" variation="inherit" />
-          <!-- alternative icon: "speaker-2" -->
         </oc-button>
       </div>
 
@@ -143,7 +144,6 @@
           @click="$emit('resetViewport')"
         >
           <oc-icon fill-type="line" name="arrow-go-back" variation="inherit" />
-          <!-- alternative icon: "loop-left" -->
         </oc-button>
       </div>
 
@@ -174,7 +174,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { useGettext } from 'vue3-gettext'
-import { Resource } from '@ownclouders/web-client/src' // 'web-client/src'
+import { Resource } from '@ownclouders/web-client/src'
 
 export default defineComponent({
   name: 'DicomControls',
@@ -233,7 +233,6 @@ export default defineComponent({
         availableMediaFiles: props.files.length.toString()
       })
     })
-
     const calculateZoom = (zoom, factor) => {
       return Math.round(zoom * factor * 20) / 20
     }
