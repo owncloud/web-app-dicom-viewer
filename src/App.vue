@@ -663,7 +663,6 @@ export default defineComponent({
         this.vipInformation.patientBirthdate,
         longDateTimeFormat
       )
-      this.patientInformation.patientBirthday = this.vipInformation.patientBirthdate
       this.patientInformation.patientSex = patientSex
       this.patientInformation.patientWeight = patientWeight
 

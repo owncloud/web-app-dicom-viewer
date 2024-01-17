@@ -257,8 +257,6 @@ export default defineComponent({
       currentZoomDisplayValue,
       screenreaderFileCount,
       ariaHiddenFileCount,
-      enterFullScreenDescription: $gettext('Enter full screen mode'),
-      exitFullScreenDescription: $gettext('Exit full screen mode'),
       imageShrinkDescription: $gettext('Shrink the image'),
       imageZoomDescription: $gettext('Enlarge the image'),
       imageOriginalSizeDescription: $gettext('Show the image at its normal size'),
