@@ -118,14 +118,14 @@ describe('DicomControls component', () => {
         expect(wrapper.find(selectors.controlsImageOriginalSize).isVisible()).toBeTruthy()
       })
       it('should be hidden if screen size is small screen', () => {
-        // element should exist but not be visible (css .oc-visible\@s "display: none !important;")
+        // element should exist but not be visible (css class .oc-visible\@s with "display: none !important;" should be applied)
         // testing for visibility seems to be an issue of https://github.com/vuejs/vue-test-utils/issues/2073, see also https://v1.test-utils.vuejs.org/api/wrapper/#isvisible
         const { wrapper } = getWrapper()
         resizeWindowSize(smallScreen)
         expect(wrapper.find(selectors.controlsImageOriginalSize).attributes('class')).toContain(visibleOnlyOnScreensBiggerThan639px)
       })
       it('should be hidden if screen size is medium screen and "isShowMetadataActivated" is true', () => {
-        // element should exist but not be visible (css .oc-visible\@m "display: none !important;")
+        // element should exist but not be visible (css class .oc-visible\@s with "display: none !important;" should be applied)
         const { wrapper } = getWrapper({ isShowMetadataActivated: true })
         resizeWindowSize(mediumScreen)
         expect(wrapper.find(selectors.controlsImageOriginalSize).attributes('class')).toContain(visibleOnlyOnScreensBiggerThan959px)

@@ -1,5 +1,5 @@
 import { mount, shallowMount } from '@vue/test-utils' 
-import { mock } from 'vitest-mock-extended' //import { mock } from 'jest-mock-extended'
+import { mock } from 'vitest-mock-extended' 
 import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
 
 import MetadataSidebar from '../../../src/components/MetadataSidebar.vue'
@@ -9,9 +9,11 @@ const selectors = {
   controlsClose: '.header__close'
 }
 
+const hiddenOnScreensBiggerThan639px = 'oc-hidden@s' 
+
 const defaultScreenSize = window.innerWidth
-const smallScreenSize = 600 // smaller than 640
-const wideScreenSize = 1200 // wider than 640
+const smallScreenSize = 600 // smaller than 640px
+const wideScreenSize = 1200 // wider than 640px
 
 // test cases
 describe('MetadataSidebar component', () => {
@@ -28,10 +30,11 @@ describe('MetadataSidebar component', () => {
   })
   describe('navigation elements', () => {
     describe('back button', () => {
-      it('should exist if screen size is small screen', () => {
+      it('should be visible if screen size is small screen', () => {
         const { wrapper } = getWrapper()
         resizeWindowSize(smallScreenSize)
         expect(wrapper.find(selectors.controlsBack).exists()).toBeTruthy()
+        expect(wrapper.find(selectors.controlsBack).isVisible()).toBeTruthy()
       })
       it('should emit "closeMetadataSidebar"-event on click if screen size is small screen', async () => {
         const { wrapper } = getWrapper()
@@ -39,13 +42,12 @@ describe('MetadataSidebar component', () => {
         await wrapper.find(selectors.controlsBack).trigger('click')
         expect(wrapper.emitted('closeMetadataSidebar').length).toBe(1)
       })
-      // TODO figure out why this test is failing
-      it('should not exist if screen size is not small screen', () => {
+      it('should be hidden if screen size is bigger than small screen', () => {
+        // element should exist but not be visible (css class .oc-hidden\@s with "display: none !important;" should be applied)
         const { wrapper } = getWrapper()
         resizeWindowSize(wideScreenSize)
-        // element should exist but not be visible (css display none)
         expect(wrapper.find(selectors.controlsBack).exists()).toBeTruthy()
-        //expect(wrapper.find(selectors.controlsBack).isVisible()).toBeFalsy()
+        expect(wrapper.find(selectors.controlsBack).attributes('class')).toContain(hiddenOnScreensBiggerThan639px)
       })
     })
     describe('close button', () => {
@@ -62,19 +64,17 @@ describe('MetadataSidebar component', () => {
     describe('metadata sidebar content div section', () => {
       it('should exist if "isMetadataExtracted" is true', () => {
         const { wrapper } = getWrapper({ isMetadataExtracted: true })
-        console.log(wrapper.html())
         expect(wrapper.find('div #dicom-metadata-sidebar-content').exists()).toBeTruthy()
       })
       it('should not exist if "isMetadataExtracted" is false', () => {
         const { wrapper } = getWrapper({ isMetadataExtracted: false })
-        console.log(wrapper.html())
         expect(wrapper.find('div #dicom-metadata-sidebar-content').exists()).toBeFalsy()
       })
     })
     describe('passing patient metadata as props into the metadata sidebar', () => {
       const patientName = 'Albert Einstein'
       const patientID = '1089'
-      const patientBirthday = 'Mar 14, 1879' // '18790314'
+      const patientBirthday = 'Mar 14, 1879'
 
       const mockedPatientMetadata = {
         isMetadataExtracted: true,
@@ -112,6 +112,7 @@ describe('MetadataSidebar component', () => {
 function getWrapper(props = {}) {
   return {
     wrapper: shallowMount(MetadataSidebar, {
+      attachTo: document.body,
       props: {
         ...props
       },
