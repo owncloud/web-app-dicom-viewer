@@ -20,11 +20,19 @@ ownCloud Web DICOM Viewer app.
   "external_apps": [
     {
       "id": "dicom-viewer",
-      "path": "",
-      "config": { }
+      "path": "http://localhost:9999/js/web-app-dicom-viewer.js",
+      "config": {
+        "mimeTypes": [
+          "application/dicom",
+          "application/octet-stream",
+          "application/dicom+xml",
+          "application/json"
+        ]
+      }
     }
   ]
 }
+ 
 ```
 
 
