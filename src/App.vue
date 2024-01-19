@@ -90,6 +90,7 @@ import { Resource } from '@ownclouders/web-client/src'
 import DicomControls from './components/DicomControls.vue'
 import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
+import { extractMetadataHelper } from './helper/extractMetadataHelper'
 import uids from './helper/uids'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
@@ -441,7 +442,7 @@ export default defineComponent({
     },
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
-
+      //getPatieData(dicimImage, "patientName")
       let patientName, patientBirthdate, institutionName, instanceCreationDate, instanceCreationTime
 
       await cornerstoneDICOMImageLoader.wadouri
@@ -459,6 +460,15 @@ export default defineComponent({
       this.vipInformation.institutionName = institutionName
       this.vipInformation.instanceCreationDate = instanceCreationDate
       this.vipInformation.instanceCreationTime = instanceCreationTime
+
+      /*
+      const { test, uppercase} = extractMetadataHelper()
+      let fetchedData = test()
+      console.log('received data: ' + fetchedData)
+      console.log('to uppercase: ' + uppercase('test'))
+
+      //console.log('fetched data length: ' + fetchedData.length)
+      */
 
       this.isVipMetadataFetched = true
     },
