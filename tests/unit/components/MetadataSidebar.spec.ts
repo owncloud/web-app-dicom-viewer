@@ -61,6 +61,8 @@ describe('MetadataSidebar component', () => {
         expect(wrapper.emitted('closeMetadataSidebar').length).toBe(1)
       })
     })
+  })
+  describe('display of content', () => {
     describe('metadata sidebar content div section', () => {
       it('should exist if "isMetadataExtracted" is true', () => {
         const { wrapper } = getWrapper({ isMetadataExtracted: true })
@@ -92,7 +94,6 @@ describe('MetadataSidebar component', () => {
         uidsInformation: {},
         otherInformation: {}
       }
-
       it('should display the patients name in the content section of the sidebar', () => {
         const { wrapper } = getWrapper(mockedPatientMetadata)
         expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientName)
@@ -101,9 +102,9 @@ describe('MetadataSidebar component', () => {
         const { wrapper } = getWrapper(mockedPatientMetadata)
         expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientID)
       })
-      it('should display the patients name in the content section of the sidebar', () => {
+      it('should display the patients birthday in the content section of the sidebar', () => {
         const { wrapper } = getWrapper(mockedPatientMetadata)
-        expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientName)
+        expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientBirthday)
       })
     })
   })
