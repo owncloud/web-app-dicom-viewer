@@ -21,10 +21,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useGettext } from 'vue3-gettext'
 
 export default defineComponent({
-  name: 'MetadataSidebar',
+  name: 'VipMetadataOverlay',
   props: {
     patientName: {
       type: String,
@@ -42,9 +41,6 @@ export default defineComponent({
       type: String,
       required: false
     }
-  },
-  setup(props, { emit }) {
-    //const { $gettext } = useGettext()
   }
 })
 </script>
