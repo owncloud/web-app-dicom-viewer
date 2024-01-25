@@ -662,16 +662,6 @@ export default defineComponent({
         // adding values to corresponding variable
         this.imageInformation.rowsX_Columns =
           imageData.dimensions[0] + ' x ' + imageData.dimensions[1]
-        /*
-        this.exampleInformation.direction = imageData.direction
-          .map((x) => Math.round(x * 100) / 100)
-          .join(',')
-          // same as Image Orientation Patient
-        this.exampleInformation.origin = imageData.origin
-          .map((x) => Math.round(x * 100) / 100)
-          .join(',')
-          // same as Image Position Patient
-        */
         this.imageInformation.bitsAllocated = bitsAllocated
         this.imageInformation.bitsStored = bitsStored
         this.imageInformation.highBit = highBit
@@ -759,11 +749,11 @@ export default defineComponent({
     // functions relating to dicom controls
     prev() {
       console.log('prev clicked')
-      // TODO: still needs to be implemented, similar to prev & next in preview app
+      // TODO: still needs to be implemented, similar to prev & next in preview app, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
     },
     next() {
       console.log('next clicked')
-      // TODO: still needs to be implemented, similar to prev & next in preview app
+      // TODO: still needs to be implemented, similar to prev & next in preview app, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
     },
     setZoom(newZoomFactor) {
       this.currentImageZoom = newZoomFactor
