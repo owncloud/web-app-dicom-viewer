@@ -107,7 +107,7 @@ import { useGettext } from 'vue3-gettext'
 import { Resource } from '@ownclouders/web-client/src' 
 import DicomControls from './components/DicomControls.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
-import { extractMetadataHelper } from './helper/extractMetadataHelper'
+import { extractMetadata } from './helper/extractMetadata'
 import uids from './helper/uids'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
@@ -336,6 +336,8 @@ export default defineComponent({
       viewport: null,
       viewportCameraParallelScale: 1,
       dicomUrl: null,
+      dicomImageData: null,
+      isDicomImageDataFetched: false,
       currentImageZoom: 1,
       currentImageRotation: 0,
       isVipMetadataFetched: false,
@@ -448,6 +450,7 @@ export default defineComponent({
     this.isMetadataExtracted = false
     this.isVipMetadataFetched = false
     this.isMetadataFetched = false
+    this.isDicomImageDataFetched = false
   },
   unmounted() {
     console.log('lifecycle @ unmounted')
@@ -463,37 +466,54 @@ export default defineComponent({
     async addWadouriPrefix(url: String) {
       return 'wadouri:' + url
     },
-    async fetchVipMetadataInformation(imageId) {
-      console.log('fetch vip meta data information for: ' + imageId)
-      //getPatieData(dicimImage, "patientName")
-      let patientName, patientBirthdate, institutionName, instanceCreationDate, instanceCreationTime
+    async fetchDicomImageData(imageId) {
+      console.log('fetching dicom image data for: ' + imageId)
+      // console.log('is dicom image data fetched? ' + this.isDicomImageDataFetched)
+
+      let dicomImageData
 
       await cornerstoneDICOMImageLoader.wadouri
         .loadImage(imageId)
         .promise.then(async function (dicomImage) {
-          patientName = dicomImage.data.string('x00100010')
-          patientBirthdate = dicomImage.data.string('x00100030')
-          institutionName = dicomImage.data.string('x00080080')
-          instanceCreationDate = dicomImage.data.string('x00080012')
-          instanceCreationTime = dicomImage.data.string('x00080013')
+          dicomImageData = dicomImage.data
         })
 
-      this.vipInformation.patientName = patientName
-      this.vipInformation.patientBirthdate = patientBirthdate
-      this.vipInformation.institutionName = institutionName
-      this.vipInformation.instanceCreationDate = instanceCreationDate
-      this.vipInformation.instanceCreationTime = instanceCreationTime
+      this.dicomImageData = dicomImageData
 
-      /*
-      const { test, uppercase} = extractMetadataHelper()
+      this.isDicomImageDataFetched = true
+    },
+    async fetchVipMetadataInformation(imageId) {
+      console.log('fetch vip meta data information for: ' + imageId)
+
+      if (!this.isDicomImageDataFetched) {
+        await this.fetchDicomImageData(imageId)
+      }
+      
+      this.vipInformation.patientName = this.dicomImageData.string('x00100010')
+      this.vipInformation.patientBirthdate = this.dicomImageData.string('x00100030')
+      this.vipInformation.institutionName = this.dicomImageData.string('x00080080')
+      this.vipInformation.instanceCreationDate = this.dicomImageData.string('x00080012')
+      this.vipInformation.instanceCreationTime = this.dicomImageData.string('x00080013')
+
+      this.isVipMetadataFetched = true
+
+      // using some function from extract metadata helper
+      // for testing only
+      const { test, uppercase, asynctest } = extractMetadata()
+
       let fetchedData = test()
       console.log('received data: ' + fetchedData)
       console.log('to uppercase: ' + uppercase('test'))
+      
+      // some examples with async functions
+      let fetchedAsyncData = asynctest()
+      console.log('received async data: ' + fetchedAsyncData)
+      // resolving async data
+      fetchedAsyncData.then((value) => {
+        console.log('fetched async data promise resolved with value: ' + value)
+      })
 
-      //console.log('fetched data length: ' + fetchedData.length)
-      */
-
-      this.isVipMetadataFetched = true
+      //getPatieData(dicimImage, "patientName")
     },
     async fetchMetadataInformation(imageId) {
       console.log('fetch meta data information for: ' + imageId)
