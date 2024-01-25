@@ -1,49 +1,52 @@
 import translations from '../l10n/translations.json'
-import { AppWrapperRoute } from '@ownclouders/web-pkg'
+import { AppWrapperRoute,
+  defineWebApplication } from '@ownclouders/web-pkg'
 import App from './App.vue'
-//import * as app from './App.vue'
-//const { default: App, mimeTypes, appId } = app as any
+import { useGettext } from 'vue3-gettext'
 
-// just a dummy function to trick gettext tools
-function $gettext(msg) {
-  return msg
-}
+export default defineWebApplication({
+  setup(args) {
+    const { $gettext } = useGettext()
 
-const routes = [
-  {
-    path: '/:driveAliasAndItem(.*)?',
-    component: AppWrapperRoute(App, {
-      applicationId: 'dicom-viewer',
-      urlForResourceOptions: {
-        //disposition: 'inline'
+    const appInfo = {
+      name: $gettext('DICOM Viewer'),
+      id: 'dicom-viewer',
+      icon: 'resource-type-medical',
+      iconFillType: 'fill',
+      iconColor: 'var(--oc-color-icon-medical)',
+      extensions: [
+        {
+          extension: 'dcm',
+          routeName: 'dicom-viewer',
+          label: $gettext('Preview'),
+          canBeDefault: true
+        }
+      ]
+    }
+
+    const routes = [
+      {
+        path: '/:driveAliasAndItem(.*)?',
+        component: AppWrapperRoute(App, {
+          applicationId: 'dicom-viewer',
+          urlForResourceOptions: {
+            //disposition: 'inline'
+          }
+        }),
+        name: 'dicom-viewer',
+        meta: {
+          authContext: 'hybrid',
+          title: $gettext('DICOM Viewer'),
+          patchCleanPath: true
+        }
       }
-    }),
-    name: 'dicom-viewer',
-    meta: {
-      authContext: 'hybrid',
-      title: $gettext('DICOM Viewer'),
-      patchCleanPath: true
+    ]
+
+    return {
+      appInfo,
+      routes,
+      translations,
+      //extensions: extensions(args)
     }
   }
-]
-
-const appInfo = {
-  name: $gettext('DICOM Viewer'),
-  id: 'dicom-viewer',
-  icon: 'resource-type-medical',
-  iconFillType: 'fill',
-  iconColor: 'var(--oc-color-icon-medical)',
-  extensions: [
-    {
-      extension: 'dcm',
-      routeName: 'dicom-viewer',
-      label: $gettext('Preview')
-    }
-  ]
-}
-
-export default {
-  appInfo,
-  routes,
-  translations
-}
+})
