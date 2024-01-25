@@ -859,16 +859,10 @@ export default defineComponent({
 
 .details-table {
   tr {
-    height: 1rem; // reducing hight, originally 1.5rem
+    height: 1rem; 
   }
 
   border-bottom: 1px solid var(--oc-color-border);
 }
 
-// @media (max-width: $oc-breakpoint-medium-default) {
-//   .dicom-canvas {
-//     max-height: 85vw;
-//     max-width: 85vw;
-//   }
-// }
 </style>
