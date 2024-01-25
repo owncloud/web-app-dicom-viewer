@@ -492,285 +492,134 @@ export default defineComponent({
     async fetchMetadataInformation(imageId) {
       console.log('fetch meta data information for: ' + imageId)
 
-      //patientInformation
-      let patientName, patientID, patientBirthday, patientSex, patientWeight
+      if (!this.isVipMetadataFetched) {
+        await this.fetchVipMetadataInformation(imageId)
+        // making sure that all values that should have been populated by this function have been fetched, 
+        // alternatively this check could be made when assigning the values
+      }
 
-      //studyInformation
-      let studyDescription, protocolName, accessionNumber, studyID, studyDate, studyTime
-
-      // seriesInformation
-      let seriesDescription, seriesNumber, modality, bodyPart, seriesDate, seriesTime
-
-      // instanceInformation
-      let instanceNumber,
-        acquisitionNumber,
-        acquisitionDate,
-        acquisitionTime,
-        instanceCreationDate,
-        instanceCreationTime,
-        contentDate,
-        contentTime
-
-      // imageInformation
-      let photometricInterpretation,
-        imageType,
-        rescaleSlope,
-        rescaleIntercept,
-        imagePositionPatient,
-        imageOrientationPatient,
-        patientPosition,
-        pixelSpacing,
-        imageComments
-
-      // equipmentInformation
-      let manufacturer,
-        model,
-        stationName,
-        AE_Title,
-        institutionName,
-        softwareVersion,
-        implementationVersionName
-
-      // scanningInformation
-      let scanningSequence,
-        sequenceVariant,
-        scanOptions,
-        sliceThickness,
-        repetitionTime,
-        echoTime,
-        inversionTime,
-        imagingFrequency,
-        imagedNucleus,
-        echoNumbers,
-        magneticFieldStrength,
-        spacingBetweenSlices,
-        numberOfPhaseEncodingSteps,
-        echoTrainLength
-
-      // uidsInformation
-      let studyUID, seriesUID, instanceUID, SOP_ClassUID, transferSyntaxUID, frameOfReferenceUID
-
-      // otherInformation
-      let specificCharacterSet,
-        referringPhysicianName,
-        MR_AcquisitionType,
-        numberOfAverages,
-        percentSampling,
-        percentPhaseFieldOfView,
-        lowRR_Value,
-        highRR_Value,
-        intervalsAcquired,
-        intervalsRejected,
-        heartRate,
-        recieveCoilName,
-        transmitCoilName,
-        inPlanePhaseEncodingDirection,
-        flipAngle,
-        positionReferenceIndicator,
-        windowCenter,
-        windowWidth
-
-      await cornerstoneDICOMImageLoader.wadouri
-        .loadImage(imageId)
-        .promise.then(async function (dicomImage) {
-          patientID = dicomImage.data.string('x00100020')
-          patientSex = dicomImage.data.string('x00100040')
-          patientWeight = dicomImage.data.string('x00101030')
-
-          studyDescription = dicomImage.data.string('x00081030')
-          protocolName = dicomImage.data.string('x00181030')
-          accessionNumber = dicomImage.data.string('x00080050')
-          studyID = dicomImage.data.string('x00200010')
-          studyDate = dicomImage.data.string('x00080020')
-          studyTime = dicomImage.data.string('x00080030')
-
-          seriesDescription = dicomImage.data.string('x0008103e')
-          seriesNumber = dicomImage.data.string('x00200011')
-          modality = dicomImage.data.string('x00080060')
-          bodyPart = dicomImage.data.string('x00180015') //   Body Part Examined? or Body Part Thickness?
-          seriesDate = dicomImage.data.string('x00080021')
-          seriesTime = dicomImage.data.string('x00080031')
-
-          instanceNumber = dicomImage.data.string('x00200013')
-          acquisitionNumber = dicomImage.data.string('x00200012')
-          acquisitionDate = dicomImage.data.string('x00080022')
-          acquisitionTime = dicomImage.data.string('x0008002A')
-          instanceCreationDate = dicomImage.data.string('x00080012')
-          instanceCreationTime = dicomImage.data.string('x00080013')
-          contentDate = dicomImage.data.string('x00080023')
-          contentTime = dicomImage.data.string('x00080033')
-
-          photometricInterpretation = dicomImage.data.string('x00280004')
-          imageType = dicomImage.data.string('x00080008')
-          rescaleSlope = dicomImage.data.string('x00281053')
-          rescaleIntercept = dicomImage.data.string('x00281052')
-          imagePositionPatient = dicomImage.data.string('x00200032')
-          pixelSpacing = dicomImage.data.string('x00280030')
-          imageComments = dicomImage.data.string('x00204000')
-          imageOrientationPatient = dicomImage.data.string('x00200037')
-          patientPosition = dicomImage.data.string('x00185100')
-
-          manufacturer = dicomImage.data.string('x00080070')
-          model = dicomImage.data.string('x00081090') // Manufacturer's Model Name
-          stationName = dicomImage.data.string('x00081010')
-          AE_Title = dicomImage.data.string('x') //Retrieve AE Title? or Station AE Title?
-          institutionName = dicomImage.data.string('x00080080')
-          softwareVersion = dicomImage.data.string('x00181020')
-          implementationVersionName = dicomImage.data.string('x00020013')
-
-          scanningSequence = dicomImage.data.string('x00180020')
-          sequenceVariant = dicomImage.data.string('x00180021')
-          scanOptions = dicomImage.data.string('x00180022')
-          sliceThickness = dicomImage.data.string('x00180050')
-          repetitionTime = dicomImage.data.string('x00180080')
-          echoTime = dicomImage.data.string('x00180081')
-          inversionTime = dicomImage.data.string('x00180082')
-          imagingFrequency = dicomImage.data.string('x00180084')
-          imagedNucleus = dicomImage.data.string('x00180085')
-          echoNumbers = dicomImage.data.string('x00180086')
-          magneticFieldStrength = dicomImage.data.string('x00180087')
-          spacingBetweenSlices = dicomImage.data.string('x00180088')
-          numberOfPhaseEncodingSteps = dicomImage.data.string('x00180089')
-          echoTrainLength = dicomImage.data.string('x00180091')
-
-          studyUID = dicomImage.data.string('x0020000d') // Study Instance UID	?
-          seriesUID = dicomImage.data.string('x0020000e') //Series Instance UID	?
-          instanceUID = dicomImage.data.string('x00080018') // SOP Instance UID	?
-          SOP_ClassUID = dicomImage.data.string('x00080016')
-          transferSyntaxUID = dicomImage.data.string('x00020010')
-          frameOfReferenceUID = dicomImage.data.string('x00200052')
-
-          specificCharacterSet = dicomImage.data.string('x00080005')
-          referringPhysicianName = dicomImage.data.string('x00080090')
-          MR_AcquisitionType = dicomImage.data.string('x00180023')
-          numberOfAverages = dicomImage.data.string('x00180083')
-          percentSampling = dicomImage.data.string('x00180093')
-          percentPhaseFieldOfView = dicomImage.data.string('x00180094')
-          lowRR_Value = dicomImage.data.string('x00181081')
-          highRR_Value = dicomImage.data.string('x00181082')
-          intervalsAcquired = dicomImage.data.string('x00181083')
-          intervalsRejected = dicomImage.data.string('x00181084')
-          heartRate = dicomImage.data.string('x00181088')
-          recieveCoilName = dicomImage.data.string('x00181250')
-          transmitCoilName = dicomImage.data.string('x00181251')
-          inPlanePhaseEncodingDirection = dicomImage.data.string('x00181312')
-          flipAngle = dicomImage.data.string('x00181314')
-          positionReferenceIndicator = dicomImage.data.string('x00201040')
-          windowCenter = dicomImage.data.string('x00281050')
-          windowWidth = dicomImage.data.string('x00281051')
-        })
+      if (!this.isDicomImageDataFetched) {
+        await this.fetchDicomImageData(imageId)
+      }
 
       //patientInformation
       this.patientInformation.patientName = this.vipInformation.patientName
-      this.patientInformation.patientID = patientID
+      this.patientInformation.patientID = this.dicomImageData.string('x00100020')
       this.patientInformation.patientBirthday = this.formatDate(
         this.vipInformation.patientBirthdate,
         longDateTimeFormat
       )
-      this.patientInformation.patientSex = patientSex
-      this.patientInformation.patientWeight = patientWeight
+      this.patientInformation.patientSex = this.dicomImageData.string('x00100040')
+      this.patientInformation.patientWeight = this.dicomImageData.string('x00101030')
 
       //studyInformation
-      this.studyInformation.studyDescription = studyDescription
-      this.studyInformation.protocolName = protocolName
-      this.studyInformation.accessionNumber = accessionNumber
-      this.studyInformation.studyID = studyID
-      this.studyInformation.studyDate = this.formatDate(studyDate, longDateTimeFormat)
-      this.studyInformation.studyTime = this.formatTime(studyTime, longDateTimeFormat)
+      this.studyInformation.studyDescription = this.dicomImageData.string('x00081030')
+      this.studyInformation.protocolName = this.dicomImageData.string('x00181030')
+      this.studyInformation.accessionNumber = this.dicomImageData.string('x00080050')
+      this.studyInformation.studyID = this.dicomImageData.string('x00200010')
+      this.studyInformation.studyDate = this.formatDate(this.dicomImageData.string('x00080020'), longDateTimeFormat)
+      this.studyInformation.studyTime = this.formatTime(this.dicomImageData.string('x00080030'), longDateTimeFormat)
 
       // seriesInformation
-      this.seriesInformation.seriesDescription = seriesDescription
-      this.seriesInformation.seriesNumber = seriesNumber
-      this.seriesInformation.modality = modality
-      this.seriesInformation.bodyPart = bodyPart //: Body Part Examined? or Body Part Thickness?
-      this.seriesInformation.seriesDate = this.formatDate(seriesDate, longDateTimeFormat)
-      this.seriesInformation.seriesTime = this.formatTime(seriesTime, longDateTimeFormat)
+      this.seriesInformation.seriesDescription = this.dicomImageData.string('x0008103e')
+      this.seriesInformation.seriesNumber = this.dicomImageData.string('x00200011')
+      this.seriesInformation.modality = this.dicomImageData.string('x00080060')
+      this.seriesInformation.bodyPart = this.dicomImageData.string('x00180015')  //Body Part Examined? or Body Part Thickness?
+      this.seriesInformation.seriesDate = this.formatDate(this.dicomImageData.string('x00080021'), longDateTimeFormat)
+      this.seriesInformation.seriesTime = this.formatTime(this.dicomImageData.string('x00080031'), longDateTimeFormat)
 
       // instanceInformation
-      this.instanceInformation.instanceNumber = instanceNumber
-      this.instanceInformation.acquisitionNumber = acquisitionNumber
+      this.instanceInformation.instanceNumber = this.dicomImageData.string('x00200013')
+      this.instanceInformation.acquisitionNumber = this.dicomImageData.string('x00200012')
       this.instanceInformation.acquisitionDate = this.formatDate(
-        acquisitionDate,
+        this.dicomImageData.string('x00080022'),
         longDateTimeFormat
       )
       this.instanceInformation.acquisitionTime = this.formatTime(
-        acquisitionTime,
+        this.dicomImageData.string('x0008002A'),
         longDateTimeFormat
       )
       this.instanceInformation.instanceCreationDate = this.formatDate(
-        instanceCreationDate,
+        this.dicomImageData.string('x00080012'),
         longDateTimeFormat
       )
       this.instanceInformation.instanceCreationTime = this.formatTime(
-        instanceCreationTime,
+        this.dicomImageData.string('x00080013'),
         longDateTimeFormat
       )
-      this.instanceInformation.contentDate = this.formatDate(contentDate, longDateTimeFormat)
-      this.instanceInformation.contentTime = this.formatTime(contentTime, longDateTimeFormat)
+      this.instanceInformation.contentDate = this.formatDate(
+        this.dicomImageData.string('x00080023'), 
+        longDateTimeFormat
+      )
+      this.instanceInformation.contentTime = this.formatTime(
+        this.dicomImageData.string('x00080033'), 
+        longDateTimeFormat
+      )
 
       // imageInformation
-      this.imageInformation.photometricInterpretation = photometricInterpretation
-      this.imageInformation.imageType = imageType
-      this.imageInformation.rescaleSlope = rescaleSlope
-      this.imageInformation.rescaleIntercept = rescaleIntercept
-      this.imageInformation.imagePositionPatient = imagePositionPatient
-      this.imageInformation.imageOrientationPatient = imageOrientationPatient
-      this.imageInformation.patientPosition = patientPosition
-      this.imageInformation.pixelSpacing = pixelSpacing
-      this.imageInformation.imageComments = imageComments
+      this.imageInformation.photometricInterpretation = this.dicomImageData.string('x00280004')
+      this.imageInformation.imageType = this.dicomImageData.string('x00080008')
+      this.imageInformation.rescaleSlope = this.dicomImageData.string('x00281053')
+      this.imageInformation.rescaleIntercept = this.dicomImageData.string('x00281052')
+      this.imageInformation.imagePositionPatient = this.dicomImageData.string('x00200032')
+      this.imageInformation.imageOrientationPatient = this.dicomImageData.string('x00280030')
+      this.imageInformation.patientPosition = this.dicomImageData.string('x00204000')
+      this.imageInformation.pixelSpacing = this.dicomImageData.string('x00200037')
+      this.imageInformation.imageComments = this.dicomImageData.string('x00185100')
 
       // equipmentInformation
-      this.equipmentInformation.manufacturer = manufacturer
-      this.equipmentInformation.model = model
-      this.equipmentInformation.stationName = stationName
-      this.equipmentInformation.AE_Title = AE_Title
-      this.equipmentInformation.institutionName = institutionName
-      this.equipmentInformation.softwareVersion = softwareVersion
-      this.equipmentInformation.implementationVersionName = implementationVersionName
+      this.equipmentInformation.manufacturer = this.dicomImageData.string('x00080070')
+      this.equipmentInformation.model = this.dicomImageData.string('x00081090') // Manufacturer's Model Name
+      this.equipmentInformation.stationName = this.dicomImageData.string('x00081010')
+      this.equipmentInformation.AE_Title = this.dicomImageData.string('x') // Retrieve AE Title? or Station AE Title? // TODO: get value!!!
+      this.equipmentInformation.institutionName = this.dicomImageData.string('x00080080') // this.vipInformation.institutionName
+      this.equipmentInformation.softwareVersion = this.dicomImageData.string('x00181020')
+      this.equipmentInformation.implementationVersionName = this.dicomImageData.string('x00020013')
 
       // scanningInformation
-      this.scanningInformation.scanningSequence = scanningSequence
-      this.scanningInformation.sequenceVariant = sequenceVariant
-      this.scanningInformation.scanOptions = scanOptions
-      this.scanningInformation.sliceThickness = sliceThickness
-      this.scanningInformation.repetitionTime = repetitionTime
-      this.scanningInformation.echoTime = echoTime
-      this.scanningInformation.inversionTime = inversionTime
-      this.scanningInformation.imagingFrequency = imagingFrequency
-      this.scanningInformation.imagedNucleus = imagedNucleus
-      this.scanningInformation.echoNumbers = echoNumbers
-      this.scanningInformation.magneticFieldStrength = magneticFieldStrength
-      this.scanningInformation.spacingBetweenSlices = spacingBetweenSlices
-      this.scanningInformation.numberOfPhaseEncodingSteps = numberOfPhaseEncodingSteps
-      this.scanningInformation.echoTrainLength = echoTrainLength
+      this.scanningInformation.scanningSequence = this.dicomImageData.string('x00180020')
+      this.scanningInformation.sequenceVariant = this.dicomImageData.string('x00180021')
+      this.scanningInformation.scanOptions = this.dicomImageData.string('x00180022')
+      this.scanningInformation.sliceThickness = this.dicomImageData.string('x00180050')
+      this.scanningInformation.repetitionTime = this.dicomImageData.string('x00180080')
+      this.scanningInformation.echoTime = this.dicomImageData.string('x00180081')
+      this.scanningInformation.inversionTime = this.dicomImageData.string('x00180082')
+      this.scanningInformation.imagingFrequency = this.dicomImageData.string('x00180084')
+      this.scanningInformation.imagedNucleus = this.dicomImageData.string('x00180085')
+      this.scanningInformation.echoNumbers = this.dicomImageData.string('x00180086')
+      this.scanningInformation.magneticFieldStrength = this.dicomImageData.string('x00180087')
+      this.scanningInformation.spacingBetweenSlices = this.dicomImageData.string('x00180088')
+      this.scanningInformation.numberOfPhaseEncodingSteps = this.dicomImageData.string('x00180089')
+      this.scanningInformation.echoTrainLength = this.dicomImageData.string('x00180091')
 
       // uidsInformation
-      this.uidsInformation.studyUID = studyUID
-      this.uidsInformation.seriesUID = seriesUID
-      this.uidsInformation.instanceUID = instanceUID
+      this.uidsInformation.studyUID = this.dicomImageData.string('x0020000d') // Study Instance UID?
+      this.uidsInformation.seriesUID = this.dicomImageData.string('x0020000e') // Series Instance UID?
+      this.uidsInformation.instanceUID = this.dicomImageData.string('x00080018') // SOP Instance UID?
+      let SOP_ClassUID = this.dicomImageData.string('x00080016')
       this.uidsInformation.SOP_ClassUID = SOP_ClassUID + ' [' + uids[SOP_ClassUID] + ']' // adding description of the SOP module
-      this.uidsInformation.transferSyntaxUID = transferSyntaxUID
-      this.uidsInformation.frameOfReferenceUID = frameOfReferenceUID
+      this.uidsInformation.transferSyntaxUID = this.dicomImageData.string('x00020010')
+      this.uidsInformation.frameOfReferenceUID = this.dicomImageData.string('x00200052')
 
       // otherInformation
-      this.otherInformation.specificCharacterSet = specificCharacterSet
-      this.otherInformation.referringPhysicianName = referringPhysicianName
-      this.otherInformation.MR_AcquisitionType = MR_AcquisitionType
-      this.otherInformation.numberOfAverages = numberOfAverages
-      this.otherInformation.percentSampling = percentSampling
-      this.otherInformation.percentPhaseFieldOfView = percentPhaseFieldOfView
-      this.otherInformation.lowRR_Value = lowRR_Value
-      this.otherInformation.highRR_Value = highRR_Value
-      this.otherInformation.intervalsAcquired = intervalsAcquired
-      this.otherInformation.intervalsRejected = intervalsRejected
-      this.otherInformation.heartRate = heartRate
-      this.otherInformation.recieveCoilName = recieveCoilName
-      this.otherInformation.transmitCoilName = transmitCoilName
-      this.otherInformation.inPlanePhaseEncodingDirection = inPlanePhaseEncodingDirection
-      this.otherInformation.flipAngle = flipAngle
-      this.otherInformation.positionReferenceIndicator = positionReferenceIndicator
-      this.otherInformation.windowCenter = windowCenter
-      this.otherInformation.windowWidth = windowWidth
+      this.otherInformation.specificCharacterSet = this.dicomImageData.string('x00080005')
+      this.otherInformation.referringPhysicianName = this.dicomImageData.string('x00080090')
+      this.otherInformation.MR_AcquisitionType = this.dicomImageData.string('x00180023')
+      this.otherInformation.numberOfAverages = this.dicomImageData.string('x00180083')
+      this.otherInformation.percentSampling = this.dicomImageData.string('x00180093')
+      this.otherInformation.percentPhaseFieldOfView = this.dicomImageData.string('x00180094')
+      this.otherInformation.lowRR_Value = this.dicomImageData.string('x00181081')
+      this.otherInformation.highRR_Value = this.dicomImageData.string('x00181082')
+      this.otherInformation.intervalsAcquired = this.dicomImageData.string('x00181083')
+      this.otherInformation.intervalsRejected = this.dicomImageData.string('x00181084')
+      this.otherInformation.heartRate = this.dicomImageData.string('x00181088')
+      this.otherInformation.recieveCoilName = this.dicomImageData.string('x00181250')
+      this.otherInformation.transmitCoilName = this.dicomImageData.string('x00181251')
+      this.otherInformation.inPlanePhaseEncodingDirection = this.dicomImageData.string('x00181312')
+      this.otherInformation.flipAngle = this.dicomImageData.string('x00181314')
+      this.otherInformation.positionReferenceIndicator = this.dicomImageData.string('x00201040')
+      this.otherInformation.windowCenter = this.dicomImageData.string('x00281050')
+      this.otherInformation.windowWidth = this.dicomImageData.string('x00281051')
 
       this.isMetadataFetched = true
       // TODO: check that data only gets displayed after all metadata has been fetched
