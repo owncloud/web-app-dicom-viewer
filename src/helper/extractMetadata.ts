@@ -1,4 +1,5 @@
 import * as cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader'
+import dicomTags from './dicomTags'
 
 export const extractMetadata = () => { 
   const uppercase = (s: string) => {
@@ -16,6 +17,19 @@ export const extractMetadata = () => {
   const asynctest = async () => {
     console.log('calling an async function')
     return 'async'
+  }
+
+  const findDicomTagByValue = (value: string): string | undefined => {
+    return Object.keys(dicomTags).find(key => dicomTags[key] === value)
+  }
+
+  const extractDicomMetadata = (imageData: Object, tags: Object) => {
+    // takes an Object with dicomImageData and an Object with empty values  
+    // seaches for the tags
+    // extracts values
+    // creates object
+    // returns newly created object filled with the corresponding values
+    return 'todo'
   }
 
   /*
@@ -46,5 +60,5 @@ export const extractMetadata = () => {
   }
   */
 
-  return { uppercase, lowercase, test, asynctest }
+  return { uppercase, lowercase, test, asynctest, findDicomTagByValue, extractDicomMetadata }
 }
