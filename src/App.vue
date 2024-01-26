@@ -473,7 +473,7 @@ export default defineComponent({
 
       // using some function from extract metadata helper
       // for testing only
-      const { test, uppercase, asynctest } = extractMetadata()
+      const { test, uppercase, asynctest, findDicomTagByValue } = extractMetadata()
 
       let fetchedData = test()
       console.log('received data: ' + fetchedData)
@@ -486,6 +486,28 @@ export default defineComponent({
       fetchedAsyncData.then((value) => {
         console.log('fetched async data promise resolved with value: ' + value)
       })
+
+      // getting values via dicomtags.ts dictionary
+      let key = findDicomTagByValue('patientName')
+      //console.log('find key by value: ' + key )
+      //console.log('getting dicomTag for patient name: ' + dicomTags[key] )
+      //console.log('getting value for patient name: ' + this.dicomImageData.string(key) )
+      console.log('getting value for patient name: ' + this.dicomImageData.string(findDicomTagByValue('patientName')) )
+
+      var k = Object.keys(this.vipInformation)
+      console.log(k[0]) // patientName (key of first item in object)
+      console.log(k)
+
+      for (var i = 0; i < k.length; i++) {
+        console.log('attribute name: ' + k[i] + ' / value: ' + this.dicomImageData.string(findDicomTagByValue(k[i])) )
+      }
+
+      // todo: 
+      // - convert vipInformation.xyz into a string, get value for it (done) --> https://stackoverflow.com/questions/29191451/get-name-of-variable-in-typescript
+      // - loop over the whole object and get values for all attributes (done)
+      // - store values into object
+      // - move the stuff above into helper class function (extractDicomMetadata)
+      // - check where to do nice formating of date & time values
 
       //getPatieData(dicimImage, "patientName")
     },
