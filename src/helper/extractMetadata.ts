@@ -19,13 +19,52 @@ export const extractMetadata = () => {
     return 'async'
   }
 
+  const fetchDicomImageDataHelper = async (imageId: string) => {
+    console.log('extract metadata helper - fetching dicom image data for: ' + imageId)
+
+    let dicomImageData
+
+    await cornerstoneDICOMImageLoader.wadouri
+      .loadImage(imageId)
+      .promise.then(async function (dicomImage) {
+        dicomImageData = dicomImage.data
+      })
+
+    return dicomImageData
+  }
+
   const findDicomTagByValue = (value: string): string | undefined => {
     return Object.keys(dicomTags).find(key => dicomTags[key] === value)
   }
 
+
+/*
+  // getting values via dicomtags.ts dictionary
+  let key = findDicomTagByValue('patientName')
+  //console.log('find key by value: ' + key )
+  //console.log('getting dicomTag for patient name: ' + dicomTags[key] )
+  //console.log('getting value for patient name: ' + this.dicomImageData.string(key) )
+  console.log('getting value for patient name: ' + this.dicomImageData.string(findDicomTagByValue('patientName')) )
+
+  
+  */
+
+  // todo: 
+  // - convert vipInformation.xyz into a string, get value for it (done) --> https://stackoverflow.com/questions/29191451/get-name-of-variable-in-typescript
+  // - loop over the whole object and get values for all attributes (done)
+  // - store values into object
+  // - move the stuff above into helper class function (extractDicomMetadata)
+  // - check where to do nice formating of date & time values
+
   const extractDicomMetadata = (imageData: Object, tags: Object) => {
-    // takes an Object with dicomImageData and an Object with empty values  
+    console.log('extracting dicom metadata')
     // seaches for the tags
+    var k = Object.keys(tags)
+    for (var i = 0; i < k.length; i++) {
+      console.log('attribute name: ' + k[i] + ' / value: '  )
+    }
+    // imageData.string(findDicomTagByValue(k[i]))
+
     // extracts values
     // creates object
     // returns newly created object filled with the corresponding values
@@ -60,5 +99,5 @@ export const extractMetadata = () => {
   }
   */
 
-  return { uppercase, lowercase, test, asynctest, findDicomTagByValue, extractDicomMetadata }
+  return { uppercase, lowercase, test, asynctest, findDicomTagByValue, fetchDicomImageDataHelper, extractDicomMetadata }
 }
