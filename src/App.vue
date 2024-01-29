@@ -441,26 +441,17 @@ export default defineComponent({
       return 'wadouri:' + url
     },
     async fetchDicomImageData(imageId) {
-      console.log('fetching dicom image data for: ' + imageId)
-      // console.log('is dicom image data fetched? ' + this.isDicomImageDataFetched)
-
-      let dicomImageData
-
-      await cornerstoneDICOMImageLoader.wadouri
-        .loadImage(imageId)
-        .promise.then(async function (dicomImage) {
-          dicomImageData = dicomImage.data
-        })
-
-      this.dicomImageData = dicomImageData
-
-      this.isDicomImageDataFetched = true
+      // moved to extract metadata helper class
     },
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
 
+      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageDataHelper } = extractMetadata()
+
       if (!this.isDicomImageDataFetched) {
-        await this.fetchDicomImageData(imageId)
+        //await this.fetchDicomImageData(imageId)
+        this.dicomImageData = await fetchDicomImageDataHelper(imageId)
+        this.isDicomImageDataFetched = true
       }
       
       this.vipInformation.patientName = this.dicomImageData.string('x00100010')
@@ -473,34 +464,30 @@ export default defineComponent({
 
       // using some function from extract metadata helper
       // for testing only
-      const { test, uppercase, asynctest, findDicomTagByValue } = extractMetadata()
-
-      let fetchedData = test()
-      console.log('received data: ' + fetchedData)
-      console.log('to uppercase: ' + uppercase('test'))
       
-      // some examples with async functions
-      let fetchedAsyncData = asynctest()
-      console.log('received async data: ' + fetchedAsyncData)
-      // resolving async data
-      fetchedAsyncData.then((value) => {
-        console.log('fetched async data promise resolved with value: ' + value)
-      })
-
-      // getting values via dicomtags.ts dictionary
-      let key = findDicomTagByValue('patientName')
-      //console.log('find key by value: ' + key )
-      //console.log('getting dicomTag for patient name: ' + dicomTags[key] )
-      //console.log('getting value for patient name: ' + this.dicomImageData.string(key) )
-      console.log('getting value for patient name: ' + this.dicomImageData.string(findDicomTagByValue('patientName')) )
-
+      /*
+      console.log('type of dicom image data: ' + typeof this.dicomImageData)
+      console.log('dicom image data object attributes: ' + this.dicomImageData.attributes )
+      console.log('dicom image data object data: ' + this.dicomImageData.data )
+      console.log('dicom image data object name: ' + this.dicomImageData.name )
+      console.log('dicom image data object: ' + this.dicomImageData.object )
+      console.log('dicom image data Object: ' + this.dicomImageData.Object )
+      console.log('dicom image data object string: ' + this.dicomImageData.string )
+      console.log('dicom image data object String: ' + this.dicomImageData.String )
+      console.log('dicom image data object type of: ' + this.dicomImageData.typeof )
+      console.log('dicom image data object type: ' + this.dicomImageData.type )
+      console.log('dicom image data object types: ' + this.dicomImageData.types )
+      console.log('dicom image data object Types: ' + this.dicomImageData.Types )
+      */
       var k = Object.keys(this.vipInformation)
-      console.log(k[0]) // patientName (key of first item in object)
-      console.log(k)
 
+      /*
       for (var i = 0; i < k.length; i++) {
         console.log('attribute name: ' + k[i] + ' / value: ' + this.dicomImageData.string(findDicomTagByValue(k[i])) )
       }
+      */
+
+      let vipInformation = extractDicomMetadata(this.dicomImageData, this.vipInformation)
 
       // todo: 
       // - convert vipInformation.xyz into a string, get value for it (done) --> https://stackoverflow.com/questions/29191451/get-name-of-variable-in-typescript
@@ -513,6 +500,7 @@ export default defineComponent({
     },
     async fetchMetadataInformation(imageId) {
       console.log('fetch meta data information for: ' + imageId)
+      const { fetchDicomImageDataHelper } = extractMetadata()
 
       if (!this.isVipMetadataFetched) {
         await this.fetchVipMetadataInformation(imageId)
@@ -521,7 +509,9 @@ export default defineComponent({
       }
 
       if (!this.isDicomImageDataFetched) {
-        await this.fetchDicomImageData(imageId)
+        //await this.fetchDicomImageData(imageId)
+        this.dicomImageData = await fetchDicomImageDataHelper(imageId)
+        this.isDicomImageDataFetched = true
       }
 
       //patientInformation
