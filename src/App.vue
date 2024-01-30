@@ -8,30 +8,13 @@
       "
     >
       <div id="dicom-canvas" class="dicom-canvas oc-position-relative oc-mb-xl">
-        <div
-          v-if="isVipMetadataFetched"
-          id="dicom-viewer-vip-metadata"
-          class="oc-position-absolute"
-        >
-          <div class="oc-pr-s oc-font-semibold">
-            <span>{{ vipInformation.patientName || 'patient name not defined' }}</span>
-            <span>
-              (*{{
-                formatDate(vipInformation.patientBirthdate, true) || 'birthdate not defined'
-              }})</span
-            >
-          </div>
-          <div class="oc-pr-s oc-font-semibold">
-            <span>{{ vipInformation.institutionName || 'institution name not defined' }}</span
-            >,
-            <span> {{
-              formatDateAndTime(
-                vipInformation.instanceCreationDate,
-                vipInformation.instanceCreationTime
-              ) || 'instance creation date and time not defined'
-            }}</span>
-          </div>
-        </div>
+        <vip-metadata-overlay
+          v-show="isVipMetadataFetched"
+          :patientName ="vipInformation.patientName"
+          :patientBirthdate ="formatDate(vipInformation.patientBirthdate, true)"
+          :institutionName ="vipInformation.institutionName"
+          :instanceCreationDateTime ="formatDateAndTime(vipInformation.instanceCreationDate, vipInformation.instanceCreationTime)"
+        />
       </div>
       <div id="dicom-viewer-toggle-metadata-sidebar" class="oc-flex oc-position-absolute">
         <oc-button
@@ -72,7 +55,6 @@
         @toggle-next="next"
       />
     </div>
-
     <metadata-sidebar
       v-show="isShowMetadataActivated"
       :patientInformation="patientInformation"
@@ -106,6 +88,7 @@ import { useGettext } from 'vue3-gettext'
 // other imports
 import { Resource } from '@ownclouders/web-client/src' 
 import DicomControls from './components/DicomControls.vue'
+import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
 import uids from './helper/uids'
 import { DateTime } from 'luxon'
@@ -164,7 +147,8 @@ export default defineComponent({
   //name: 'DicomViewer', // seems like this is not needed anymore for streamlined apps
   components: {
     DicomControls,
-    MetadataSidebar
+    MetadataSidebar,
+    VipMetadataOverlay
   },
   props: {
     url: {
