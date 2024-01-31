@@ -56,5 +56,6 @@
         "design-system*"
       ]
     }
-  }
+  },
+  "packageManager": "pnpm@8.14.1"
 }
