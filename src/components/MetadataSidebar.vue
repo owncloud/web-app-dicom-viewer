@@ -40,7 +40,7 @@
         <tr>
           <th colspan="2">
             <p
-              class="oc-py-s oc-font-semibold dicom-metadata-section-title dicom-metadata-first-section"
+              class="oc-py-s oc-font-semibold dicom-metadata-section-title"
             >
               Patient Information
             </p>
@@ -211,14 +211,9 @@ export default defineComponent({
       type: Array,
       required: true
     }, 
-    dummyText: {
-      type: String
-    }, 
-    dummyArray: {
-      type: Array,
-    }, 
     dummyObject: {
       type: Array,
+      required: true
     }
   },
   emits: ['closeMetadataSidebar'],

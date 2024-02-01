@@ -5,13 +5,6 @@
         class="oc-py-s oc-font-semibold dicom-metadata-section-title"
         :class="isFirstSection ? 'dicom-metadata-first-section' : ''"
       >{{ metadataSectionName }} </p>
-      <!-- for testing only 
-      <p>test: {{ $props.dummyText }}</p>
-      <p>test: {{ $props.dummyArray }}</p>
-      <p>test: {{ $props.dummyObject }}</p>
-      <p v-for="item in $props.dummyArray"> {{ item }}</p>
-      <p>props: {{ $props.metadataSectionData }}</p>  
-      -->
     </th>
   </tr>
   <tr v-for="(value, key) in metadataSectionData" :key="key">
@@ -38,15 +31,6 @@ export default defineComponent({
     isFirstSection: {
       type: Boolean,
       default: false
-    },
-    dummyText: {
-      type: String
-    },
-    dummyArray: {
-      type: Array,
-    }, 
-    dummyObject: {
-      type: Array,
     }
   },
   methods: {
