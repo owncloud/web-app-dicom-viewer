@@ -155,10 +155,6 @@ export default defineComponent({
       type: String,
       required: true
     },
-    currentContent: { // looks like this is not used
-      type: String,
-      required: true
-    },
     resource: {
       type: Object as PropType<Resource>,
       default: null
