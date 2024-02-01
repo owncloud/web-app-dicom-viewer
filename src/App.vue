@@ -56,6 +56,9 @@
       />
     </div>
     <metadata-sidebar
+      :dummy-text="dummy"
+      v-bind:dummy-array=dummyArray
+      v-bind:dummy-object=dummyObject
       v-show="isShowMetadataActivated"
       :patientInformation="patientInformation"
       :studyInformation="studyInformation"
@@ -81,7 +84,7 @@ import * as cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader'
 import { RenderingEngine, Types, Enums, metaData } from '@cornerstonejs/core'
 
 // vue imports
-import { defineComponent, computed, ref, unref } from 'vue'
+import { defineComponent, watch, computed, ref, unref, reactive, toRefs } from 'vue'
 import type { PropType } from 'vue'
 import { useGettext } from 'vue3-gettext'
 
@@ -191,10 +194,38 @@ export default defineComponent({
       type: Array
     }
   },
+  watch: {
+    patientInformation: {
+      deep: true,
+      immediate: true,
+      handler(newValue, oldValue) {
+        console.log(newValue);
+      }
+    } 
+  },
   setup(props) {
     const { $gettext } = useGettext()
 
+    /*
+    const patientInformation = reactive({
+      patientName: '',
+        patientID: '',
+        patientBirthday: '',
+        patientSex: '',
+        patientWeight: ''
+    })
+
+    const patientInformationData = toRefs(patientInformation)
+    */
+
     return {
+      /*
+      message: 'some text', 
+      messages: {
+        first: 'abc',
+        second: '123'
+      },
+      */
       vipInformation: {
         patientName: '',
         patientBirthdate: '',
@@ -324,11 +355,21 @@ export default defineComponent({
       isVipMetadataFetched: false,
       isMetadataFetched: false,
       isShowMetadataActivated: false,
-      dicomFiles: [this.resource]
+      dicomFiles: [this.resource], 
+      dummy: null,
+      dummyArray: null,
+      dummyObject: {
+        patientName: '',
+        patientBirthday: '',
+        institutionName: '',
+        instanceCreationDate: '',
+        instanceCreationTime: ''
+      },
+
+      // todo: refactor patient data to match dummy 
     }
   },
   computed: {},
-  watch: {},
 
   // --------------------------
   // vue js lifecylce functions
@@ -466,6 +507,15 @@ export default defineComponent({
       this.vipInformation.institutionName = institutionName
       this.vipInformation.instanceCreationDate = instanceCreationDate
       this.vipInformation.instanceCreationTime = instanceCreationTime
+
+      // for testing only
+      this.dummy = 'hello'
+      this.dummyArray = ['how', 'are', 'you', '?']
+      this.dummyObject.patientName = patientName
+      this.dummyObject.patientBirthday = patientBirthdate
+      this.dummyObject.institutionName = institutionName
+      this.dummyObject.instanceCreationDate = instanceCreationDate
+      this.dummyObject.instanceCreationTime = instanceCreationTime
 
       this.isVipMetadataFetched = true
     },

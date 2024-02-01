@@ -28,6 +28,14 @@
     </div>
     <div v-if="isMetadataExtracted" id="dicom-metadata-sidebar-content" class="oc-p-s">
       <table class="details-table">
+        <!-- vip information section (for testing only) -->
+        <metadata-sidebar-table-row
+          v-bind="$props"
+          :metadataSectionName="'VIP Information'"
+          :metadataSectionData="$props.dummyObject"
+          :is-first-section="true"
+        />
+
         <!-- patient information section -->
         <tr>
           <th colspan="2">
@@ -42,6 +50,21 @@
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
           <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
+        
+        <!--
+        <metadata-sidebar-table-row
+          v-bind="$props"
+          :metadataSectionName="'Patient Information'"
+          :metadataSectionData="$props.patientInformation"
+          :is-first-section="true"
+        />
+        <metadata-sidebar-table-row
+          :metadataSectionName="'Study Information'"
+          :metadataSectionData="studyInformation"
+          :is-first-section="false"
+          v-bind="$props"
+        />
+        -->
         <!-- study information section -->
         <tr>
           <th colspan="2">
@@ -52,6 +75,7 @@
           <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
           <td class="oc-text-break">{{ value || '–' }}</td>
         </tr>
+        
         <!-- series information section -->
         <tr>
           <th colspan="2">
@@ -133,12 +157,18 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { defineComponent, watch } from 'vue'
 import { useGettext } from 'vue3-gettext'
 import upperFirst from 'lodash-es/upperFirst'
 
+import MetadataSidebarTableRow from './MetadataSidebarTableRow.vue'
+
+
 export default defineComponent({
   name: 'MetadataSidebar',
+  components: {
+    MetadataSidebarTableRow,
+  },
   props: {
     isMetadataExtracted: {
       type: Boolean,
@@ -180,6 +210,15 @@ export default defineComponent({
     otherInformation: {
       type: Array,
       required: true
+    }, 
+    dummyText: {
+      type: String
+    }, 
+    dummyArray: {
+      type: Array,
+    }, 
+    dummyObject: {
+      type: Array,
     }
   },
   emits: ['closeMetadataSidebar'],
@@ -188,7 +227,8 @@ export default defineComponent({
 
     return {
       hideMetadataDescription: $gettext('Hide DICOM metadata'),
-      backToMainDescription: $gettext('Back to DICOM viewer')
+      backToMainDescription: $gettext('Back to DICOM viewer'), 
+      //... props,
     }
   },
   methods: {
