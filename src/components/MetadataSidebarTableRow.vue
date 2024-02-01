@@ -49,3 +49,22 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.dicom-metadata-section-title {
+  //margin: 4px 0px 8px 0px;
+  margin-bottom: 0px;
+  padding-top: 16px !important;
+  border-top: 1px solid var(--oc-color-border);
+}
+
+.dicom-metadata-first-section {
+  padding-top: 0 !important;
+  border-top: none;
+}
+
+.details-table th,
+td {
+  vertical-align: top;
+}
+</style>

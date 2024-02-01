@@ -56,7 +56,6 @@
       />
     </div>
     <metadata-sidebar
-      v-bind:dummy-object=dummyObject
       v-show="isShowMetadataActivated"
       :patientInformation="patientInformation"
       :studyInformation="studyInformation"
@@ -156,7 +155,7 @@ export default defineComponent({
       type: String,
       required: true
     },
-    currentContent: {
+    currentContent: { // looks like this is not used
       type: String,
       required: true
     },
@@ -190,15 +189,31 @@ export default defineComponent({
     },
     otherInformation: {
       type: Array
-    }, 
-    dummyObject: {
-      type: Array
     }
   },
   setup(props) {
     const { $gettext } = useGettext()
 
     return {
+      imageShowMetadataDescription: $gettext('Show DICOM metadata'),
+      imageHideMetadataDescription: $gettext('Hide DICOM metadata')
+    }
+  },
+  data() {
+    return {
+      isDicomFileRendered: false, // check if this is needed
+      isMetadataExtracted: false,
+      element: null,
+      renderingEngine: null,
+      viewport: null,
+      viewportCameraParallelScale: 1,
+      dicomUrl: null,
+      currentImageZoom: 1,
+      currentImageRotation: 0,
+      isVipMetadataFetched: false,
+      isMetadataFetched: false,
+      isShowMetadataActivated: false,
+      dicomFiles: [this.resource], 
       vipInformation: {
         patientName: '',
         patientBirthdate: '',
@@ -308,40 +323,9 @@ export default defineComponent({
         positionReferenceIndicator: '',
         windowCenter: '',
         windowWidth: ''
-      },
-
-      imageShowMetadataDescription: $gettext('Show DICOM metadata'),
-      imageHideMetadataDescription: $gettext('Hide DICOM metadata')
+      }
     }
   },
-  data() {
-    return {
-      isDicomFileRendered: false, // check if this is needed
-      isMetadataExtracted: false,
-      element: null,
-      renderingEngine: null,
-      viewport: null,
-      viewportCameraParallelScale: 1,
-      dicomUrl: null,
-      currentImageZoom: 1,
-      currentImageRotation: 0,
-      isVipMetadataFetched: false,
-      isMetadataFetched: false,
-      isShowMetadataActivated: false,
-      dicomFiles: [this.resource], 
-      dummyArray: null,
-      dummyObject: {
-        patientName: '',
-        patientBirthday: '',
-        institutionName: '',
-        instanceCreationDate: '',
-        instanceCreationTime: ''
-      },
-
-      // todo: refactor patient data to match dummy 
-    }
-  },
-  computed: {},
 
   // --------------------------
   // vue js lifecylce functions
@@ -479,14 +463,6 @@ export default defineComponent({
       this.vipInformation.institutionName = institutionName
       this.vipInformation.instanceCreationDate = instanceCreationDate
       this.vipInformation.instanceCreationTime = instanceCreationTime
-
-      // for testing only
-      //this.dummyArray = ['how', 'are', 'you', '?']
-      this.dummyObject.patientName = patientName
-      this.dummyObject.patientBirthday = patientBirthdate
-      this.dummyObject.institutionName = institutionName
-      this.dummyObject.instanceCreationDate = instanceCreationDate
-      this.dummyObject.instanceCreationTime = instanceCreationTime
 
       this.isVipMetadataFetched = true
     },

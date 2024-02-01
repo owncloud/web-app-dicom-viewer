@@ -28,130 +28,70 @@
     </div>
     <div v-if="isMetadataExtracted" id="dicom-metadata-sidebar-content" class="oc-p-s">
       <table class="details-table">
-        <!-- vip information section (for testing only) -->
-        <metadata-sidebar-table-row
-          v-bind="$props"
-          :metadataSectionName="'VIP Information'"
-          :metadataSectionData="$props.dummyObject"
-          :is-first-section="true"
-        />
 
-        <!-- patient information section -->
-        <tr>
-          <th colspan="2">
-            <p
-              class="oc-py-s oc-font-semibold dicom-metadata-section-title"
-            >
-              Patient Information
-            </p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in patientInformation" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td class="oc-text-break">{{ value || '–' }}</td>
-        </tr>
-        
-        <!--
         <metadata-sidebar-table-row
-          v-bind="$props"
+          v-bind="$props.patientInformation"
           :metadataSectionName="'Patient Information'"
           :metadataSectionData="$props.patientInformation"
           :is-first-section="true"
         />
-        <metadata-sidebar-table-row
-          :metadataSectionName="'Study Information'"
-          :metadataSectionData="studyInformation"
-          :is-first-section="false"
-          v-bind="$props"
-        />
-        -->
-        <!-- study information section -->
-        <tr>
-          <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">Study Information</p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in studyInformation" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td class="oc-text-break">{{ value || '–' }}</td>
-        </tr>
         
-        <!-- series information section -->
-        <tr>
-          <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">Series Information</p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in seriesInformation" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td class="oc-text-break">{{ value || '–' }}</td>
-        </tr>
-        <!-- instance information section -->
-        <tr>
-          <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">
-              Instance Information
-            </p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in instanceInformation" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td class="oc-text-break">{{ value || '–' }}</td>
-        </tr>
-        <!-- image information section -->
-        <tr>
-          <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">Image Information</p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in imageInformation" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td class="oc-text-break">{{ value || '–' }}</td>
-        </tr>
-        <!-- equipment information section -->
-        <tr>
-          <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">
-              Equipment Information
-            </p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in equipmentInformation" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td class="oc-text-break">{{ value || '–' }}</td>
-        </tr>
-        <!-- scanning information section -->
-        <tr>
-          <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">
-              Scanning Information
-            </p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in scanningInformation" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td class="oc-text-break">{{ value || '–' }}</td>
-        </tr>
-        <!-- uids information section -->
-        <tr>
-          <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">UIDS Information</p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in uidsInformation" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td class="oc-text-break">{{ value || '–' }}</td>
-        </tr>
-        <!-- other information section -->
-        <tr>
-          <th colspan="2">
-            <p class="oc-py-s oc-font-semibold dicom-metadata-section-title">Other Information</p>
-          </th>
-        </tr>
-        <tr v-for="(value, key) in otherInformation" :key="key">
-          <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-          <td class="oc-text-break">{{ value || '–' }}</td>
-        </tr>
+        <metadata-sidebar-table-row
+          v-bind="$props.studyInformation"
+          :metadataSectionName="'Study Information'"
+          :metadataSectionData="$props.studyInformation"
+          :is-first-section="false"
+        />
+
+        <metadata-sidebar-table-row
+          v-bind="$props.seriesInformation"
+          :metadataSectionName="'Series Information'"
+          :metadataSectionData="$props.seriesInformation"
+          :is-first-section="false"
+        />
+
+        <metadata-sidebar-table-row
+          v-bind="$props.instanceInformation"
+          :metadataSectionName="'Instance Information'"
+          :metadataSectionData="$props.instanceInformation"
+          :is-first-section="false"
+        />
+
+        <metadata-sidebar-table-row
+          v-bind="$props.imageInformation"
+          :metadataSectionName="'Image Information'"
+          :metadataSectionData="$props.imageInformation"
+          :is-first-section="false"
+        />
+
+        <metadata-sidebar-table-row
+          v-bind="$props.equipmentInformation"
+          :metadataSectionName="'Equipment Information'"
+          :metadataSectionData="$props.equipmentInformation"
+          :is-first-section="false"
+        />
+
+        <metadata-sidebar-table-row
+          v-bind="$props.scanningInformation"
+          :metadataSectionName="'Scanning Information'"
+          :metadataSectionData="$props.scanningInformation"
+          :is-first-section="false"
+        />
+
+        <metadata-sidebar-table-row
+          v-bind="$props.uidsInformation"
+          :metadataSectionName="'UIDS Information'"
+          :metadataSectionData="$props.uidsInformation"
+          :is-first-section="false"
+        />
+        
+        <metadata-sidebar-table-row
+          v-bind="$props.otherInformation"
+          :metadataSectionName="'Other Information'"
+          :metadataSectionData="$props.otherInformation"
+          :is-first-section="false"
+        />
+
       </table>
     </div>
   </div>
@@ -162,7 +102,6 @@ import { useGettext } from 'vue3-gettext'
 import upperFirst from 'lodash-es/upperFirst'
 
 import MetadataSidebarTableRow from './MetadataSidebarTableRow.vue'
-
 
 export default defineComponent({
   name: 'MetadataSidebar',
@@ -210,10 +149,6 @@ export default defineComponent({
     otherInformation: {
       type: Array,
       required: true
-    }, 
-    dummyObject: {
-      type: Array,
-      required: true
     }
   },
   emits: ['closeMetadataSidebar'],
@@ -223,7 +158,6 @@ export default defineComponent({
     return {
       hideMetadataDescription: $gettext('Hide DICOM metadata'),
       backToMainDescription: $gettext('Back to DICOM viewer'), 
-      //... props,
     }
   },
   methods: {
@@ -245,7 +179,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dicom-metadata-sidebar {
-  border-left: 1px solid var(--oc-color-border); // TODO: hide line on small screen
+  border-left: 1px solid var(--oc-color-border); 
   position: relative;
   overflow: hidden;
   max-width: var(--oc-breakpoint-medium-default);
@@ -268,24 +202,7 @@ export default defineComponent({
   width: 100%;
 }
 
-.dicom-metadata-section-title {
-  //margin: 4px 0px 8px 0px;
-  margin-bottom: 0px;
-  padding-top: 16px !important;
-  border-top: 1px solid var(--oc-color-border);
-}
-
-.dicom-metadata-first-section {
-  padding-top: 0 !important;
-  border-top: none;
-}
-
 .details-table tr {
   height: 1rem; // reducing hight, originally 1.5rem
-}
-
-.details-table th,
-td {
-  vertical-align: top;
 }
 </style>
