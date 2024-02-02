@@ -1,5 +1,5 @@
 <template> 
-  <tr>
+  <tr class="dicom-metadata-section">
     <th colspan="2">
       <p 
         class="oc-py-s oc-font-semibold dicom-metadata-section-title"
