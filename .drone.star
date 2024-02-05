@@ -73,7 +73,7 @@ def unitTestPipeline(ctx):
                  ],
         "trigger": {
             "ref": [
-                "refs/heads/master",
+                "refs/heads/main",
                 "refs/pull/**",
             ],
         },
