@@ -25,7 +25,7 @@ export default defineComponent({
       required: true
     },
     metadataSectionData: {
-      type: Array,
+      type: Object,
       required: true
     }, 
     isFirstSection: {
