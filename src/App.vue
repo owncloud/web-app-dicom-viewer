@@ -57,7 +57,7 @@
     </div>
     <metadata-sidebar
       v-show="isShowMetadataActivated"
-      :patientInformation="patientInformation"
+      :patientInformation="vipInformation3"
       :studyInformation="studyInformation"
       :seriesInformation="seriesInformation"
       :instanceInformation="instanceInformation"
@@ -211,20 +211,25 @@ export default defineComponent({
       isMetadataFetched: false,
       isShowMetadataActivated: false,
       dicomFiles: [this.resource],
-      vipInformation: {
-        patientName: '',
-        patientBirthdate: '',
-        institutionName: '',
-        instanceCreationDate: '',
-        instanceCreationTime: ''
-      },
-      patientInformation: {
-        patientName: '',
-        patientID: '',
-        patientBirthday: '',
-        patientSex: '',
-        patientWeight: ''
-      },
+      vipInformation: [
+        { patientName: '' },
+        { patientBirthdate: '' },
+        { institutionName: '' },
+        { instanceCreationDate: '' },
+        { instanceCreationTime: '' }
+        ],
+      vipInformation2: [
+        { label: 'Patient Name', value: 'Max' },
+        { label: 'Institution', value: 'TMU' },
+      ],
+      vipInformation3: [],
+      patientInformation: [
+        { label: 'patientName', value: 'x' },
+        { label: 'patientID', value: '123' },
+        { label: 'patientBirthday', value: '01011900' },
+        { label: 'patientSex', value: 'M' },
+        { label: 'patientWeight', value: '90' }
+      ],
       studyInformation: {
         studyDescription: '',
         protocolName: '',
@@ -320,7 +325,7 @@ export default defineComponent({
         positionReferenceIndicator: '',
         windowCenter: '',
         windowWidth: ''
-      }
+      },
     }
   },
 
@@ -441,10 +446,17 @@ export default defineComponent({
     async addWadouriPrefix(url: String) {
       return 'wadouri:' + url
     },
+    addObject(newLabel: string, newValue: string) {
+      this.vipInformation2.push({ label: newLabel, value: newValue })
+    },
+    addMetadataItem(informationObject, newLabel: string, newValue: string) {
+      var object = Object.keys(informationCategory)
+      informationObject.push({ label: newLabel, value: newValue })
+    },
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
 
-      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageData } = extractMetadata()
+      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageData , test } = extractMetadata()
 
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
@@ -463,26 +475,50 @@ export default defineComponent({
 
       this.isVipMetadataFetched = true
 
-      /*
       // using some function from extract metadata helper
       // for testing
+
+      /*
+      console.log('vip: ' + this.vipInformation2)
+      console.log('vip length: ' + this.vipInformation2.length)
+      console.log('vip name: ' + this.vipInformation2[0].label)
+      console.log('vip amount: ' + this.vipInformation2[0].value)
+      this.addObject('patientName', 'Max Muster')
+      console.log('vip length: ' + this.vipInformation2.length)
+      console.log('vip name: ' + this.vipInformation2[2].label)
+      console.log('vip amount: ' + this.vipInformation2[2].value)
+      this.addObject('patientBirthdate', '01011900')
+      console.log('vip length: ' + this.vipInformation2.length)
+      console.log('vip name: ' + this.vipInformation2[3].label)
+      console.log('vip amount: ' + this.vipInformation2[3].value)
+      */
+
       let vipInformation = extractDicomMetadata(imageId, this.vipInformation)
-      console.log('vip information extracted in helper function: ')
-      console.log(vipInformation) // returns Promise
-                                  // PromiseState: "fulfilled"
-                                  // PromiseResult: "{ patientName: 'MR/BRAIN/GRASE/1024';patientBirthdate: '19010101';institutionName: 'OTM4 R4.5';instanceCreationDate: '19960823';instanceCreationTime: '093801'; }"
+      // console.log('vip information extracted in helper function: ' + vipInformation)
+         // returns Promise
+         // PromiseState: "fulfilled"
+         // PromiseResult: "{ patientName: 'MR/BRAIN/GRASE/1024';patientBirthdate: '19010101';institutionName: 'OTM4 R4.5';instanceCreationDate: '19960823';instanceCreationTime: '093801'; }"
 
       vipInformation.then((result) => {
         console.log('logging result: ' + result)
-        //this.vipInformation = result
+        // this.vipInformation = result
       })
 
       let vipInformationTest = test()
-      console.log('received data: ' + vipInformationTest)
-      for (let element in this.vipInformation ) {
-        console.log(element)
-        //this.vipInformation.element
+      for (let i=0; i<vipInformationTest.length; i++ ) {
+        console.log('(' + i.toString() + ') ' + vipInformationTest[i][0] + ' / ' + vipInformationTest[i][1])
+        this.vipInformation3.push({ label: vipInformationTest[i][0], value: vipInformationTest[i][1] })
       }
+
+      console.log('vip information 3: ' + this.vipInformation3)
+
+      /*
+      let temp
+      for (let tag in this.vipInformation ) {
+        console.log('- ' + tag)
+      }
+      //console.log('patient name: ' + this.vipInformation.patientName)
+
 
       //this.vipInformation = vipInformationTest
       console.log('new patient name: ' +  this.vipInformation.patientName)

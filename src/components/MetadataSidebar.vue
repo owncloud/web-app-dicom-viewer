@@ -35,7 +35,8 @@
           :metadataSectionData="$props.patientInformation"
           :is-first-section="true"
         />
-        
+
+        <!--
         <metadata-sidebar-table-row
           v-bind="$props.studyInformation"
           :metadataSectionName="'Study Information'"
@@ -91,6 +92,7 @@
           :metadataSectionData="$props.otherInformation"
           :is-first-section="false"
         />
+        -->
 
       </table>
     </div>

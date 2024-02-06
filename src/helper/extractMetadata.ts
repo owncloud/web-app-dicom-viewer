@@ -12,9 +12,20 @@ export const extractMetadata = () => {
 
   const test = () => {
     let stringArray
+    var testResult: [number, string][]
+
     stringArray = ['MR/BRAIN/GRASE/1024', '19010101', 'OTM4 R4.5', '19960823', '093801']
+    testResult = [
+        ['patientName', 'Maxine'],
+        ['patientID', '1234'],
+        ['patientBirthday', '01011901'],
+        ['patientSex', 'F'],
+        ['patientWeight', '80']
+      ]
     //console.log('print string array: ' + stringArray)
-    return stringArray
+    console.log('print rest result (in helper function): ' + testResult)
+    //return stringArray
+    return testResult
   }
 
   const asynctest = async () => {
@@ -57,7 +68,7 @@ export const extractMetadata = () => {
   // - make this function work for single objects as well as array of objects
 
   const extractDicomMetadata = async (imageId: string, dicomData: Object) => {
-    console.log('extracting dicom metadata')
+    // console.log('extracting dicom metadata')
 
     // define return object with opening tag
     var dicomDataExtracted = '{ '
@@ -70,7 +81,6 @@ export const extractMetadata = () => {
       .loadImage(imageId)
       .promise.then(async function (dicomImage) {
         dicomImageData = dicomImage.data
-        console.log('type of dicom image data: ' + typeof dicomImageData)
       })
 
     // extract dicom tags from dicom data object
@@ -88,7 +98,7 @@ export const extractMetadata = () => {
     // add closing tag
     dicomDataExtracted += ' }'
 
-    console.log(dicomDataExtracted)
+    // console.log('dicom data extracted (from helper function): ' + dicomDataExtracted)
 
     // todo
     // build new object and populate it

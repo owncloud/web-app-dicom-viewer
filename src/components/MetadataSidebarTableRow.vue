@@ -7,9 +7,10 @@
       >{{ metadataSectionName }} </p>
     </th>
   </tr>
-  <tr v-for="(value, key) in metadataSectionData" :key="key">
-    <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-    <td class="oc-text-break">{{ value || '–' }}</td>
+  <tr v-for="element in metadataSectionData" :key="element.id">
+  <!--<tr v-for="(value, key) in metadataSectionData" :key="key">-->
+    <th scope="col" class="oc-pr-s">{{ formatLabel(element.label) }}</th>
+    <td class="oc-text-break">{{ element.value || '–' }}</td>
   </tr>
 </template>
 
