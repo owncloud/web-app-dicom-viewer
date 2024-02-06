@@ -11,10 +11,8 @@ export const extractMetadata = () => {
   }
 
   const test = () => {
-    let stringArray
     var testResult: [string, string][]
 
-    stringArray = ['MR/BRAIN/GRASE/1024', '19010101', 'OTM4 R4.5', '19960823', '093801']
     testResult = [
         ['patientName', 'Maxine'],
         ['patientID', '1234'],
@@ -22,15 +20,10 @@ export const extractMetadata = () => {
         ['patientSex', 'F'],
         ['patientWeight', '80']
       ]
-    //console.log('print string array: ' + stringArray)
-    console.log('print test result (in helper function): ' + testResult)
-    //return stringArray
     return testResult
   }
 
   const asynctest = async () => {
-    console.log('calling an async function')
-
     var testResult: [string, string][]
 
     testResult = [
@@ -40,9 +33,8 @@ export const extractMetadata = () => {
             ['patientSex', 'F'],
             ['patientWeight', '80']
           ]
-    console.log('print test result (in helper function): ' + testResult)
 
-    return testResult //'async'
+    return testResult
   }
 
   //const fetchDicomImageData = async (imageId: string): Promise<object> => {
@@ -79,7 +71,7 @@ export const extractMetadata = () => {
   // - check where to do nice formatting of date & time values
   // - make this function work for single objects as well as array of objects
 
-  const extractDicomMetadata = async (imageId: string, dicomData: Object) => {
+  const extractDicomMetadataOld = async (imageId: string, dicomData: Object) => {
     // console.log('extracting dicom metadata')
 
     // define return object with opening tag
@@ -122,6 +114,49 @@ export const extractMetadata = () => {
     return dicomDataExtracted
   }
 
+  const extractDicomMetadata = async (imageId: string, tags: Object) => {
+    console.log('tags: ' + tags)
+    console.log('tags length: ' + tags.length)
+
+    var testResult: [string, string][]
+
+    /*
+    testResult = [
+              ['patientName', 'Maxine'],
+              ['patientID', '1234'],
+              ['patientBirthday', '01011901'],
+              ['patientSex', 'F'],
+              ['patientWeight', '80']
+            ]
+    */
+
+    // get image data
+    // var dicomImageData = await fetchDicomImageData(imageId)
+    // figure out why this can't be done in separate function
+
+    var dicomImageData
+
+    await cornerstoneDICOMImageLoader.wadouri
+        .loadImage(imageId)
+        .promise.then(async function (dicomImage) {
+          dicomImageData = dicomImage.data
+        })
+
+    for (var i=0; i < tags.length; ++i) {
+        console.log('attribute name: ' + tags[i] + ' / value: ' + dicomImageData.string(findDicomTagByValue(tags[i])) )
+        //dicomDataExtracted += tags[i] + ': \'' + dicomImageData.string(findDicomTagByValue(tags[i])) + '\'; '
+        //testResult.push(tags[i].toString(), dicomImageData.string(findDicomTagByValue(tags[i])).toString())
+    }
+
+      //console.log('extracted data (from helper function): ' + testResult)
+
+      // todo
+      // build new object and populate it
+      // returns newly created object filled with the corresponding values
+
+      return testResult
+    }
+
   /*
   const fetchVipMetadataInformationHelper = async (imageId: string) => {
     console.log('fetch vip meta data information helper function is called for: ' + imageId)
@@ -150,5 +185,5 @@ export const extractMetadata = () => {
   }
   */
 
-  return { uppercase, lowercase, test, asynctest, findDicomTagByValue, fetchDicomImageData, extractDicomMetadata }
+  return { uppercase, lowercase, test, asynctest, findDicomTagByValue, fetchDicomImageData, extractDicomMetadata, extractDicomMetadataOld }
 }

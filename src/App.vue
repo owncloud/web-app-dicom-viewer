@@ -226,7 +226,7 @@ export default defineComponent({
       patientInformation: [
         { label: 'patientName', value: 'x' },
         { label: 'patientID', value: '123' },
-        { label: 'patientBirthday', value: '01011900' },
+        { label: 'patientBirthdate', value: '01011900' },
         { label: 'patientSex', value: 'M' },
         { label: 'patientWeight', value: '90' }
       ],
@@ -456,7 +456,7 @@ export default defineComponent({
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
 
-      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageData , test, asynctest } = extractMetadata()
+      const { findDicomTagByValue, extractDicomMetadata, extractDicomMetadataOld, fetchDicomImageData , test, asynctest } = extractMetadata()
 
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
@@ -478,14 +478,25 @@ export default defineComponent({
       // using some function from extract metadata helper
       // for testing
 
-      let vipInformation = extractDicomMetadata(imageId, this.vipInformation)
-      vipInformation.then((result) => {
-        console.log('logging result: ' + result)
+      let vipInformationOld = extractDicomMetadataOld(imageId, this.vipInformation)
+      vipInformationOld.then((result) => {
+        // console.log('logging result: ' + result)
       })
 
       let vipInformationAsyncTest = asynctest()
       vipInformationAsyncTest.then((result) => {
-        console.log('logging async result: ' + result)
+        // console.log('logging async result: ' + result)
+        for (let i=0; i<result.length; i++ ) {
+          //console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
+          //this.vipInformation3.push({ label: result[i][0], value: result[i][1] })
+        }
+      })
+
+      let testTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
+
+      let vipInformation = extractDicomMetadata(imageId, testTags)
+      vipInformation.then((result) => {
+        console.log('logging result extract: ' + result)
         for (let i=0; i<result.length; i++ ) {
           console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
           this.vipInformation3.push({ label: result[i][0], value: result[i][1] })
@@ -533,7 +544,7 @@ export default defineComponent({
       //patientInformation
       this.patientInformation.patientName = this.vipInformation.patientName
       this.patientInformation.patientID = this.dicomImageData.string('x00100020')
-      this.patientInformation.patientBirthday = this.formatDate(
+      this.patientInformation.patientBirthdate = this.formatDate(
         this.vipInformation.patientBirthdate,
         longDateTimeFormat
       )
