@@ -320,6 +320,7 @@ export default defineComponent({
         positionReferenceIndicator: '',
         windowCenter: '',
         windowWidth: ''
+      }
     }
   },
 
@@ -349,7 +350,7 @@ export default defineComponent({
   // "mounted" is called when component has been added to DOM
   async mounted() {
     console.log('lifecycle @ mounted')
-    // check if cornerstone core is initalized
+    // check if cornerstone core is initialized
     if (!cornerstone.isCornerstoneInitialized()) {
       await this.initCornerstoneCore()
     }
