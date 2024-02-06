@@ -86,7 +86,7 @@ import type { PropType } from 'vue'
 import { useGettext } from 'vue3-gettext'
 
 // other imports
-import { Resource } from '@ownclouders/web-client/src' 
+import { Resource } from '@ownclouders/web-client/src'
 import DicomControls from './components/DicomControls.vue'
 import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
@@ -210,7 +210,7 @@ export default defineComponent({
       isVipMetadataFetched: false,
       isMetadataFetched: false,
       isShowMetadataActivated: false,
-      dicomFiles: [this.resource], 
+      dicomFiles: [this.resource],
       vipInformation: {
         patientName: '',
         patientBirthdate: '',
@@ -453,7 +453,7 @@ export default defineComponent({
         this.dicomImageData = await fetchDicomImageDataHelper(imageId)
         this.isDicomImageDataFetched = true
       }
-      
+
       this.vipInformation.patientName = this.dicomImageData.string('x00100010')
       this.vipInformation.patientBirthdate = this.dicomImageData.string('x00100030')
       this.vipInformation.institutionName = this.dicomImageData.string('x00080080')
@@ -464,7 +464,7 @@ export default defineComponent({
 
       // using some function from extract metadata helper
       // for testing only
-      
+
       /*
       console.log('type of dicom image data: ' + typeof this.dicomImageData)
       console.log('dicom image data object attributes: ' + this.dicomImageData.attributes )
@@ -489,7 +489,7 @@ export default defineComponent({
 
       let vipInformation = extractDicomMetadata(this.dicomImageData, this.vipInformation)
 
-      // todo: 
+      // todo:
       // - convert vipInformation.xyz into a string, get value for it (done) --> https://stackoverflow.com/questions/29191451/get-name-of-variable-in-typescript
       // - loop over the whole object and get values for all attributes (done)
       // - store values into object
@@ -504,7 +504,7 @@ export default defineComponent({
 
       if (!this.isVipMetadataFetched) {
         await this.fetchVipMetadataInformation(imageId)
-        // making sure that all values that should have been populated by this function have been fetched, 
+        // making sure that all values that should have been populated by this function have been fetched,
         // alternatively this check could be made when assigning the values
       }
 
@@ -560,11 +560,11 @@ export default defineComponent({
         longDateTimeFormat
       )
       this.instanceInformation.contentDate = this.formatDate(
-        this.dicomImageData.string('x00080023'), 
+        this.dicomImageData.string('x00080023'),
         longDateTimeFormat
       )
       this.instanceInformation.contentTime = this.formatTime(
-        this.dicomImageData.string('x00080033'), 
+        this.dicomImageData.string('x00080033'),
         longDateTimeFormat
       )
 
@@ -845,7 +845,7 @@ export default defineComponent({
 
 .details-table {
   tr {
-    height: 1rem; 
+    height: 1rem;
   }
 
   border-bottom: 1px solid var(--oc-color-border);
