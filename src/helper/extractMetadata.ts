@@ -12,7 +12,7 @@ export const extractMetadata = () => {
 
   const test = () => {
     let stringArray
-    var testResult: [number, string][]
+    var testResult: [string, string][]
 
     stringArray = ['MR/BRAIN/GRASE/1024', '19010101', 'OTM4 R4.5', '19960823', '093801']
     testResult = [
@@ -23,14 +23,26 @@ export const extractMetadata = () => {
         ['patientWeight', '80']
       ]
     //console.log('print string array: ' + stringArray)
-    console.log('print rest result (in helper function): ' + testResult)
+    console.log('print test result (in helper function): ' + testResult)
     //return stringArray
     return testResult
   }
 
   const asynctest = async () => {
     console.log('calling an async function')
-    return 'async'
+
+    var testResult: [string, string][]
+
+    testResult = [
+            ['patientName', 'Maxine'],
+            ['patientID', '1234'],
+            ['patientBirthday', '01011901'],
+            ['patientSex', 'F'],
+            ['patientWeight', '80']
+          ]
+    console.log('print test result (in helper function): ' + testResult)
+
+    return testResult //'async'
   }
 
   //const fetchDicomImageData = async (imageId: string): Promise<object> => {
@@ -85,7 +97,9 @@ export const extractMetadata = () => {
 
     // extract dicom tags from dicom data object
     var tags = Object.keys(dicomData)
-    for (var i = 0; i < tags.length; i++) {
+    // todo: figure out why first 5 keys are undefined
+    // pass string[] instead of object into this function?
+    for (var i = 5; i < tags.length; i++) {
       //console.log('attribute name: ' + tags[i] + ' / value: ' + dicomImageData.string(findDicomTagByValue(tags[i])) )
       dicomDataExtracted += tags[i] + ': \'' + dicomImageData.string(findDicomTagByValue(tags[i])) + '\'; '
       /*

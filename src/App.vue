@@ -456,7 +456,7 @@ export default defineComponent({
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
 
-      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageData , test } = extractMetadata()
+      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageData , test, asynctest } = extractMetadata()
 
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
@@ -478,37 +478,19 @@ export default defineComponent({
       // using some function from extract metadata helper
       // for testing
 
-      /*
-      console.log('vip: ' + this.vipInformation2)
-      console.log('vip length: ' + this.vipInformation2.length)
-      console.log('vip name: ' + this.vipInformation2[0].label)
-      console.log('vip amount: ' + this.vipInformation2[0].value)
-      this.addObject('patientName', 'Max Muster')
-      console.log('vip length: ' + this.vipInformation2.length)
-      console.log('vip name: ' + this.vipInformation2[2].label)
-      console.log('vip amount: ' + this.vipInformation2[2].value)
-      this.addObject('patientBirthdate', '01011900')
-      console.log('vip length: ' + this.vipInformation2.length)
-      console.log('vip name: ' + this.vipInformation2[3].label)
-      console.log('vip amount: ' + this.vipInformation2[3].value)
-      */
-
       let vipInformation = extractDicomMetadata(imageId, this.vipInformation)
-      // console.log('vip information extracted in helper function: ' + vipInformation)
-         // returns Promise
-         // PromiseState: "fulfilled"
-         // PromiseResult: "{ patientName: 'MR/BRAIN/GRASE/1024';patientBirthdate: '19010101';institutionName: 'OTM4 R4.5';instanceCreationDate: '19960823';instanceCreationTime: '093801'; }"
-
       vipInformation.then((result) => {
         console.log('logging result: ' + result)
-        // this.vipInformation = result
       })
 
-      let vipInformationTest = test()
-      for (let i=0; i<vipInformationTest.length; i++ ) {
-        console.log('(' + i.toString() + ') ' + vipInformationTest[i][0] + ' / ' + vipInformationTest[i][1])
-        this.vipInformation3.push({ label: vipInformationTest[i][0], value: vipInformationTest[i][1] })
-      }
+      let vipInformationAsyncTest = asynctest()
+      vipInformationAsyncTest.then((result) => {
+        console.log('logging async result: ' + result)
+        for (let i=0; i<result.length; i++ ) {
+          console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
+          this.vipInformation3.push({ label: result[i][0], value: result[i][1] })
+        }
+      })
 
       console.log('vip information 3: ' + this.vipInformation3)
 
@@ -518,7 +500,6 @@ export default defineComponent({
         console.log('- ' + tag)
       }
       //console.log('patient name: ' + this.vipInformation.patientName)
-
 
       //this.vipInformation = vipInformationTest
       console.log('new patient name: ' +  this.vipInformation.patientName)
