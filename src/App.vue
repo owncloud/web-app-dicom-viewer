@@ -441,18 +441,18 @@ export default defineComponent({
     async addWadouriPrefix(url: String) {
       return 'wadouri:' + url
     },
-    async fetchDicomImageData(imageId) {
-      // moved to extract metadata helper class
-    },
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
 
-      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageDataHelper } = extractMetadata()
+      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageData } = extractMetadata()
 
       if (!this.isDicomImageDataFetched) {
-        //await this.fetchDicomImageData(imageId)
-        this.dicomImageData = await fetchDicomImageDataHelper(imageId)
-        this.isDicomImageDataFetched = true
+        this.dicomImageData = await fetchDicomImageData(imageId)
+        if (!this.isDicomImageDataFetched) {
+          if (this.dicomImageData != null){
+            this.isDicomImageDataFetched = true
+          }
+        }
       }
 
       this.vipInformation.patientName = this.dicomImageData.string('x00100010')
@@ -463,45 +463,44 @@ export default defineComponent({
 
       this.isVipMetadataFetched = true
 
+      /*
       // using some function from extract metadata helper
-      // for testing only
+      // for testing
+      let vipInformation = extractDicomMetadata(imageId, this.vipInformation)
+      console.log('vip information extracted in helper function: ')
+      console.log(vipInformation) // returns Promise
+                                  // PromiseState: "fulfilled"
+                                  // PromiseResult: "{ patientName: 'MR/BRAIN/GRASE/1024';patientBirthdate: '19010101';institutionName: 'OTM4 R4.5';instanceCreationDate: '19960823';instanceCreationTime: '093801'; }"
 
-      /*
-      console.log('type of dicom image data: ' + typeof this.dicomImageData)
-      console.log('dicom image data object attributes: ' + this.dicomImageData.attributes )
-      console.log('dicom image data object data: ' + this.dicomImageData.data )
-      console.log('dicom image data object name: ' + this.dicomImageData.name )
-      console.log('dicom image data object: ' + this.dicomImageData.object )
-      console.log('dicom image data Object: ' + this.dicomImageData.Object )
-      console.log('dicom image data object string: ' + this.dicomImageData.string )
-      console.log('dicom image data object String: ' + this.dicomImageData.String )
-      console.log('dicom image data object type of: ' + this.dicomImageData.typeof )
-      console.log('dicom image data object type: ' + this.dicomImageData.type )
-      console.log('dicom image data object types: ' + this.dicomImageData.types )
-      console.log('dicom image data object Types: ' + this.dicomImageData.Types )
-      */
-      var k = Object.keys(this.vipInformation)
+      vipInformation.then((result) => {
+        console.log('logging result: ' + result)
+        //this.vipInformation = result
+      })
 
-      /*
-      for (var i = 0; i < k.length; i++) {
-        console.log('attribute name: ' + k[i] + ' / value: ' + this.dicomImageData.string(findDicomTagByValue(k[i])) )
+      let vipInformationTest = test()
+      console.log('received data: ' + vipInformationTest)
+      for (let element in this.vipInformation ) {
+        console.log(element)
+        //this.vipInformation.element
       }
-      */
 
-      let vipInformation = extractDicomMetadata(this.dicomImageData, this.vipInformation)
+      //this.vipInformation = vipInformationTest
+      console.log('new patient name: ' +  this.vipInformation.patientName)
+
+      // try to pass values over
+      //this.vipInformation = vipInformation
 
       // todo:
-      // - convert vipInformation.xyz into a string, get value for it (done) --> https://stackoverflow.com/questions/29191451/get-name-of-variable-in-typescript
-      // - loop over the whole object and get values for all attributes (done)
       // - store values into object
       // - move the stuff above into helper class function (extractDicomMetadata)
       // - check where to do nice formatting of date & time values
 
       //getPatientData(dicomImage, "patientName")
+      */
     },
     async fetchMetadataInformation(imageId) {
       console.log('fetch meta data information for: ' + imageId)
-      const { fetchDicomImageDataHelper } = extractMetadata()
+      const { fetchDicomImageData } = extractMetadata()
 
       if (!this.isVipMetadataFetched) {
         await this.fetchVipMetadataInformation(imageId)
@@ -510,8 +509,7 @@ export default defineComponent({
       }
 
       if (!this.isDicomImageDataFetched) {
-        //await this.fetchDicomImageData(imageId)
-        this.dicomImageData = await fetchDicomImageDataHelper(imageId)
+        this.dicomImageData = await fetchDicomImageData(imageId)
         this.isDicomImageDataFetched = true
       }
 

@@ -220,7 +220,6 @@ export default defineComponent({
     const currentZoomDisplayValue = computed(() => {
       return `${(props.currentImageZoom * 100).toFixed(0)}%`
     })
-
     const ariaHiddenFileCount = computed(() => {
       return $gettext('%{ displayIndex } of %{ availableMediaFiles }', {
         displayIndex: (props.activeIndex + 1).toString(),

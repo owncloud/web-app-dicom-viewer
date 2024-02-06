@@ -11,15 +11,19 @@ export const extractMetadata = () => {
   }
 
   const test = () => {
-    return 'test'
-  }  
+    let stringArray
+    stringArray = ['MR/BRAIN/GRASE/1024', '19010101', 'OTM4 R4.5', '19960823', '093801']
+    //console.log('print string array: ' + stringArray)
+    return stringArray
+  }
 
   const asynctest = async () => {
     console.log('calling an async function')
     return 'async'
   }
 
-  const fetchDicomImageDataHelper = async (imageId: string) => {
+  //const fetchDicomImageData = async (imageId: string): Promise<object> => {
+  const fetchDicomImageData = async (imageId: string) => {
     console.log('extract metadata helper - fetching dicom image data for: ' + imageId)
 
     let dicomImageData
@@ -37,7 +41,6 @@ export const extractMetadata = () => {
     return Object.keys(dicomTags).find(key => dicomTags[key] === value)
   }
 
-
 /*
   // getting values via dicomtags.ts dictionary
   let key = findDicomTagByValue('patientName')
@@ -45,30 +48,54 @@ export const extractMetadata = () => {
   //console.log('getting dicomTag for patient name: ' + dicomTags[key] )
   //console.log('getting value for patient name: ' + this.dicomImageData.string(key) )
   console.log('getting value for patient name: ' + this.dicomImageData.string(findDicomTagByValue('patientName')) )
-
-  
-  */
+*/
 
   // todo: 
-  // - convert vipInformation.xyz into a string, get value for it (done) --> https://stackoverflow.com/questions/29191451/get-name-of-variable-in-typescript
-  // - loop over the whole object and get values for all attributes (done)
   // - store values into object
   // - move the stuff above into helper class function (extractDicomMetadata)
-  // - check where to do nice formating of date & time values
+  // - check where to do nice formatting of date & time values
+  // - make this function work for single objects as well as array of objects
 
-  const extractDicomMetadata = (imageData: Object, tags: Object) => {
+  const extractDicomMetadata = async (imageId: string, dicomData: Object) => {
     console.log('extracting dicom metadata')
-    // seaches for the tags
-    var k = Object.keys(tags)
-    for (var i = 0; i < k.length; i++) {
-      console.log('attribute name: ' + k[i] + ' / value: '  )
-    }
-    // imageData.string(findDicomTagByValue(k[i]))
 
-    // extracts values
-    // creates object
+    // define return object with opening tag
+    var dicomDataExtracted = '{ '
+
+    // get image data
+    var dicomImageData // = await fetchDicomImageData(imageId)
+                       // figure out why this can't be done in separate function
+
+    await cornerstoneDICOMImageLoader.wadouri
+      .loadImage(imageId)
+      .promise.then(async function (dicomImage) {
+        dicomImageData = dicomImage.data
+        console.log('type of dicom image data: ' + typeof dicomImageData)
+      })
+
+    // extract dicom tags from dicom data object
+    var tags = Object.keys(dicomData)
+    for (var i = 0; i < tags.length; i++) {
+      //console.log('attribute name: ' + tags[i] + ' / value: ' + dicomImageData.string(findDicomTagByValue(tags[i])) )
+      dicomDataExtracted += tags[i] + ': \'' + dicomImageData.string(findDicomTagByValue(tags[i])) + '\'; '
+      /*
+      if (i < tags.length -1 ) {
+        dicomDataExtracted += ', '
+      }
+      */
+    }
+
+    // add closing tag
+    dicomDataExtracted += ' }'
+
+    console.log(dicomDataExtracted)
+
+    // todo
+    // build new object and populate it
     // returns newly created object filled with the corresponding values
-    return 'todo'
+
+    // Type 'Promise<string>' is missing the following properties from type '{ patientName: string; patientBirthdate: string; institutionName: string; instanceCreationDate: string; instanceCreationTime: string; }': patientName, patientBirthdate, institutionName, instanceCreationDate, instanceCreationTimets(2739)
+    return dicomDataExtracted
   }
 
   /*
@@ -99,5 +126,5 @@ export const extractMetadata = () => {
   }
   */
 
-  return { uppercase, lowercase, test, asynctest, findDicomTagByValue, fetchDicomImageDataHelper, extractDicomMetadata }
+  return { uppercase, lowercase, test, asynctest, findDicomTagByValue, fetchDicomImageData, extractDicomMetadata }
 }
