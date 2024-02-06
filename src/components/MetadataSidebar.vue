@@ -160,20 +160,6 @@ export default defineComponent({
       backToMainDescription: $gettext('Back to DICOM viewer'), 
     }
   },
-  methods: {
-    formatLabel(label: string) {
-      // formatting camelcase labels into easily readible labels by adding a gap befor each upper case letter
-      // there is no space added if there are multiple upper case letters in a row (e.g. ID)
-      // in cases where such an abbreviation is followed by another word and underline should be added in the variable name, e.g. "SOP_InstanceUID" becomes "SOP Instance UID"
-
-      const result = label.replace(/([A-Z]+)/g, ' $1').replace('_', '')
-
-      // optionally make first letter of each word lower?
-      // return upperFirst(result.toLowerCase())
-
-      return upperFirst(result)
-    }
-  }
 })
 </script>
 
