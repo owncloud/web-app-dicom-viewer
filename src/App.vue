@@ -313,7 +313,7 @@ export default defineComponent({
         intervalsAcquired: '',
         intervalsRejected: '',
         heartRate: '',
-        recieveCoilName: '',
+        receiveCoilName: '',
         transmitCoilName: '',
         inPlanePhaseEncodingDirection: '',
         flipAngle: '',
@@ -494,9 +494,9 @@ export default defineComponent({
       // - loop over the whole object and get values for all attributes (done)
       // - store values into object
       // - move the stuff above into helper class function (extractDicomMetadata)
-      // - check where to do nice formating of date & time values
+      // - check where to do nice formatting of date & time values
 
-      //getPatieData(dicimImage, "patientName")
+      //getPatientData(dicomImage, "patientName")
     },
     async fetchMetadataInformation(imageId) {
       console.log('fetch meta data information for: ' + imageId)
@@ -625,7 +625,7 @@ export default defineComponent({
       this.otherInformation.intervalsAcquired = this.dicomImageData.string('x00181083')
       this.otherInformation.intervalsRejected = this.dicomImageData.string('x00181084')
       this.otherInformation.heartRate = this.dicomImageData.string('x00181088')
-      this.otherInformation.recieveCoilName = this.dicomImageData.string('x00181250')
+      this.otherInformation.receiveCoilName = this.dicomImageData.string('x00181250')
       this.otherInformation.transmitCoilName = this.dicomImageData.string('x00181251')
       this.otherInformation.inPlanePhaseEncodingDirection = this.dicomImageData.string('x00181312')
       this.otherInformation.flipAngle = this.dicomImageData.string('x00181314')
@@ -705,7 +705,7 @@ export default defineComponent({
     formatTime(time: string, isSimple: boolean) {
       // transform time string retrieved from dicom metadata into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
       // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'TM'
-      // isSimple determins output format (DateTime.DATE_MED or DateTime.DATE_SHORT), see https://moment.github.io/luxon/api-docs/index.html
+      // isSimple determines output format (DateTime.DATE_MED or DateTime.DATE_SHORT), see https://moment.github.io/luxon/api-docs/index.html
       if (time != undefined && time.length >= 4) {
         let tempDateTimeString =
           '1970-01-01T' +
@@ -721,7 +721,7 @@ export default defineComponent({
       }
     },
     formatLabel(label: string) {
-      // formatting camelcase labels into easily readible labels by adding a gap befor each upper case letter
+      // formatting camelcase labels into easily readable labels by adding a gap before each upper case letter
       // there is no space added if there are multiple upper case letters in a row (e.g. ID)
       // in cases where such an abbreviation is followed by another word and underline should be added in the variable name, e.g. "SOP_InstanceUID" becomes "SOP Instance UID"
 
