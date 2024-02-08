@@ -11,9 +11,9 @@
         <vip-metadata-overlay
           v-show="isVipMetadataFetched"
           :patientName ="vipInformation.patientName"
-          :patientBirthdate ="formatDate(vipInformation.patientBirthdate, true)"
+          :patientBirthdate ="formatOverlayDate(vipInformation.patientBirthdate)"
           :institutionName ="vipInformation.institutionName"
-          :instanceCreationDateTime ="formatDateAndTime(vipInformation.instanceCreationDate, vipInformation.instanceCreationTime)"
+          :instanceCreationDateTime ="formatOverlayDateAndTime(vipInformation.instanceCreationDate, vipInformation.instanceCreationTime)"
         />
       </div>
       <div id="dicom-viewer-toggle-metadata-sidebar" class="oc-flex oc-position-absolute">
@@ -454,7 +454,7 @@ export default defineComponent({
       this.viewportCameraParallelScale = camera.parallelScale
     },
     // functions for styling data
-    formatDateAndTime(date: string, time: string) {
+    formatOverlayDateAndTime(date: string, time: string) {
       // transforming date and time into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
       if (date != undefined && time != undefined && date.length >= 8 && time.length >= 6) {
         let tempDateTimeString =
@@ -475,7 +475,7 @@ export default defineComponent({
         return upperFirst(formattedDate)
       }
     },
-    formatDate(date: string, isShort: boolean) {
+    formatOverlayDate(date: string) {
       // transforming date into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
       // isShort determines output format (DateTime.DATE_MED or DateTime.DATE_SHORT), see https://moment.github.io/luxon/api-docs/index.html
       if (date != undefined && date.length >= 8) {
@@ -487,7 +487,7 @@ export default defineComponent({
           date.substring(6, 8) +
           'T00:00:00'
 
-        let formattedDate = DateTime.fromISO(tempDateTimeString).setLocale(this.$language.current).toLocaleString(isShort ? DateTime.DATE_SHORT : DateTime.DATE_MED)
+        let formattedDate = DateTime.fromISO(tempDateTimeString).setLocale(this.$language.current).toLocaleString(DateTime.DATE_SHORT)
 
         return upperFirst(formattedDate)
       }
