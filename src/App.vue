@@ -456,7 +456,7 @@ export default defineComponent({
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
 
-      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageData , test, asynctest } = extractMetadata()
+      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageData } = extractMetadata()
 
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
@@ -477,15 +477,6 @@ export default defineComponent({
 
       // using some function from extract metadata helper
       // for testing
-
-      let vipInformationAsyncTest = asynctest()
-      vipInformationAsyncTest.then((result) => {
-        // console.log('logging async result: ' + result)
-        for (let i=0; i<result.length; i++ ) {
-          //console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
-          //this.vipInformation3.push({ label: result[i][0], value: result[i][1] })
-        }
-      })
 
       let testTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
 

@@ -10,33 +10,6 @@ export const extractMetadata = () => {
     return s.toLowerCase()
   }
 
-  const test = () => {
-    var testResult: [string, string][]
-
-    testResult = [
-        ['patientName', 'Maxine'],
-        ['patientID', '1234'],
-        ['patientBirthday', '01011901'],
-        ['patientSex', 'F'],
-        ['patientWeight', '80']
-      ]
-    return testResult
-  }
-
-  const asynctest = async () => {
-    var testResult: [string, string][]
-
-    testResult = [
-            ['patientName', 'Maxine'],
-            ['patientID', '1234'],
-            ['patientBirthday', '01011901'],
-            ['patientSex', 'F'],
-            ['patientWeight', '80']
-          ]
-
-    return testResult
-  }
-
   //const fetchDicomImageData = async (imageId: string): Promise<object> => {
   const fetchDicomImageData = async (imageId: string) => {
     console.log('extract metadata helper - fetching dicom image data for: ' + imageId)
@@ -87,5 +60,5 @@ export const extractMetadata = () => {
       return extractedData
     }
 
-  return { uppercase, lowercase, test, asynctest, findDicomTagByValue, fetchDicomImageData, extractDicomMetadata }
+  return { uppercase, lowercase, findDicomTagByValue, fetchDicomImageData, extractDicomMetadata }
 }
