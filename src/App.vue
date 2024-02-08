@@ -443,7 +443,7 @@ export default defineComponent({
         console.error('Error initalizing cornerstone core', e)
       }
     },
-    async addWadouriPrefix(url: String) {
+    async addWadouriPrefix(url: string) {
       return 'wadouri:' + url
     },
     addObject(newLabel: string, newValue: string) {
@@ -651,7 +651,7 @@ export default defineComponent({
       this.isMetadataFetched = true
       // TODO: check that data only gets displayed after all metadata has been fetched
     },
-    extractMetadataFromViewport(imageId: String) {
+    extractMetadataFromViewport(imageId: string) {
       // get metadata from viewport
       const imageData = this.viewport.getImageData() // returns IImageData object, see https://www.cornerstonejs.org/api/core/namespace/Types#IImageData
 
