@@ -113,7 +113,7 @@ export const extractMetadata = () => {
     return dicomDataExtracted
   }
 
-  const extractDicomMetadata = async (imageId: string, tags: Object) => {
+  const extractDicomMetadata = async (imageId: string, tags: string[]) => {
     var extractedData: [string, string][] = []
 
     // get image data
@@ -122,10 +122,10 @@ export const extractMetadata = () => {
     var dicomImageData
 
     await cornerstoneDICOMImageLoader.wadouri
-        .loadImage(imageId)
-        .promise.then(async function (dicomImage) {
-          dicomImageData = dicomImage.data
-        })
+      .loadImage(imageId)
+      .promise.then(async function (dicomImage) {
+        dicomImageData = dicomImage.data
+      })
 
     // extracting data
     for (var i=0; i < tags.length; ++i) {
@@ -137,34 +137,6 @@ export const extractMetadata = () => {
 
       return extractedData
     }
-
-  /*
-  const fetchVipMetadataInformationHelper = async (imageId: string) => {
-    console.log('fetch vip meta data information helper function is called for: ' + imageId)
-
-    let vipInformation
-    let patientName, patientBirthdate, institutionName, instanceCreationDate, instanceCreationTime
-
-    await cornerstoneDICOMImageLoader.wadouri
-        .loadImage(imageId)
-        .promise.then(async function (dicomImage) {
-          patientName = dicomImage.data.string('x00100010')
-          patientBirthdate = dicomImage.data.string('x00100030')
-          institutionName = dicomImage.data.string('x00080080')
-          instanceCreationDate = dicomImage.data.string('x00080012')
-          instanceCreationTime = dicomImage.data.string('x00080013')
-        })
-  
-      vipInformation.patientName = patientName
-      vipInformation.patientBirthdate = patientBirthdate
-      vipInformation.institutionName = institutionName
-      vipInformation.instanceCreationDate = instanceCreationDate
-      vipInformation.instanceCreationTime = instanceCreationTime
-    
-    return vipInformation
-    
-  }
-  */
 
   return { uppercase, lowercase, test, asynctest, findDicomTagByValue, fetchDicomImageData, extractDicomMetadata, extractDicomMetadataOld }
 }
