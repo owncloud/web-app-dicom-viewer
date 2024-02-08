@@ -472,20 +472,6 @@ export default defineComponent({
 
       this.isVipMetadataFetched = true
 
-      // using some function from extract metadata helper (for testing only)
-      let testTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
-
-      let testInformation = extractDicomMetadata(imageId, testTags)
-      testInformation.then((result) => {
-        console.log('logging result extract: ' + result)
-        if (result != undefined) {
-          for (let i=0; i<result.length; i++ ) {
-            console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
-            this.testInformation.push({ label: result[i][0], value: result[i][1] })
-          }
-        }
-      })
-
       /*
       let temp
       for (let tag in this.vipInformation ) {
@@ -509,7 +495,8 @@ export default defineComponent({
     },
     async fetchMetadataInformation(imageId) {
       console.log('fetch meta data information for: ' + imageId)
-      const { fetchDicomImageData } = extractMetadata()
+
+      const { fetchDicomImageData, extractDicomMetadata } = extractMetadata()
 
       if (!this.isVipMetadataFetched) {
         await this.fetchVipMetadataInformation(imageId)
@@ -517,12 +504,29 @@ export default defineComponent({
         // alternatively this check could be made when assigning the values
       }
 
+      // this might no longer be needed
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
         this.isDicomImageDataFetched = true
       }
 
+      // using some function from extract metadata helper (for testing only)
+      let testTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
+
+      let testInformation = extractDicomMetadata(imageId, testTags)
+      testInformation.then((result) => {
+        console.log('logging result extract: ' + result)
+        if (result != undefined) {
+          for (let i=0; i<result.length; i++ ) {
+            console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
+            this.testInformation.push({ label: result[i][0], value: result[i][1] })
+          }
+        }
+      })
+
       //patientInformation
+      const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
+
       this.patientInformation.patientName = this.vipInformation.patientName
       this.patientInformation.patientID = this.dicomImageData.string('x00100020')
       this.patientInformation.patientBirthdate = this.formatDate(
