@@ -57,7 +57,7 @@
     </div>
     <metadata-sidebar
       v-show="isShowMetadataActivated"
-      :patientInformation="testInformation"
+      :patientInformation="patientInformation"
       :studyInformation="studyInformation"
       :seriesInformation="seriesInformation"
       :instanceInformation="instanceInformation"
@@ -218,14 +218,7 @@ export default defineComponent({
         { instanceCreationDate: '' },
         { instanceCreationTime: '' }
         ],
-      testInformation: [],
-      patientInformation: [
-        { label: 'patientName', value: 'x' },
-        { label: 'patientID', value: '123' },
-        { label: 'patientBirthdate', value: '01011900' },
-        { label: 'patientSex', value: 'M' },
-        { label: 'patientWeight', value: '90' }
-      ],
+      patientInformation: [],
       studyInformation: {
         studyDescription: '',
         protocolName: '',
@@ -515,7 +508,7 @@ export default defineComponent({
 
       let testInformation = extractDicomMetadata(imageId, testTags)
       testInformation.then((result) => {
-        console.log('logging result extract: ' + result)
+        console.log('logging patient information: ' + result)
         if (result != undefined) {
           for (let i=0; i<result.length; i++ ) {
             console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
@@ -527,6 +520,18 @@ export default defineComponent({
       //patientInformation
       const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
 
+      const patientInformation = extractDicomMetadata(imageId, testTags)
+      patientInformation.then((result) => {
+        console.log('logging patient information: ' + result)
+        if (result != undefined) {
+          for (let i=0; i<result.length; i++ ) {
+            // console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
+            this.patientInformation.push({ label: result[i][0], value: result[i][1] })
+          }
+        }
+      })
+      /*
+      // todo check how formatting of data strings can be done in the code above, e.g. by checking if the label contains Date or Time?
       this.patientInformation.patientName = this.vipInformation.patientName
       this.patientInformation.patientID = this.dicomImageData.string('x00100020')
       this.patientInformation.patientBirthdate = this.formatDate(
@@ -535,6 +540,7 @@ export default defineComponent({
       )
       this.patientInformation.patientSex = this.dicomImageData.string('x00100040')
       this.patientInformation.patientWeight = this.dicomImageData.string('x00101030')
+      */
 
       //studyInformation
       this.studyInformation.studyDescription = this.dicomImageData.string('x00081030')
