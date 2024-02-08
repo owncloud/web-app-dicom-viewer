@@ -29,15 +29,7 @@ export const extractMetadata = () => {
     const extractedData: [string, string][] = []
 
     // get image data
-    // var dicomImageData = await fetchDicomImageData(imageId)
-    // figure out why this can't be done in separate function
-    let dicomImageData
-
-    await cornerstoneDICOMImageLoader.wadouri
-      .loadImage(imageId)
-      .promise.then(async function (dicomImage) {
-      dicomImageData = dicomImage.data
-    })
+    const dicomImageData = await fetchDicomImageData(imageId)
 
     // extracting data
     for (let i=0; i < tags.length; ++i) {
