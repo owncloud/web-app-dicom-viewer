@@ -456,7 +456,7 @@ export default defineComponent({
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
 
-      const { findDicomTagByValue, extractDicomMetadata, extractDicomMetadataOld, fetchDicomImageData , test, asynctest } = extractMetadata()
+      const { findDicomTagByValue, extractDicomMetadata, fetchDicomImageData , test, asynctest } = extractMetadata()
 
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
@@ -477,11 +477,6 @@ export default defineComponent({
 
       // using some function from extract metadata helper
       // for testing
-
-      let vipInformationOld = extractDicomMetadataOld(imageId, this.vipInformation)
-      vipInformationOld.then((result) => {
-        // console.log('logging result: ' + result)
-      })
 
       let vipInformationAsyncTest = asynctest()
       vipInformationAsyncTest.then((result) => {
