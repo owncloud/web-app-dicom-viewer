@@ -219,22 +219,8 @@ export default defineComponent({
         { instanceCreationTime: '' }
         ],
       patientInformation: [],
-      studyInformation: {
-        studyDescription: '',
-        protocolName: '',
-        accessionNumber: '',
-        studyID: '',
-        studyDate: '',
-        studyTime: ''
-      },
-      seriesInformation: {
-        seriesDescription: '',
-        seriesNumber: '',
-        modality: '',
-        bodyPart: '',
-        seriesDate: '',
-        seriesTime: ''
-      },
+      studyInformation: [],
+      seriesInformation: [],
       instanceInformation: {
         instanceNumber: '',
         acquisitionNumber: '',
@@ -503,6 +489,7 @@ export default defineComponent({
         this.isDicomImageDataFetched = true
       }
 
+      /*
       // using some function from extract metadata helper (for testing only)
       let testTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
 
@@ -516,11 +503,12 @@ export default defineComponent({
           }
         }
       })
+      */
 
       //patientInformation
       const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
 
-      const patientInformation = extractDicomMetadata(imageId, testTags)
+      const patientInformation = extractDicomMetadata(imageId, patientInformationTags)
       patientInformation.then((result) => {
         console.log('logging patient information: ' + result)
         if (result != undefined) {
@@ -532,31 +520,45 @@ export default defineComponent({
       })
       /*
       // todo check how formatting of data strings can be done in the code above, e.g. by checking if the label contains Date or Time?
-      this.patientInformation.patientName = this.vipInformation.patientName
-      this.patientInformation.patientID = this.dicomImageData.string('x00100020')
       this.patientInformation.patientBirthdate = this.formatDate(
         this.vipInformation.patientBirthdate,
         longDateTimeFormat
       )
-      this.patientInformation.patientSex = this.dicomImageData.string('x00100040')
-      this.patientInformation.patientWeight = this.dicomImageData.string('x00101030')
       */
 
       //studyInformation
-      this.studyInformation.studyDescription = this.dicomImageData.string('x00081030')
-      this.studyInformation.protocolName = this.dicomImageData.string('x00181030')
-      this.studyInformation.accessionNumber = this.dicomImageData.string('x00080050')
-      this.studyInformation.studyID = this.dicomImageData.string('x00200010')
+      const studyInformationTags = ['studyDescription', 'protocolName', 'accessionNumber', 'studyID', 'studyDate', 'studyTime' ]
+
+      const studyInformation = extractDicomMetadata(imageId, studyInformationTags)
+      studyInformation.then((result) => {
+        console.log('logging study information: ' + result)
+        if (result != undefined) {
+          for (let i=0; i<result.length; i++ ) {
+            this.studyInformation.push({ label: result[i][0], value: result[i][1] })
+          }
+        }
+      })
+      /*
       this.studyInformation.studyDate = this.formatDate(this.dicomImageData.string('x00080020'), longDateTimeFormat)
       this.studyInformation.studyTime = this.formatTime(this.dicomImageData.string('x00080030'), longDateTimeFormat)
+      */
 
       // seriesInformation
-      this.seriesInformation.seriesDescription = this.dicomImageData.string('x0008103e')
-      this.seriesInformation.seriesNumber = this.dicomImageData.string('x00200011')
-      this.seriesInformation.modality = this.dicomImageData.string('x00080060')
-      this.seriesInformation.bodyPart = this.dicomImageData.string('x00180015')  //Body Part Examined? or Body Part Thickness?
+      const seriesInformationTags = ['seriesDescription', 'seriesNumber', 'modality', 'bodyPart', 'seriesDate', 'seriesTime' ]
+
+      const seriesInformation = extractDicomMetadata(imageId, seriesInformationTags)
+      seriesInformation.then((result) => {
+        console.log('logging series information: ' + result)
+        if (result != undefined) {
+          for (let i=0; i<result.length; i++ ) {
+            this.seriesInformation.push({ label: result[i][0], value: result[i][1] })
+          }
+        }
+      })
+      /*
       this.seriesInformation.seriesDate = this.formatDate(this.dicomImageData.string('x00080021'), longDateTimeFormat)
       this.seriesInformation.seriesTime = this.formatTime(this.dicomImageData.string('x00080031'), longDateTimeFormat)
+      */
 
       // instanceInformation
       this.instanceInformation.instanceNumber = this.dicomImageData.string('x00200013')
