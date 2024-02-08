@@ -57,7 +57,7 @@
     </div>
     <metadata-sidebar
       v-show="isShowMetadataActivated"
-      :patientInformation="vipInformation3"
+      :patientInformation="testInformation"
       :studyInformation="studyInformation"
       :seriesInformation="seriesInformation"
       :instanceInformation="instanceInformation"
@@ -218,11 +218,7 @@ export default defineComponent({
         { instanceCreationDate: '' },
         { instanceCreationTime: '' }
         ],
-      vipInformation2: [
-        { label: 'Patient Name', value: 'Max' },
-        { label: 'Institution', value: 'TMU' },
-      ],
-      vipInformation3: [],
+      testInformation: [],
       patientInformation: [
         { label: 'patientName', value: 'x' },
         { label: 'patientID', value: '123' },
@@ -458,6 +454,7 @@ export default defineComponent({
 
       const { fetchDicomImageData, extractDicomMetadata } = extractMetadata()
 
+      // fetching dicom image data
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
         if (!this.isDicomImageDataFetched) {
@@ -475,23 +472,19 @@ export default defineComponent({
 
       this.isVipMetadataFetched = true
 
-      // using some function from extract metadata helper
-      // for testing
-
+      // using some function from extract metadata helper (for testing only)
       let testTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
 
-      let vipInformation = extractDicomMetadata(imageId, testTags)
-      vipInformation.then((result) => {
+      let testInformation = extractDicomMetadata(imageId, testTags)
+      testInformation.then((result) => {
         console.log('logging result extract: ' + result)
         if (result != undefined) {
           for (let i=0; i<result.length; i++ ) {
             console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
-            this.vipInformation3.push({ label: result[i][0], value: result[i][1] })
+            this.testInformation.push({ label: result[i][0], value: result[i][1] })
           }
         }
       })
-
-      console.log('vip information 3: ' + this.vipInformation3)
 
       /*
       let temp
