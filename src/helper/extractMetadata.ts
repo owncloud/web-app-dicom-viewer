@@ -90,7 +90,6 @@ export const extractMetadata = () => {
     // extract dicom tags from dicom data object
     var tags = Object.keys(dicomData)
     // todo: figure out why first 5 keys are undefined
-    // pass string[] instead of object into this function?
     for (var i = 5; i < tags.length; i++) {
       //console.log('attribute name: ' + tags[i] + ' / value: ' + dicomImageData.string(findDicomTagByValue(tags[i])) )
       dicomDataExtracted += tags[i] + ': \'' + dicomImageData.string(findDicomTagByValue(tags[i])) + '\'; '
@@ -115,25 +114,11 @@ export const extractMetadata = () => {
   }
 
   const extractDicomMetadata = async (imageId: string, tags: Object) => {
-    console.log('tags: ' + tags)
-    console.log('tags length: ' + tags.length)
-
-    var testResult: [string, string][]
-
-    /*
-    testResult = [
-              ['patientName', 'Maxine'],
-              ['patientID', '1234'],
-              ['patientBirthday', '01011901'],
-              ['patientSex', 'F'],
-              ['patientWeight', '80']
-            ]
-    */
+    var extractedData: [string, string][] = []
 
     // get image data
     // var dicomImageData = await fetchDicomImageData(imageId)
     // figure out why this can't be done in separate function
-
     var dicomImageData
 
     await cornerstoneDICOMImageLoader.wadouri
@@ -142,19 +127,15 @@ export const extractMetadata = () => {
           dicomImageData = dicomImage.data
         })
 
+    // extracting data
     for (var i=0; i < tags.length; ++i) {
-        console.log('attribute name: ' + tags[i] + ' / value: ' + dicomImageData.string(findDicomTagByValue(tags[i])) )
-        //dicomDataExtracted += tags[i] + ': \'' + dicomImageData.string(findDicomTagByValue(tags[i])) + '\'; '
-        //testResult.push(tags[i].toString(), dicomImageData.string(findDicomTagByValue(tags[i])).toString())
+        let label = tags[i]
+        let value = dicomImageData.string(findDicomTagByValue(tags[i]))
+        let element = [label, value]
+        extractedData.push(element)
     }
 
-      //console.log('extracted data (from helper function): ' + testResult)
-
-      // todo
-      // build new object and populate it
-      // returns newly created object filled with the corresponding values
-
-      return testResult
+      return extractedData
     }
 
   /*

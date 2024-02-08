@@ -419,7 +419,7 @@ export default defineComponent({
   updated() {
     console.log('lifecycle @ updated')
     // this.viewport.resize()
-    // also check if it is needed to recalculate scalefactor
+    // also check if it is needed to recalculate scale factor
     // this.setViewportCameraParallelScaleFactor()
   },
   // cleaning up component, leaving no variables or events that could cause memory leaks to app
@@ -497,9 +497,11 @@ export default defineComponent({
       let vipInformation = extractDicomMetadata(imageId, testTags)
       vipInformation.then((result) => {
         console.log('logging result extract: ' + result)
-        for (let i=0; i<result.length; i++ ) {
-          console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
-          this.vipInformation3.push({ label: result[i][0], value: result[i][1] })
+        if (result != undefined) {
+          for (let i=0; i<result.length; i++ ) {
+            console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
+            this.vipInformation3.push({ label: result[i][0], value: result[i][1] })
+          }
         }
       })
 
