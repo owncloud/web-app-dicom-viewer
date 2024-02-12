@@ -1,47 +1,51 @@
-import {Given, When, Then} from '@cucumber/cucumber'
-import {state} from '../hooks'
-import {config} from "../config.js"
+import { Given, When, Then } from '@cucumber/cucumber'
+import { state } from '../hooks'
+import { config } from "../config.js"
 
-import {DicomViewer} from "../pageObjects/DicomViewer"
-import util from "util";
+import { DicomViewer } from "../pageObjects/DicomViewer"
+import { getUser } from "../userStore";
 
-Given('{string} has logged in', async function(user: string): Promise<void> {
+Given('the user {string} has logged in', async function(user: string): Promise<void> {
     const page = state.page
     const dicomViewer = new DicomViewer()
-
     await page.goto(config.baseUrlOcis)
-    await dicomViewer.login({ username: 'admin', password: 'admin' })
-    await page.locator(dicomViewer.webContentSelector).waitFor()
+    const stepUser = await getUser({user})
+    await dicomViewer.login({ username: stepUser.displayName, password: stepUser.password })
 })
 
-Given('{string} has uploaded the dicom file {string}', async function (user: string, filename: string): Promise<void> {
+Given('the user has uploaded the dicom file {string}', async function (filename: string): Promise<void> {
+    const dicomViewer = new DicomViewer()
+    await dicomViewer.upload({ filename })
+})
+
+When('the user previews the dicom file {string}', async function (filename: string): Promise<void> {
+    const dicomViewer = new DicomViewer()
+    await dicomViewer.previewDicomFile({ filename })
+})
+
+When('the user checks VIP metadata for dicom file', async function(): Promise<void> {
+    const dicomViewer = new DicomViewer()
+    await dicomViewer.checkVIPMetadata()
+})
+
+When('the user checks the extended metadata for dicom file', async function(): Promise<void> {
+    const dicomViewer = new DicomViewer()
+    await dicomViewer.checkExtendedMetadata()
+})
+
+Then(/^the user should see patient name "([^"]*)" in (VIP metadata|metadata sidebar)$/, async function (patientName: string, metadataLocation: string): Promise<void> {
+    const dicomViewer = new DicomViewer()
+    await dicomViewer.checkPatientName({ patientName, metadataLocation })
+})
+
+Then('the user closes the DICOM file preview', async function () {
+    const dicomViewer = new DicomViewer()
+    await dicomViewer.closeDicomFilePreview()
+})
+
+Then('the user logs out', async function(): Promise<void> {
     const page = state.page
     const dicomViewer = new DicomViewer()
-
-    await dicomViewer.upload({filename: `${config.assets}/${filename}`})
-    await page.goto(config.baseUrlOcis)
-    await page.locator(util.format(dicomViewer.resourceNameSelector, filename)).waitFor()
-})
-
-When('{string} previews the dicom file {string}', async function (user: string, filename: string): Promise<void> {
-    const dicomViewer = new DicomViewer()
-    await dicomViewer.openDicomFile({filename})
-})
-
-Then('{string} logs out', async function(user: string): Promise<void> {
-    const page = state.page
-    const dicomViewer = new DicomViewer()
-
     await dicomViewer.logout()
-    await page.locator(dicomViewer.loginFormSelector).waitFor()
-})
-
-Then('{string} opens files app', async function (user: string) {
-    const dicomViewer = new DicomViewer()
-    await dicomViewer.openFilesApp()
-})
-
-Then('{string} deletes file {string}', async function (user: string, filename: string) {
-    const dicomViewer = new DicomViewer()
-    await dicomViewer.deleteFile()
+    await page.locator(dicomViewer.elements.loginFormSelector).waitFor()
 })
