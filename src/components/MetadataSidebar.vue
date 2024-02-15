@@ -64,6 +64,7 @@
           :metadataSectionData="$props.imageInformation"
           :is-first-section="false"
         />
+        -->
 
         <metadata-sidebar-table-row
           v-bind="$props.equipmentInformation"
@@ -72,6 +73,7 @@
           :is-first-section="false"
         />
 
+        <!--
         <metadata-sidebar-table-row
           v-bind="$props.scanningInformation"
           :metadataSectionName="'Scanning Information'"

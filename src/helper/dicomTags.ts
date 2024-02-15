@@ -39,6 +39,15 @@ const dicomTags = {
   'x00204000': 'patientPosition',
   'x00200037': 'pixelSpacing',
   'x00185100': 'imageComments',
+  'x00080070': 'manufacturer',
+  'x00081090': 'model', // Manufacturer's Model Name
+  'x00081010': 'stationName',
+  'x00080055': 'AE_Title',
+  'x00080080': 'institutionName',
+  'x00181020': 'softwareVersion',
+  'x00020013': 'implementationVersionName',
+  '': '',
+  '': '',
 }
 
 export default dicomTags

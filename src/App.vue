@@ -239,15 +239,7 @@ export default defineComponent({
         samplesPerPixel: '',
         imageComments: ''
       },
-      equipmentInformation: {
-        manufacturer: '',
-        model: '',
-        stationName: '',
-        AE_Title: '',
-        institutionName: '',
-        softwareVersion: '',
-        implementationVersionName: ''
-      },
+      equipmentInformation: [],
       scanningInformation: {
         scanningSequence: '',
         sequenceVariant: '',
@@ -557,13 +549,14 @@ export default defineComponent({
       this.imageInformation.imageComments = this.dicomImageData.string('x00185100')
 
       // equipmentInformation
-      this.equipmentInformation.manufacturer = this.dicomImageData.string('x00080070')
-      this.equipmentInformation.model = this.dicomImageData.string('x00081090') // Manufacturer's Model Name
-      this.equipmentInformation.stationName = this.dicomImageData.string('x00081010')
-      this.equipmentInformation.AE_Title = this.dicomImageData.string('x') // Retrieve AE Title? or Station AE Title? // TODO: get value!!!
-      this.equipmentInformation.institutionName = this.dicomImageData.string('x00080080') // this.vipInformation.institutionName
-      this.equipmentInformation.softwareVersion = this.dicomImageData.string('x00181020')
-      this.equipmentInformation.implementationVersionName = this.dicomImageData.string('x00020013')
+      const equipmentInformationTags = ['manufacturer', 'model', 'stationName', 'AE_Title', 'institutionName', 'softwareVersion', 'implementationVersionName' ]
+
+      const equipmentInformation = extractDicomMetadata(imageId, equipmentInformationTags)
+      equipmentInformation.then((result) => {
+        if (result != undefined) {
+          this.equipmentInformation = result
+        }
+      })
 
       // scanningInformation
       this.scanningInformation.scanningSequence = this.dicomImageData.string('x00180020')
