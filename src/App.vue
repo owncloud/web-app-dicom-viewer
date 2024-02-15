@@ -451,26 +451,9 @@ export default defineComponent({
 
       this.isVipMetadataFetched = true
 
-      /*
-      let temp
-      for (let tag in this.vipInformation ) {
-        console.log('- ' + tag)
-      }
-      //console.log('patient name: ' + this.vipInformation.patientName)
-
-      //this.vipInformation = vipInformationTest
-      console.log('new patient name: ' +  this.vipInformation.patientName)
-
-      // try to pass values over
-      //this.vipInformation = vipInformation
-
       // todo:
       // - store values into object
-      // - move the stuff above into helper class function (extractDicomMetadata)
       // - check where to do nice formatting of date & time values
-
-      //getPatientData(dicomImage, "patientName")
-      */
     },
     async fetchMetadataInformation(imageId) {
       console.log('fetch meta data information for: ' + imageId)
@@ -489,22 +472,6 @@ export default defineComponent({
         this.isDicomImageDataFetched = true
       }
 
-      /*
-      // using some function from extract metadata helper (for testing only)
-      let testTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
-
-      let testInformation = extractDicomMetadata(imageId, testTags)
-      testInformation.then((result) => {
-        console.log('logging patient information: ' + result)
-        if (result != undefined) {
-          for (let i=0; i<result.length; i++ ) {
-            console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
-            this.testInformation.push({ label: result[i][0], value: result[i][1] })
-          }
-        }
-      })
-      */
-
       //patientInformation
       const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
 
@@ -512,12 +479,10 @@ export default defineComponent({
       patientInformation.then((result) => {
         console.log('logging patient information: ' + result)
         if (result != undefined) {
-          for (let i=0; i<result.length; i++ ) {
-            // console.log('(' + i.toString() + ') ' + result[i][0] + ' / ' + result[i][1])
-            this.patientInformation.push({ label: result[i][0], value: result[i][1] })
-          }
+          this.patientInformation = result
         }
       })
+
       /*
       // todo check how formatting of data strings can be done in the code above, e.g. by checking if the label contains Date or Time?
       this.patientInformation.patientBirthdate = this.formatDate(
@@ -533,9 +498,7 @@ export default defineComponent({
       studyInformation.then((result) => {
         console.log('logging study information: ' + result)
         if (result != undefined) {
-          for (let i=0; i<result.length; i++ ) {
-            this.studyInformation.push({ label: result[i][0], value: result[i][1] })
-          }
+          this.studyInformation = result
         }
       })
       /*
@@ -550,9 +513,7 @@ export default defineComponent({
       seriesInformation.then((result) => {
         console.log('logging series information: ' + result)
         if (result != undefined) {
-          for (let i=0; i<result.length; i++ ) {
-            this.seriesInformation.push({ label: result[i][0], value: result[i][1] })
-          }
+          this.seriesInformation = result
         }
       })
       /*
