@@ -24,11 +24,11 @@ describe('MetadataSidebarTableRow component', () => {
 
     const mockedData = {
       metadataSectionName: metadataSectionTitle,
-      metadataSectionData: {
-        patientName: patientName,
-        patientID: patientID ,
-        patientBirthday: patientBirthday
-        }, 
+      metadataSectionData: [
+        { label: 'patientName', value: patientName },
+        { label: 'patientID', value: patientID },
+        { label: 'patientBirthday', value: patientBirthday }
+        ],
       isFirstSection: true,
     }
     it('should display the section title in the .dicom-metadata-section-title header part of the table', () => {
