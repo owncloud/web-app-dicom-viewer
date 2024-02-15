@@ -242,26 +242,7 @@ export default defineComponent({
       equipmentInformation: [],
       scanningInformation: [],
       uidsInformation: [],
-      otherInformation: {
-        specificCharacterSet: '',
-        referringPhysicianName: '',
-        MR_AcquisitionType: '',
-        numberOfAverages: '',
-        percentSampling: '',
-        percentPhaseFieldOfView: '',
-        lowRR_Value: '',
-        highRR_Value: '',
-        intervalsAcquired: '',
-        intervalsRejected: '',
-        heartRate: '',
-        receiveCoilName: '',
-        transmitCoilName: '',
-        inPlanePhaseEncodingDirection: '',
-        flipAngle: '',
-        positionReferenceIndicator: '',
-        windowCenter: '',
-        windowWidth: ''
-      },
+      otherInformation: [],
     }
   },
 
@@ -562,24 +543,14 @@ export default defineComponent({
 
 
       // otherInformation
-      this.otherInformation.specificCharacterSet = this.dicomImageData.string('x00080005')
-      this.otherInformation.referringPhysicianName = this.dicomImageData.string('x00080090')
-      this.otherInformation.MR_AcquisitionType = this.dicomImageData.string('x00180023')
-      this.otherInformation.numberOfAverages = this.dicomImageData.string('x00180083')
-      this.otherInformation.percentSampling = this.dicomImageData.string('x00180093')
-      this.otherInformation.percentPhaseFieldOfView = this.dicomImageData.string('x00180094')
-      this.otherInformation.lowRR_Value = this.dicomImageData.string('x00181081')
-      this.otherInformation.highRR_Value = this.dicomImageData.string('x00181082')
-      this.otherInformation.intervalsAcquired = this.dicomImageData.string('x00181083')
-      this.otherInformation.intervalsRejected = this.dicomImageData.string('x00181084')
-      this.otherInformation.heartRate = this.dicomImageData.string('x00181088')
-      this.otherInformation.receiveCoilName = this.dicomImageData.string('x00181250')
-      this.otherInformation.transmitCoilName = this.dicomImageData.string('x00181251')
-      this.otherInformation.inPlanePhaseEncodingDirection = this.dicomImageData.string('x00181312')
-      this.otherInformation.flipAngle = this.dicomImageData.string('x00181314')
-      this.otherInformation.positionReferenceIndicator = this.dicomImageData.string('x00201040')
-      this.otherInformation.windowCenter = this.dicomImageData.string('x00281050')
-      this.otherInformation.windowWidth = this.dicomImageData.string('x00281051')
+      const otherInformationTags = ['specificCharacterSet', 'referringPhysicianName', 'MR_AcquisitionType', 'numberOfAverages', 'percentSampling', 'percentPhaseFieldOfView', 'lowRR_Value', 'highRR_Value', 'intervalsAcquired', 'intervalsRejected', 'heartRate', 'receiveCoilName', 'transmitCoilName', 'inPlanePhaseEncodingDirection', 'flipAngle', 'positionReferenceIndicator', 'windowCenter', 'windowWidth']
+
+      const otherInformation = extractDicomMetadata(imageId, otherInformationTags)
+      otherInformation.then((result) => {
+        if (result != undefined) {
+          this.otherInformation = result
+        }
+      })
 
       this.isMetadataFetched = true
       // TODO: check that data only gets displayed after all metadata has been fetched

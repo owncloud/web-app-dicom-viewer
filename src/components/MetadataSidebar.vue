@@ -87,14 +87,12 @@
           :is-first-section="false"
         />
 
-        <!--
         <metadata-sidebar-table-row
           v-bind="$props.otherInformation"
           :metadataSectionName="'Other Information'"
           :metadataSectionData="$props.otherInformation"
           :is-first-section="false"
         />
-        -->
 
       </table>
     </div>
@@ -193,6 +191,6 @@ export default defineComponent({
 }
 
 .details-table tr {
-  height: 1rem; // reducing hight, originally 1.5rem
+  height: 1rem; // reducing height, originally 1.5rem
 }
 </style>
