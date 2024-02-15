@@ -25,19 +25,16 @@ export const extractMetadata = () => {
   }
 
   const dateTagChecker = (tag: string): boolean => {
-    return (tag.endsWith('date') || tag.endsWith('Date')) ? true : false
+    return (tag.endsWith('_formatDate')) ? true : false
   }
 
   const timeTagChecker = (tag: string): boolean => {
-    if (tag.endsWith('time') || tag.endsWith('Time')) {
-      return true
-    }
-    return false
+    return (tag.endsWith('_formatTime')) ? true : false
   }
 
   // todo:
-  // - check where to do nice formatting of date & time values
   // - make this function work for single objects as well as array of objects?
+  // - or pass extracted data as parameter
 
   const extractDicomMetadata = async (imageId: string, tags: string[], language: string = 'en') => {
     const extractedData: { label: string, value: string }[] = []
@@ -47,17 +44,26 @@ export const extractMetadata = () => {
 
     // extracting data
     for (let i=0; i < tags.length; ++i) {
-
+      // check if tag contains the extension for date or time formatting
       let isDate = dateTagChecker(tags[i])
       let isTime = timeTagChecker(tags[i])
 
-      let metadataValue = dicomImageData.string(findDicomTagByValue(tags[i]))
-      if (isDate && metadataValue.length >= 8) {
+      let metadataLabel = tags[i]
+      if (isDate || isTime) {
+        metadataLabel = metadataLabel.slice(0, -11) // cutting off the add-on (_formatDate or _formatTime) from the label
+      }
+
+      let metadataValue = dicomImageData.string(findDicomTagByValue(metadataLabel))
+
+      if (isDate && metadataValue != undefined && metadataValue.length >= 8) {
         metadataValue = formatDate(metadataValue, language, DateTime.DATE_MED)
+      }
+      else if (isTime && metadataValue != undefined && metadataValue.length >= 4) {
+        metadataValue = formatTime(metadataValue, language, DateTime.TIME_24_WITH_SECONDS)
       }
 
       extractedData.push({
-        label: tags[i],
+        label: metadataLabel,
         value: metadataValue
       })
     }
@@ -65,9 +71,11 @@ export const extractMetadata = () => {
     return extractedData
   }
 
-  const formatDate = (date: string, language: string, dateFormat: DateTime) => {
+  const formatDate = (date: string, language: string, dateFormat: DateTime): string | undefined => {
   // transforming date into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
+  // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'DA'
   // date output format: e.g. DateTime.DATE_MED, DateTime.DATE_SHORT, see https://moment.github.io/luxon/api-docs/index.html
+
     if (date != undefined && date.length >= 8) {
       let tempDateTimeString =
         date.substring(0, 4) +
@@ -81,28 +89,29 @@ export const extractMetadata = () => {
 
       return upperFirst(formattedDate)
     }
+    return undefined
   }
 
-  /*
-  const formatTime(time: string, isSimple: boolean) {
-        // transform time string retrieved from dicom metadata into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
-        // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'TM'
-        // isSimple determines output format (DateTime.DATE_MED or DateTime.DATE_SHORT), see https://moment.github.io/luxon/api-docs/index.html
-        if (time != undefined && time.length >= 4) {
-          let tempDateTimeString =
-            '1970-01-01T' +
-            time.substring(0, 2) +
-            ':' +
-            time.substring(2, 4) +
-            ':' +
-            (time.length >= 6 ? time.substring(4, 6) : '00')
+  const formatTime = (time: string, language: string, timeFormat: DateTime): string | undefined => {
+  // transform time string retrieved from dicom metadata into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
+  // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'TM'
+  // time output format: e.g. DateTime.TIME_SIMPLE, DateTime.TIME_24_WITH_SECONDS, see https://moment.github.io/luxon/api-docs/index.html
 
-          let formattedTime = DateTime.fromISO(tempDateTimeString).setLocale(this.$language.current).toLocaleString(isSimple ? DateTime.TIME_SIMPLE : DateTime.TIME_24_WITH_SECONDS)
+    if (time != undefined && time.length >= 4) {
+      let tempDateTimeString =
+        '1970-01-01T' +
+        time.substring(0, 2) +
+        ':' +
+        time.substring(2, 4) +
+        ':' +
+        (time.length >= 6 ? time.substring(4, 6) : '00')
 
-          return upperFirst(formattedTime)
-        }
-      }
-      */
+      let formattedTime = DateTime.fromISO(tempDateTimeString).setLocale(language).toLocaleString(timeFormat)
 
-  return { fetchDicomImageData, findDicomTagByValue, dateTagChecker, timeTagChecker, formatDate, extractDicomMetadata }
+      return upperFirst(formattedTime)
+    }
+    return undefined
+  }
+
+  return { fetchDicomImageData, findDicomTagByValue, dateTagChecker, timeTagChecker, formatDate, formatTime, extractDicomMetadata }
 }

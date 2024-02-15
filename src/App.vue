@@ -411,7 +411,7 @@ export default defineComponent({
       }
 
       // patientInformation
-      const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
+      const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate_formatDate', 'patientSex', 'patientWeight' ]
 
       const patientInformation = extractDicomMetadata(imageId, patientInformationTags, this.$language.current)
       patientInformation.then((result) => {
@@ -420,16 +420,8 @@ export default defineComponent({
         }
       })
 
-      /*
-      // todo check how formatting of data strings can be done in the code above, e.g. by checking if the label contains Date or Time?
-      this.patientInformation.patientBirthdate = this.formatDate(
-        this.vipInformation.patientBirthdate,
-        longDateTimeFormat
-      )
-      */
-
       // studyInformation
-      const studyInformationTags = ['studyDescription', 'protocolName', 'accessionNumber', 'studyID', 'studyDate', 'studyTime' ]
+      const studyInformationTags = ['studyDescription', 'protocolName', 'accessionNumber', 'studyID', 'studyDate_formatDate', 'studyTime_formatTime' ]
 
       const studyInformation = extractDicomMetadata(imageId, studyInformationTags, this.$language.current)
       studyInformation.then((result) => {
@@ -437,14 +429,9 @@ export default defineComponent({
           this.studyInformation = result
         }
       })
-      /*
-      // formatting of date & time
-      this.studyInformation.studyDate = this.formatDate(this.dicomImageData.string('x00080020'), longDateTimeFormat)
-      this.studyInformation.studyTime = this.formatTime(this.dicomImageData.string('x00080030'), longDateTimeFormat)
-      */
 
       // seriesInformation
-      const seriesInformationTags = ['seriesDescription', 'seriesNumber', 'modality', 'bodyPart', 'seriesDate', 'seriesTime' ]
+      const seriesInformationTags = ['seriesDescription', 'seriesNumber', 'modality', 'bodyPart', 'seriesDate_formatDate', 'seriesTime_formatTime' ]
 
       const seriesInformation = extractDicomMetadata(imageId, seriesInformationTags, this.$language.current)
       seriesInformation.then((result) => {
@@ -452,14 +439,9 @@ export default defineComponent({
           this.seriesInformation = result
         }
       })
-      /*
-      // formatting of date & time
-      this.seriesInformation.seriesDate = this.formatDate(this.dicomImageData.string('x00080021'), longDateTimeFormat)
-      this.seriesInformation.seriesTime = this.formatTime(this.dicomImageData.string('x00080031'), longDateTimeFormat)
-      */
 
       // instanceInformation
-      const instanceInformationTags = ['instanceNumber', 'acquisitionNumber', 'acquisitionDate', 'acquisitionTime', 'instanceCreationDate', 'instanceCreationTime', 'contentDate', 'contentTime' ]
+      const instanceInformationTags = ['instanceNumber', 'acquisitionNumber', 'acquisitionDate_formatDate', 'acquisitionTime_formatTime', 'instanceCreationDate_formatDate', 'instanceCreationTime_formatTime', 'contentDate_formatDate', 'contentTime_formatTime' ]
 
       const instanceInformation = extractDicomMetadata(imageId, instanceInformationTags, this.$language.current)
       instanceInformation.then((result) => {
@@ -468,35 +450,8 @@ export default defineComponent({
         }
       })
 
-      /*
-      // formatting of date & time
-      this.instanceInformation.acquisitionDate = this.formatDate(
-        this.dicomImageData.string('x00080022'),
-        longDateTimeFormat
-      )
-      this.instanceInformation.acquisitionTime = this.formatTime(
-        this.dicomImageData.string('x0008002A'),
-        longDateTimeFormat
-      )
-      this.instanceInformation.instanceCreationDate = this.formatDate(
-        this.dicomImageData.string('x00080012'),
-        longDateTimeFormat
-      )
-      this.instanceInformation.instanceCreationTime = this.formatTime(
-        this.dicomImageData.string('x00080013'),
-        longDateTimeFormat
-      )
-      this.instanceInformation.contentDate = this.formatDate(
-        this.dicomImageData.string('x00080023'),
-        longDateTimeFormat
-      )
-      this.instanceInformation.contentTime = this.formatTime(
-        this.dicomImageData.string('x00080033'),
-        longDateTimeFormat
-      )
-      */
-
       // imageInformation
+      // todo: refactor this
       this.imageInformation.photometricInterpretation = this.dicomImageData.string('x00280004')
       this.imageInformation.imageType = this.dicomImageData.string('x00080008')
       this.imageInformation.rescaleSlope = this.dicomImageData.string('x00281053')
@@ -540,7 +495,6 @@ export default defineComponent({
       // todo: adding description to SOP_ClassUID
       // let SOP_ClassUID = this.dicomImageData.string('x00080016')
       // this.uidsInformation.SOP_ClassUID = SOP_ClassUID + ' [' + uids[SOP_ClassUID] + ']' // adding description of the SOP module
-
 
       // otherInformation
       const otherInformationTags = ['specificCharacterSet', 'referringPhysicianName', 'MR_AcquisitionType', 'numberOfAverages', 'percentSampling', 'percentPhaseFieldOfView', 'lowRR_Value', 'highRR_Value', 'intervalsAcquired', 'intervalsRejected', 'heartRate', 'receiveCoilName', 'transmitCoilName', 'inPlanePhaseEncodingDirection', 'flipAngle', 'positionReferenceIndicator', 'windowCenter', 'windowWidth']
@@ -624,7 +578,7 @@ export default defineComponent({
     formatTime(time: string, isSimple: boolean) {
       // transform time string retrieved from dicom metadata into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
       // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'TM'
-      // isSimple determines output format (DateTime.DATE_MED or DateTime.DATE_SHORT), see https://moment.github.io/luxon/api-docs/index.html
+      // isSimple determines output format (DateTime.TIME_SIMPLE or DateTime.TIME_24_WITH_SECONDS), see https://moment.github.io/luxon/api-docs/index.html
       if (time != undefined && time.length >= 4) {
         let tempDateTimeString =
           '1970-01-01T' +
