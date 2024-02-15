@@ -91,7 +91,6 @@ import DicomControls from './components/DicomControls.vue'
 import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
 import { extractMetadata } from './helper/extractMetadata'
-import uids from './helper/uids'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
@@ -556,7 +555,7 @@ export default defineComponent({
     },
     formatDate(date: string, isShort: boolean) {
       // transforming date into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
-      // isShort determins output format (DateTime.DATE_MED or DateTime.DATE_SHORT), see https://moment.github.io/luxon/api-docs/index.html
+      // isShort determines output format (DateTime.DATE_MED or DateTime.DATE_SHORT), see https://moment.github.io/luxon/api-docs/index.html
       if (date != undefined && date.length >= 8) {
         let tempDateTimeString =
           date.substring(0, 4) +
@@ -569,24 +568,6 @@ export default defineComponent({
         let formattedDate = DateTime.fromISO(tempDateTimeString).setLocale(this.$language.current).toLocaleString(isShort ? DateTime.DATE_SHORT : DateTime.DATE_MED)
 
         return upperFirst(formattedDate)
-      }
-    },
-    formatTime(time: string, isSimple: boolean) {
-      // transform time string retrieved from dicom metadata into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
-      // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'TM'
-      // isSimple determines output format (DateTime.TIME_SIMPLE or DateTime.TIME_24_WITH_SECONDS), see https://moment.github.io/luxon/api-docs/index.html
-      if (time != undefined && time.length >= 4) {
-        let tempDateTimeString =
-          '1970-01-01T' +
-          time.substring(0, 2) +
-          ':' +
-          time.substring(2, 4) +
-          ':' +
-          (time.length >= 6 ? time.substring(4, 6) : '00')
-
-        let formattedTime = DateTime.fromISO(tempDateTimeString).setLocale(this.$language.current).toLocaleString(isSimple ? DateTime.TIME_SIMPLE : DateTime.TIME_24_WITH_SECONDS)
-
-        return upperFirst(formattedTime)
       }
     },
     // functions relating to dicom controls
