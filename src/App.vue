@@ -483,7 +483,7 @@ export default defineComponent({
       })
 
       // uidsInformation
-      const uidsInformationTags = ['studyUID', 'seriesUID', 'instanceUID', 'SOP_ClassUID', 'transferSyntaxUID', 'frameOfReferenceUID' ]
+      const uidsInformationTags = ['studyUID', 'seriesUID', 'instanceUID', 'SOP_ClassUID_addSOPuids', 'transferSyntaxUID', 'frameOfReferenceUID' ]
 
       const uidsInformation = extractDicomMetadata(imageId, uidsInformationTags, this.$language.current)
       uidsInformation.then((result) => {
@@ -491,10 +491,6 @@ export default defineComponent({
           this.uidsInformation = result
         }
       })
-
-      // todo: adding description to SOP_ClassUID
-      // let SOP_ClassUID = this.dicomImageData.string('x00080016')
-      // this.uidsInformation.SOP_ClassUID = SOP_ClassUID + ' [' + uids[SOP_ClassUID] + ']' // adding description of the SOP module
 
       // otherInformation
       const otherInformationTags = ['specificCharacterSet', 'referringPhysicianName', 'MR_AcquisitionType', 'numberOfAverages', 'percentSampling', 'percentPhaseFieldOfView', 'lowRR_Value', 'highRR_Value', 'intervalsAcquired', 'intervalsRejected', 'heartRate', 'receiveCoilName', 'transmitCoilName', 'inPlanePhaseEncodingDirection', 'flipAngle', 'positionReferenceIndicator', 'windowCenter', 'windowWidth']

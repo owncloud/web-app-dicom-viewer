@@ -3,6 +3,8 @@ import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
 import dicomTags from './dicomTags'
+import uids from './uids'
+
 
 export const extractMetadata = () => {
   //const fetchDicomImageData = async (imageId: string): Promise<object> => {
@@ -24,18 +26,21 @@ export const extractMetadata = () => {
     return Object.keys(dicomTags).find(key => dicomTags[key] === value)
   }
 
-  const dateTagChecker = (tag: string): boolean => {
+  const formatDateTagChecker = (tag: string): boolean => {
     return (tag.endsWith('_formatDate')) ? true : false
   }
 
-  const timeTagChecker = (tag: string): boolean => {
+  const formatTimeTagChecker = (tag: string): boolean => {
     return (tag.endsWith('_formatTime')) ? true : false
+  }
+
+  const addSopTagChecker = (tag: string): boolean => {
+    return (tag.endsWith('_addSOPuids')) ? true : false
   }
 
   // todo:
   // - make this function work for single objects as well as array of objects?
   // - or pass extracted data as parameter
-
   const extractDicomMetadata = async (imageId: string, tags: string[], language: string = 'en') => {
     const extractedData: { label: string, value: string }[] = []
 
@@ -44,13 +49,14 @@ export const extractMetadata = () => {
 
     // extracting data
     for (let i=0; i < tags.length; ++i) {
-      // check if tag contains the extension for date or time formatting
-      let isDate = dateTagChecker(tags[i])
-      let isTime = timeTagChecker(tags[i])
+      // check if tag contains an extension for date or time or SOP formatting
+      let isDate = formatDateTagChecker(tags[i])
+      let isTime = formatTimeTagChecker(tags[i])
+      let isSOP = addSopTagChecker(tags[i])
 
       let metadataLabel = tags[i]
-      if (isDate || isTime) {
-        metadataLabel = metadataLabel.slice(0, -11) // cutting off the add-on (_formatDate or _formatTime) from the label
+      if (isDate || isTime || isSOP) {
+        metadataLabel = metadataLabel.slice(0, -11) // cutting off the add-on (_formatDate or _formatTime or _addSOPuids) from the label
       }
 
       let metadataValue = dicomImageData.string(findDicomTagByValue(metadataLabel))
@@ -60,6 +66,10 @@ export const extractMetadata = () => {
       }
       else if (isTime && metadataValue != undefined && metadataValue.length >= 4) {
         metadataValue = formatTime(metadataValue, language, DateTime.TIME_24_WITH_SECONDS)
+      }
+      else if (isSOP && metadataValue != undefined){
+        // adding description of the SOP class uids
+        metadataValue += ' [' + uids[metadataValue] + ']'
       }
 
       extractedData.push({
@@ -113,5 +123,5 @@ export const extractMetadata = () => {
     return undefined
   }
 
-  return { fetchDicomImageData, findDicomTagByValue, dateTagChecker, timeTagChecker, formatDate, formatTime, extractDicomMetadata }
+  return { fetchDicomImageData, findDicomTagByValue, formatDateTagChecker, formatTimeTagChecker, addSopTagChecker, formatDate, formatTime, extractDicomMetadata }
 }
