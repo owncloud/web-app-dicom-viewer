@@ -25,23 +25,6 @@ export const extractMetadata = () => {
   // - check where to do nice formatting of date & time values
   // - make this function work for single objects as well as array of objects
 
-  const extractDicomMetadataOld = async (imageId: string, tags: string[]) => {
-    const extractedData: [string, string][] = []
-
-    // get image data
-    const dicomImageData = await fetchDicomImageData(imageId)
-
-    // extracting data
-    for (let i=0; i < tags.length; ++i) {
-      const label = tags[i]
-      const value = dicomImageData.string(findDicomTagByValue(tags[i]))
-      const element = [label, value]
-      extractedData.push(element)
-    }
-
-    return extractedData
-  }
-
   const extractDicomMetadata = async (imageId: string, tags: string[]) => {
       const extractedData: { label: string, value: string }[] = []
 
@@ -56,8 +39,10 @@ export const extractMetadata = () => {
         })
       }
 
+      // formatting date & time values?
+
       return extractedData
     }
 
-  return { fetchDicomImageData, findDicomTagByValue, extractDicomMetadata, extractDicomMetadataOld }
+  return { fetchDicomImageData, findDicomTagByValue, extractDicomMetadata }
 }
