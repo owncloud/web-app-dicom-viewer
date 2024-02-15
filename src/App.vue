@@ -221,16 +221,7 @@ export default defineComponent({
       patientInformation: [],
       studyInformation: [],
       seriesInformation: [],
-      instanceInformation: {
-        instanceNumber: '',
-        acquisitionNumber: '',
-        acquisitionDate: '',
-        acquisitionTime: '',
-        instanceCreationDate: '',
-        instanceCreationTime: '',
-        contentDate: '',
-        contentTime: ''
-      },
+      instanceInformation: [],
       imageInformation: {
         rowsX_Columns: '',
         photometricInterpretation: '',
@@ -450,10 +441,6 @@ export default defineComponent({
       this.vipInformation.instanceCreationTime = this.dicomImageData.string('x00080013')
 
       this.isVipMetadataFetched = true
-
-      // todo:
-      // - store values into object
-      // - check where to do nice formatting of date & time values
     },
     async fetchMetadataInformation(imageId) {
       console.log('fetch meta data information for: ' + imageId)
@@ -500,6 +487,7 @@ export default defineComponent({
         }
       })
       /*
+      // formatting of date & time
       this.studyInformation.studyDate = this.formatDate(this.dicomImageData.string('x00080020'), longDateTimeFormat)
       this.studyInformation.studyTime = this.formatTime(this.dicomImageData.string('x00080030'), longDateTimeFormat)
       */
@@ -514,13 +502,23 @@ export default defineComponent({
         }
       })
       /*
+      // formatting of date & time
       this.seriesInformation.seriesDate = this.formatDate(this.dicomImageData.string('x00080021'), longDateTimeFormat)
       this.seriesInformation.seriesTime = this.formatTime(this.dicomImageData.string('x00080031'), longDateTimeFormat)
       */
 
       // instanceInformation
-      this.instanceInformation.instanceNumber = this.dicomImageData.string('x00200013')
-      this.instanceInformation.acquisitionNumber = this.dicomImageData.string('x00200012')
+      const instanceInformationTags = ['instanceNumber', 'acquisitionNumber', 'acquisitionDate', 'acquisitionTime', 'instanceCreationDate', 'instanceCreationTime', 'contentDate', 'contentTime' ]
+
+      const instanceInformation = extractDicomMetadata(imageId, instanceInformationTags)
+      instanceInformation.then((result) => {
+        if (result != undefined) {
+          this.instanceInformation = result
+        }
+      })
+
+      /*
+      // formatting of date & time
       this.instanceInformation.acquisitionDate = this.formatDate(
         this.dicomImageData.string('x00080022'),
         longDateTimeFormat
@@ -545,6 +543,7 @@ export default defineComponent({
         this.dicomImageData.string('x00080033'),
         longDateTimeFormat
       )
+      */
 
       // imageInformation
       this.imageInformation.photometricInterpretation = this.dicomImageData.string('x00280004')

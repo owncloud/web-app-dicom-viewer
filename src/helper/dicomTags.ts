@@ -22,6 +22,23 @@ const dicomTags = {
   'x00180015': 'bodyPart',
   'x00080021': 'seriesDate',
   'x00080031': 'seriesTime',
+  'x00200013': 'instanceNumber',
+  'x00200012': 'acquisitionNumber',
+  'x00080022': 'acquisitionDate',
+  'x0008002A': 'acquisitionTime',
+  'x00080012': 'instanceCreationDate',
+  'x00080013': 'instanceCreationTime',
+  'x00080023': 'contentDate',
+  'x00080033': 'contentTime',
+  'x00280004': 'photometricInterpretation',
+  'x00080008': 'imageType',
+  'x00281053': 'rescaleSlope',
+  'x00281052': 'rescaleIntercept',
+  'x00200032': 'imagePositionPatient',
+  'x00280030': 'imageOrientationPatient',
+  'x00204000': 'patientPosition',
+  'x00200037': 'pixelSpacing',
+  'x00185100': 'imageComments',
 }
 
 export default dicomTags

@@ -50,7 +50,6 @@
           :is-first-section="false"
         />
 
-        <!--
         <metadata-sidebar-table-row
           v-bind="$props.instanceInformation"
           :metadataSectionName="'Instance Information'"
@@ -58,6 +57,7 @@
           :is-first-section="false"
         />
 
+        <!--
         <metadata-sidebar-table-row
           v-bind="$props.imageInformation"
           :metadataSectionName="'Image Information'"
