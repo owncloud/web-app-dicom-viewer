@@ -60,6 +60,21 @@ const dicomTags = {
   'x00180088': 'spacingBetweenSlices',
   'x00180089': 'numberOfPhaseEncodingSteps',
   'x00180091': 'echoTrainLength',
+  'x0020000d': 'studyUID',
+  'x0020000e': 'seriesUID',
+  'x00080018': 'instanceUID',
+  'x00080016': 'SOP_ClassUID',
+  'x00020010': 'transferSyntaxUID',
+  'x00200052': 'frameOfReferenceUID',
+  '': '',
+  '': '',
+  '': '',
+  '': '',
+  '': '',
+  '': '',
+  '': '',
+  '': '',
+  '': '',
   '': '',
   '': '',
   '': '',
@@ -67,5 +82,6 @@ const dicomTags = {
   '': '',
   '': '',
 }
+
 
 export default dicomTags

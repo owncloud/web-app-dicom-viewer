@@ -241,14 +241,7 @@ export default defineComponent({
       },
       equipmentInformation: [],
       scanningInformation: [],
-      uidsInformation: {
-        studyUID: '',
-        seriesUID: '',
-        instanceUID: '',
-        SOP_ClassUID: '',
-        transferSyntaxUID: '',
-        frameOfReferenceUID: ''
-      },
+      uidsInformation: [],
       otherInformation: {
         specificCharacterSet: '',
         referringPhysicianName: '',
@@ -554,13 +547,19 @@ export default defineComponent({
       })
 
       // uidsInformation
-      this.uidsInformation.studyUID = this.dicomImageData.string('x0020000d') // Study Instance UID?
-      this.uidsInformation.seriesUID = this.dicomImageData.string('x0020000e') // Series Instance UID?
-      this.uidsInformation.instanceUID = this.dicomImageData.string('x00080018') // SOP Instance UID?
-      let SOP_ClassUID = this.dicomImageData.string('x00080016')
-      this.uidsInformation.SOP_ClassUID = SOP_ClassUID + ' [' + uids[SOP_ClassUID] + ']' // adding description of the SOP module
-      this.uidsInformation.transferSyntaxUID = this.dicomImageData.string('x00020010')
-      this.uidsInformation.frameOfReferenceUID = this.dicomImageData.string('x00200052')
+      const uidsInformationTags = ['studyUID', 'seriesUID', 'instanceUID', 'SOP_ClassUID', 'transferSyntaxUID', 'frameOfReferenceUID' ]
+
+      const uidsInformation = extractDicomMetadata(imageId, uidsInformationTags)
+      uidsInformation.then((result) => {
+        if (result != undefined) {
+          this.uidsInformation = result
+        }
+      })
+
+      // todo: adding description to SOP_ClassUID
+      // let SOP_ClassUID = this.dicomImageData.string('x00080016')
+      // this.uidsInformation.SOP_ClassUID = SOP_ClassUID + ' [' + uids[SOP_ClassUID] + ']' // adding description of the SOP module
+
 
       // otherInformation
       this.otherInformation.specificCharacterSet = this.dicomImageData.string('x00080005')

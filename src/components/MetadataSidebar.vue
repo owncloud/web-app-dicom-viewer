@@ -80,14 +80,14 @@
           :is-first-section="false"
         />
 
-        <!--
         <metadata-sidebar-table-row
           v-bind="$props.uidsInformation"
           :metadataSectionName="'UIDS Information'"
           :metadataSectionData="$props.uidsInformation"
           :is-first-section="false"
         />
-        
+
+        <!--
         <metadata-sidebar-table-row
           v-bind="$props.otherInformation"
           :metadataSectionName="'Other Information'"
