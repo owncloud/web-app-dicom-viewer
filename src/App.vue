@@ -413,7 +413,7 @@ export default defineComponent({
       // patientInformation
       const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
 
-      const patientInformation = extractDicomMetadata(imageId, patientInformationTags)
+      const patientInformation = extractDicomMetadata(imageId, patientInformationTags, this.$language.current)
       patientInformation.then((result) => {
         if (result != undefined) {
           this.patientInformation = result
@@ -431,7 +431,7 @@ export default defineComponent({
       // studyInformation
       const studyInformationTags = ['studyDescription', 'protocolName', 'accessionNumber', 'studyID', 'studyDate', 'studyTime' ]
 
-      const studyInformation = extractDicomMetadata(imageId, studyInformationTags)
+      const studyInformation = extractDicomMetadata(imageId, studyInformationTags, this.$language.current)
       studyInformation.then((result) => {
         if (result != undefined) {
           this.studyInformation = result
@@ -446,7 +446,7 @@ export default defineComponent({
       // seriesInformation
       const seriesInformationTags = ['seriesDescription', 'seriesNumber', 'modality', 'bodyPart', 'seriesDate', 'seriesTime' ]
 
-      const seriesInformation = extractDicomMetadata(imageId, seriesInformationTags)
+      const seriesInformation = extractDicomMetadata(imageId, seriesInformationTags, this.$language.current)
       seriesInformation.then((result) => {
         if (result != undefined) {
           this.seriesInformation = result
@@ -461,7 +461,7 @@ export default defineComponent({
       // instanceInformation
       const instanceInformationTags = ['instanceNumber', 'acquisitionNumber', 'acquisitionDate', 'acquisitionTime', 'instanceCreationDate', 'instanceCreationTime', 'contentDate', 'contentTime' ]
 
-      const instanceInformation = extractDicomMetadata(imageId, instanceInformationTags)
+      const instanceInformation = extractDicomMetadata(imageId, instanceInformationTags, this.$language.current)
       instanceInformation.then((result) => {
         if (result != undefined) {
           this.instanceInformation = result
@@ -510,7 +510,7 @@ export default defineComponent({
       // equipmentInformation
       const equipmentInformationTags = ['manufacturer', 'model', 'stationName', 'AE_Title', 'institutionName', 'softwareVersion', 'implementationVersionName' ]
 
-      const equipmentInformation = extractDicomMetadata(imageId, equipmentInformationTags)
+      const equipmentInformation = extractDicomMetadata(imageId, equipmentInformationTags, this.$language.current)
       equipmentInformation.then((result) => {
         if (result != undefined) {
           this.equipmentInformation = result
@@ -520,7 +520,7 @@ export default defineComponent({
       // scanningInformation
       const scanningInformationTags = ['scanningSequence', 'sequenceVariant', 'scanOptions', 'sliceThickness', 'repetitionTime', 'echoTime', 'inversionTime', 'imagingFrequency', 'imagedNucleus', 'echoNumbers', 'magneticFieldStrength', 'spacingBetweenSlices', 'numberOfPhaseEncodingSteps', 'echoTrainLength' ]
 
-      const scanningInformation = extractDicomMetadata(imageId, scanningInformationTags)
+      const scanningInformation = extractDicomMetadata(imageId, scanningInformationTags, this.$language.current)
       scanningInformation.then((result) => {
         if (result != undefined) {
           this.scanningInformation = result
@@ -530,7 +530,7 @@ export default defineComponent({
       // uidsInformation
       const uidsInformationTags = ['studyUID', 'seriesUID', 'instanceUID', 'SOP_ClassUID', 'transferSyntaxUID', 'frameOfReferenceUID' ]
 
-      const uidsInformation = extractDicomMetadata(imageId, uidsInformationTags)
+      const uidsInformation = extractDicomMetadata(imageId, uidsInformationTags, this.$language.current)
       uidsInformation.then((result) => {
         if (result != undefined) {
           this.uidsInformation = result
@@ -545,7 +545,7 @@ export default defineComponent({
       // otherInformation
       const otherInformationTags = ['specificCharacterSet', 'referringPhysicianName', 'MR_AcquisitionType', 'numberOfAverages', 'percentSampling', 'percentPhaseFieldOfView', 'lowRR_Value', 'highRR_Value', 'intervalsAcquired', 'intervalsRejected', 'heartRate', 'receiveCoilName', 'transmitCoilName', 'inPlanePhaseEncodingDirection', 'flipAngle', 'positionReferenceIndicator', 'windowCenter', 'windowWidth']
 
-      const otherInformation = extractDicomMetadata(imageId, otherInformationTags)
+      const otherInformation = extractDicomMetadata(imageId, otherInformationTags, this.$language.current)
       otherInformation.then((result) => {
         if (result != undefined) {
           this.otherInformation = result
