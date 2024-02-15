@@ -96,8 +96,8 @@ import upperFirst from 'lodash-es/upperFirst'
 
 // declaring some const & references
 const { ViewportType, Events } = Enums
-const shortDateTimeFormat = true
-const longDateTimeFormat = false
+const shortDateTimeFormat = true // check if this is still used
+const longDateTimeFormat = false // check if this is still used
 
 // specify external dependencies
 cornerstoneDICOMImageLoader.external.cornerstone = cornerstone
@@ -294,8 +294,6 @@ export default defineComponent({
       element,
       defaultOptions: {
         background: <Types.Point3>[0.2, 0, 0.2]
-        // more settings, TODO: check what other settings are needed/useful
-        // orientation: Enums.OrientationAxis.AXIAL,
       }
     }
 
@@ -362,13 +360,6 @@ export default defineComponent({
     async addWadouriPrefix(url: string) {
       return 'wadouri:' + url
     },
-    addObject(newLabel: string, newValue: string) {
-      this.vipInformation2.push({ label: newLabel, value: newValue })
-    },
-    addMetadataItem(informationObject, newLabel: string, newValue: string) {
-      var object = Object.keys(informationCategory)
-      informationObject.push({ label: newLabel, value: newValue })
-    },
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
 
@@ -411,42 +402,30 @@ export default defineComponent({
 
       // patientInformation
       const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate_formatDate', 'patientSex', 'patientWeight' ]
-
       const patientInformation = extractDicomMetadata(imageId, patientInformationTags, this.$language.current)
       patientInformation.then((result) => {
-        if (result != undefined) {
-          this.patientInformation = result
-        }
+        this.patientInformation = result
       })
 
       // studyInformation
       const studyInformationTags = ['studyDescription', 'protocolName', 'accessionNumber', 'studyID', 'studyDate_formatDate', 'studyTime_formatTime' ]
-
       const studyInformation = extractDicomMetadata(imageId, studyInformationTags, this.$language.current)
       studyInformation.then((result) => {
-        if (result != undefined) {
-          this.studyInformation = result
-        }
+        this.studyInformation = result
       })
 
       // seriesInformation
       const seriesInformationTags = ['seriesDescription', 'seriesNumber', 'modality', 'bodyPart', 'seriesDate_formatDate', 'seriesTime_formatTime' ]
-
       const seriesInformation = extractDicomMetadata(imageId, seriesInformationTags, this.$language.current)
       seriesInformation.then((result) => {
-        if (result != undefined) {
-          this.seriesInformation = result
-        }
+        this.seriesInformation = result
       })
 
       // instanceInformation
       const instanceInformationTags = ['instanceNumber', 'acquisitionNumber', 'acquisitionDate_formatDate', 'acquisitionTime_formatTime', 'instanceCreationDate_formatDate', 'instanceCreationTime_formatTime', 'contentDate_formatDate', 'contentTime_formatTime' ]
-
       const instanceInformation = extractDicomMetadata(imageId, instanceInformationTags, this.$language.current)
       instanceInformation.then((result) => {
-        if (result != undefined) {
-          this.instanceInformation = result
-        }
+        this.instanceInformation = result
       })
 
       // imageInformation
@@ -463,42 +442,30 @@ export default defineComponent({
 
       // equipmentInformation
       const equipmentInformationTags = ['manufacturer', 'model', 'stationName', 'AE_Title', 'institutionName', 'softwareVersion', 'implementationVersionName' ]
-
       const equipmentInformation = extractDicomMetadata(imageId, equipmentInformationTags, this.$language.current)
       equipmentInformation.then((result) => {
-        if (result != undefined) {
-          this.equipmentInformation = result
-        }
+        this.equipmentInformation = result
       })
 
       // scanningInformation
       const scanningInformationTags = ['scanningSequence', 'sequenceVariant', 'scanOptions', 'sliceThickness', 'repetitionTime', 'echoTime', 'inversionTime', 'imagingFrequency', 'imagedNucleus', 'echoNumbers', 'magneticFieldStrength', 'spacingBetweenSlices', 'numberOfPhaseEncodingSteps', 'echoTrainLength' ]
-
       const scanningInformation = extractDicomMetadata(imageId, scanningInformationTags, this.$language.current)
       scanningInformation.then((result) => {
-        if (result != undefined) {
-          this.scanningInformation = result
-        }
+        this.scanningInformation = result
       })
 
       // uidsInformation
       const uidsInformationTags = ['studyUID', 'seriesUID', 'instanceUID', 'SOP_ClassUID_addSOPuids', 'transferSyntaxUID', 'frameOfReferenceUID' ]
-
       const uidsInformation = extractDicomMetadata(imageId, uidsInformationTags, this.$language.current)
       uidsInformation.then((result) => {
-        if (result != undefined) {
-          this.uidsInformation = result
-        }
+        this.uidsInformation = result
       })
 
       // otherInformation
       const otherInformationTags = ['specificCharacterSet', 'referringPhysicianName', 'MR_AcquisitionType', 'numberOfAverages', 'percentSampling', 'percentPhaseFieldOfView', 'lowRR_Value', 'highRR_Value', 'intervalsAcquired', 'intervalsRejected', 'heartRate', 'receiveCoilName', 'transmitCoilName', 'inPlanePhaseEncodingDirection', 'flipAngle', 'positionReferenceIndicator', 'windowCenter', 'windowWidth']
-
       const otherInformation = extractDicomMetadata(imageId, otherInformationTags, this.$language.current)
       otherInformation.then((result) => {
-        if (result != undefined) {
-          this.otherInformation = result
-        }
+        this.otherInformation = result
       })
 
       this.isMetadataFetched = true
