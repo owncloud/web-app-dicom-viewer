@@ -477,7 +477,6 @@ export default defineComponent({
 
       const patientInformation = extractDicomMetadata(imageId, patientInformationTags)
       patientInformation.then((result) => {
-        console.log('logging patient information: ' + result)
         if (result != undefined) {
           this.patientInformation = result
         }
@@ -496,7 +495,6 @@ export default defineComponent({
 
       const studyInformation = extractDicomMetadata(imageId, studyInformationTags)
       studyInformation.then((result) => {
-        console.log('logging study information: ' + result)
         if (result != undefined) {
           this.studyInformation = result
         }
@@ -511,7 +509,6 @@ export default defineComponent({
 
       const seriesInformation = extractDicomMetadata(imageId, seriesInformationTags)
       seriesInformation.then((result) => {
-        console.log('logging series information: ' + result)
         if (result != undefined) {
           this.seriesInformation = result
         }

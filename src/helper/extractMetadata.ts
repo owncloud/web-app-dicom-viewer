@@ -50,9 +50,10 @@ export const extractMetadata = () => {
 
       // extracting data
       for (let i=0; i < tags.length; ++i) {
-        const _label = tags[i]
-        const _value = dicomImageData.string(findDicomTagByValue(tags[i]))
-        extractedData.push({ label: _label, value: _value })
+        extractedData.push({
+          label: tags[i],
+          value: dicomImageData.string(findDicomTagByValue(tags[i]))
+        })
       }
 
       return extractedData
