@@ -73,7 +73,6 @@
           :is-first-section="false"
         />
 
-        <!--
         <metadata-sidebar-table-row
           v-bind="$props.scanningInformation"
           :metadataSectionName="'Scanning Information'"
@@ -81,6 +80,7 @@
           :is-first-section="false"
         />
 
+        <!--
         <metadata-sidebar-table-row
           v-bind="$props.uidsInformation"
           :metadataSectionName="'UIDS Information'"

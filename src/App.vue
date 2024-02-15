@@ -240,22 +240,7 @@ export default defineComponent({
         imageComments: ''
       },
       equipmentInformation: [],
-      scanningInformation: {
-        scanningSequence: '',
-        sequenceVariant: '',
-        scanOptions: '',
-        sliceThickness: '',
-        repetitionTime: '',
-        echoTime: '',
-        inversionTime: '',
-        imagingFrequency: '',
-        imagedNucleus: '',
-        echoNumbers: '',
-        magneticFieldStrength: '',
-        spacingBetweenSlices: '',
-        numberOfPhaseEncodingSteps: '',
-        echoTrainLength: ''
-      },
+      scanningInformation: [],
       uidsInformation: {
         studyUID: '',
         seriesUID: '',
@@ -451,7 +436,7 @@ export default defineComponent({
         this.isDicomImageDataFetched = true
       }
 
-      //patientInformation
+      // patientInformation
       const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate', 'patientSex', 'patientWeight' ]
 
       const patientInformation = extractDicomMetadata(imageId, patientInformationTags)
@@ -469,7 +454,7 @@ export default defineComponent({
       )
       */
 
-      //studyInformation
+      // studyInformation
       const studyInformationTags = ['studyDescription', 'protocolName', 'accessionNumber', 'studyID', 'studyDate', 'studyTime' ]
 
       const studyInformation = extractDicomMetadata(imageId, studyInformationTags)
@@ -559,20 +544,14 @@ export default defineComponent({
       })
 
       // scanningInformation
-      this.scanningInformation.scanningSequence = this.dicomImageData.string('x00180020')
-      this.scanningInformation.sequenceVariant = this.dicomImageData.string('x00180021')
-      this.scanningInformation.scanOptions = this.dicomImageData.string('x00180022')
-      this.scanningInformation.sliceThickness = this.dicomImageData.string('x00180050')
-      this.scanningInformation.repetitionTime = this.dicomImageData.string('x00180080')
-      this.scanningInformation.echoTime = this.dicomImageData.string('x00180081')
-      this.scanningInformation.inversionTime = this.dicomImageData.string('x00180082')
-      this.scanningInformation.imagingFrequency = this.dicomImageData.string('x00180084')
-      this.scanningInformation.imagedNucleus = this.dicomImageData.string('x00180085')
-      this.scanningInformation.echoNumbers = this.dicomImageData.string('x00180086')
-      this.scanningInformation.magneticFieldStrength = this.dicomImageData.string('x00180087')
-      this.scanningInformation.spacingBetweenSlices = this.dicomImageData.string('x00180088')
-      this.scanningInformation.numberOfPhaseEncodingSteps = this.dicomImageData.string('x00180089')
-      this.scanningInformation.echoTrainLength = this.dicomImageData.string('x00180091')
+      const scanningInformationTags = ['scanningSequence', 'sequenceVariant', 'scanOptions', 'sliceThickness', 'repetitionTime', 'echoTime', 'inversionTime', 'imagingFrequency', 'imagedNucleus', 'echoNumbers', 'magneticFieldStrength', 'spacingBetweenSlices', 'numberOfPhaseEncodingSteps', 'echoTrainLength' ]
+
+      const scanningInformation = extractDicomMetadata(imageId, scanningInformationTags)
+      scanningInformation.then((result) => {
+        if (result != undefined) {
+          this.scanningInformation = result
+        }
+      })
 
       // uidsInformation
       this.uidsInformation.studyUID = this.dicomImageData.string('x0020000d') // Study Instance UID?
