@@ -221,7 +221,8 @@ export default defineComponent({
       studyInformation: [],
       seriesInformation: [],
       instanceInformation: [],
-      imageInformation: {
+      imageInformation: [],
+      imageInformationOld: {
         rowsX_Columns: '',
         photometricInterpretation: '',
         imageType: '',
@@ -429,16 +430,20 @@ export default defineComponent({
       })
 
       // imageInformation
+      const imageInformationTags = ['photometricInterpretation', 'imageType', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'imageComments' ]
+      const imageInformation = extractDicomMetadata(imageId, imageInformationTags, this.$language.current)
+      instanceInformation.then((result) => {
+        this.imageInformation = result
+      })
+
       // todo: refactor this
-      this.imageInformation.photometricInterpretation = this.dicomImageData.string('x00280004')
-      this.imageInformation.imageType = this.dicomImageData.string('x00080008')
-      this.imageInformation.rescaleSlope = this.dicomImageData.string('x00281053')
-      this.imageInformation.rescaleIntercept = this.dicomImageData.string('x00281052')
-      this.imageInformation.imagePositionPatient = this.dicomImageData.string('x00200032')
-      this.imageInformation.imageOrientationPatient = this.dicomImageData.string('x00280030')
-      this.imageInformation.patientPosition = this.dicomImageData.string('x00204000')
-      this.imageInformation.pixelSpacing = this.dicomImageData.string('x00200037')
-      this.imageInformation.imageComments = this.dicomImageData.string('x00185100')
+      // the following tags are currently not added, somehow push them into the array above... not sure if order matters
+      // 1. rowsX_Columns
+      // 4. bitsAllocated
+      // 5. bitsStored
+      // 6. highBit
+      // 7. pixelRepresentation
+      // 14. samplesPerPixel
 
       // equipmentInformation
       const equipmentInformationTags = ['manufacturer', 'model', 'stationName', 'AE_Title', 'institutionName', 'softwareVersion', 'implementationVersionName' ]
@@ -481,13 +486,13 @@ export default defineComponent({
           metaData.get('imagePixelModule', imageId)
 
         // adding values to corresponding variable
-        this.imageInformation.rowsX_Columns =
+        this.imageInformationOld.rowsX_Columns =
           imageData.dimensions[0] + ' x ' + imageData.dimensions[1]
-        this.imageInformation.bitsAllocated = bitsAllocated
-        this.imageInformation.bitsStored = bitsStored
-        this.imageInformation.highBit = highBit
-        this.imageInformation.pixelRepresentation = pixelRepresentation
-        this.imageInformation.samplesPerPixel = samplesPerPixel
+        this.imageInformationOld.bitsAllocated = bitsAllocated
+        this.imageInformationOld.bitsStored = bitsStored
+        this.imageInformationOld.highBit = highBit
+        this.imageInformationOld.pixelRepresentation = pixelRepresentation
+        this.imageInformationOld.samplesPerPixel = samplesPerPixel
 
         this.isMetadataExtracted = true
       } else {

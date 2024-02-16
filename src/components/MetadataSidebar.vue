@@ -57,14 +57,12 @@
           :is-first-section="false"
         />
 
-        <!--
         <metadata-sidebar-table-row
           v-bind="$props.imageInformation"
           :metadataSectionName="'Image Information'"
           :metadataSectionData="$props.imageInformation"
           :is-first-section="false"
         />
-        -->
 
         <metadata-sidebar-table-row
           v-bind="$props.equipmentInformation"
