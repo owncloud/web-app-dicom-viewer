@@ -387,7 +387,7 @@ export default defineComponent({
     async fetchMetadataInformation(imageId) {
       console.log('fetch meta data information for: ' + imageId)
 
-      const { fetchDicomImageData, extractDicomMetadata } = extractMetadata()
+      const { fetchDicomImageData, extractDicomMetadata, extractDicomMetadata2 } = extractMetadata()
 
       // this might no longer be needed
       if (!this.isDicomImageDataFetched) {
@@ -398,6 +398,7 @@ export default defineComponent({
       // patientInformation
       const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate_formatDate', 'patientSex', 'patientWeight' ]
       const patientInformation = extractDicomMetadata(imageId, patientInformationTags, this.$language.current)
+      //const patientInformation = extractDicomMetadata2(this.dicomImageData, patientInformationTags, this.$language.current)
       patientInformation.then((result) => {
         this.patientInformation = result
       })
@@ -424,20 +425,23 @@ export default defineComponent({
       })
 
       // imageInformation
-      const imageInformationTags = ['photometricInterpretation', 'imageType', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'imageComments' ]
+      const imageInformationTags = ['rows', 'columns', 'photometricInterpretation', 'imageType', 'bitsAllocated', 'bitsStored', 'highBit', 'pixelRepresentation', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'samplesPerPixel', 'imageComments' ]
       const imageInformation = extractDicomMetadata(imageId, imageInformationTags, this.$language.current)
-      instanceInformation.then((result) => {
+      imageInformation.then((result) => {
         this.imageInformation = result
       })
 
-      // todo: refactor this
-      // the following tags are currently not added, somehow push them into the array above... not sure if order matters
-      // 1. rowsX_Columns
+      // todo:
+      // the following tags currently do not return a valid value...
+      // they were previously extracted directly from viewport
+      // not sure if order matters
+      // 1. rowsX_Columns (rows, columns)
       // 4. bitsAllocated
       // 5. bitsStored
       // 6. highBit
       // 7. pixelRepresentation
       // 14. samplesPerPixel
+      // seems to be related to the fact that these tags are of value US (Unsigned Short), see https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_6.2.html
 
       // equipmentInformation
       const equipmentInformationTags = ['manufacturer', 'model', 'stationName', 'AE_Title', 'institutionName', 'softwareVersion', 'implementationVersionName' ]
