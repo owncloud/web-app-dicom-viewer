@@ -389,12 +389,6 @@ export default defineComponent({
 
       const { fetchDicomImageData, extractDicomMetadata } = extractMetadata()
 
-      if (!this.isVipMetadataFetched) {
-        await this.fetchVipMetadataInformation(imageId)
-        // making sure that all values that should have been populated by this function have been fetched,
-        // alternatively this check could be made when assigning the values
-      }
-
       // this might no longer be needed
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
