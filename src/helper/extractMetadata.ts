@@ -38,10 +38,6 @@ export const extractMetadata = () => {
   const extractDicomMetadata = async (imageData: object, tags: string[], language: string = 'en') => {
     const extractedData: { label: string, value: string }[] = []
 
-    // get image data
-    //const dicomImageData = await fetchDicomImageData(imageId)
-    const dicomImageData = imageData
-
     // extracting data
     for (let i=0; i < tags.length; ++i) {
       // check if tag contains an extension for date or time or SOP formatting
@@ -54,7 +50,7 @@ export const extractMetadata = () => {
         metadataLabel = metadataLabel.slice(0, -11) // cutting off the add-on (_formatDate or _formatTime or _addSOPuids) from the label
       }
 
-      let metadataValue = dicomImageData.string(findDicomTagByValue(metadataLabel))
+      let metadataValue = imageData.string(findDicomTagByValue(metadataLabel))
 
       if (isDate && metadataValue != undefined && metadataValue.length >= 8) {
         metadataValue = formatDate(metadataValue, language, DateTime.DATE_MED)
