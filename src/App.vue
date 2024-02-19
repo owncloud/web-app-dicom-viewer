@@ -201,7 +201,7 @@ export default defineComponent({
       isVipMetadataFetched: false,
       isMetadataFetched: false,
       isShowMetadataActivated: false,
-      dicomFiles: [this.resource],
+      dicomFiles: [this.resource], // currently not used since only one file is displayed, show prev/next feature will be implemented later, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
       vipInformation: [
         { patientName: '' },
         { patientBirthdate: '' },
@@ -242,10 +242,7 @@ export default defineComponent({
   // vue js lifecylce functions
   // --------------------------
 
-  // "created" runs before DOM is rendered, data and events are already accessible
   async created() {
-    console.log('lifecycle @ created')
-
     // get resource, ensure resource url is not empty!
     if (this.url != null && this.url != undefined && this.url != '') {
       this.dicomUrl = await this.addWadouriPrefix(this.url)
@@ -257,13 +254,7 @@ export default defineComponent({
     // prefetch all other metadata (in separate function for performance reasons)
     await this.fetchMetadataInformation(await this.addWadouriPrefix(this.url))
   },
-  // "beforeMount" is called right before the component is to be mounted
-  beforeMount() {
-    console.log('lifecycle @ beforeMount')
-  },
-  // "mounted" is called when component has been added to DOM
   async mounted() {
-    console.log('lifecycle @ mounted')
     // check if cornerstone core is initialized
     if (!cornerstone.isCornerstoneInitialized()) {
       await this.initCornerstoneCore()
@@ -296,8 +287,7 @@ export default defineComponent({
     // get stack viewport that was created
     this.viewport = <Types.IStackViewport>this.renderingEngine.getViewport(viewportId)
 
-    // add resource to stack
-    // ensure resource url is not empty!
+    // add resource to stack, ensure resource url is not empty!
     if (this.url != null && this.url != undefined && this.url != '') {
       let dicomResourceUrl = await this.addWadouriPrefix(this.url)
 
@@ -317,28 +307,17 @@ export default defineComponent({
       console.log('no valid dicom resource url: ' + this.url)
     }
   },
-  // "beforeUpdate" is implementing any change in the component
-  beforeUpdate() {
-    console.log('lifecycle @ beforeUpdate')
-  },
-  // updated gets called anytime some change is made in the component
   updated() {
-    console.log('lifecycle @ updated')
     // this.viewport.resize()
     // also check if it is needed to recalculate scale factor
     // this.setViewportCameraParallelScaleFactor()
   },
-  // cleaning up component, leaving no variables or events that could cause memory leaks to app
   beforeUnmount() {
-    console.log('lifecycle @ beforeUnmount')
     this.renderingEngine.destroy()
     this.isMetadataExtracted = false
     this.isVipMetadataFetched = false
     this.isMetadataFetched = false
     this.isDicomImageDataFetched = false
-  },
-  unmounted() {
-    console.log('lifecycle @ unmounted')
   },
   methods: {
     async initCornerstoneCore() {
@@ -352,11 +331,8 @@ export default defineComponent({
       return 'wadouri:' + url
     },
     async fetchVipMetadataInformation(imageId) {
-      console.log('fetch vip meta data information for: ' + imageId)
-
       const { fetchDicomImageData, findDicomTagByValue, extractDicomMetadata } = extractMetadata()
 
-      // fetching dicom image data
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
         if (!this.isDicomImageDataFetched) {
@@ -375,8 +351,6 @@ export default defineComponent({
       this.isVipMetadataFetched = true
     },
     async fetchMetadataInformation(imageId) {
-      console.log('fetch meta data information for: ' + imageId)
-
       const { fetchDicomImageData, extractDicomMetadata } = extractMetadata()
 
       // ensure dicom image data is fetched
@@ -536,11 +510,11 @@ export default defineComponent({
     // functions relating to dicom controls
     prev() {
       console.log('prev clicked')
-      // TODO: still needs to be implemented, similar to prev & next in preview app, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
+      // currently not supported, will be implemented later similar to prev & next in preview app, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
     },
     next() {
       console.log('next clicked')
-      // TODO: still needs to be implemented, similar to prev & next in preview app, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
+      // currently not supported, will be implemented later similar to prev & next in preview app, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
     },
     setZoom(newZoomFactor) {
       this.currentImageZoom = newZoomFactor
