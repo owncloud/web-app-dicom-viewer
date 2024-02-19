@@ -152,10 +152,6 @@ export default defineComponent({
       type: String,
       required: true
     },
-    resource: {
-      type: Object as PropType<Resource>,
-      default: null
-    },
     patientInformation: {
       type: Array
     },
