@@ -237,11 +237,7 @@ export default defineComponent({
       otherInformation: [],
     }
   },
-
-  // --------------------------
   // vue js lifecylce functions
-  // --------------------------
-
   async created() {
     // get resource, ensure resource url is not empty!
     if (this.url != null && this.url != undefined && this.url != '') {
@@ -302,7 +298,8 @@ export default defineComponent({
       this.setViewportCameraParallelScaleFactor()
 
       // setting metadata
-      this.extractMetadataFromViewport(dicomResourceUrl)
+      // this.extractMetadataFromViewport(dicomResourceUrl)
+      this.getImageMetadataFromViewport(dicomResourceUrl)
     } else {
       console.log('no valid dicom resource url: ' + this.url)
     }
@@ -331,7 +328,7 @@ export default defineComponent({
       return 'wadouri:' + url
     },
     async fetchVipMetadataInformation(imageId) {
-      const { fetchDicomImageData, findDicomTagByValue, extractDicomMetadata } = extractMetadata()
+      const { fetchDicomImageData, findDicomTagByValue } = extractMetadata()
 
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
@@ -353,7 +350,7 @@ export default defineComponent({
     async fetchMetadataInformation(imageId) {
       const { fetchDicomImageData, extractDicomMetadata } = extractMetadata()
 
-      // ensure dicom image data is fetched
+      // ensure dicom image data has been fetched
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
         if (!this.isDicomImageDataFetched) {
@@ -392,6 +389,9 @@ export default defineComponent({
       })
 
       // imageInformation
+      // this.getImageMetadataFromViewport(imageId)
+      // make sure that viewport has already been initialized when this is function is called
+
       const imageInformationTags = ['rows', 'columns', 'photometricInterpretation', 'imageType', 'bitsAllocated', 'bitsStored', 'highBit', 'pixelRepresentation', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'samplesPerPixel', 'imageComments' ]
       const imageInformation = extractDicomMetadata(this.dicomImageData, imageInformationTags, this.$language.current)
       imageInformation.then((result) => {
@@ -441,8 +441,11 @@ export default defineComponent({
       this.isMetadataFetched = true
       // TODO: check that data only gets displayed after all metadata has been fetched
     },
-    extractMetadataFromViewport(imageId: string) {
-      // get metadata from viewport
+    getImageMetadataFromViewport(imageId: string) {
+      // get image related metadata directly from viewport
+      // proper values can't be extracted with extractDicomMetadata helper function since this tags are of value US (Unsigned Short),
+      // see https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_6.2.html
+      // todo: make sure that viewport is not null...
       const imageData = this.viewport.getImageData() // returns IImageData object, see https://www.cornerstonejs.org/api/core/namespace/Types#IImageData
 
       if (imageId != (null || undefined) && typeof imageId == 'string') {
@@ -450,7 +453,17 @@ export default defineComponent({
         const { pixelRepresentation, bitsAllocated, bitsStored, highBit, samplesPerPixel } =
           metaData.get('imagePixelModule', imageId)
 
-        // adding values to corresponding variable
+        // adding values to corresponding information section array
+        this.imageInformation.push({
+          label: 'rowsX_Columns',
+          value: imageData.dimensions[0] + ' x ' + imageData.dimensions[1]
+        })
+        this.imageInformation.push({ label: 'bitsAllocated', value: bitsAllocated })
+        this.imageInformation.push({ label: 'bitsStored', value: bitsStored })
+        this.imageInformation.push({ label: 'highBit', value: highBit })
+        this.imageInformation.push({ label: 'pixelRepresentation', value: pixelRepresentation })
+        this.imageInformation.push({ label: 'samplesPerPixel', value: samplesPerPixel })
+        /*
         this.imageInformationOld.rowsX_Columns =
           imageData.dimensions[0] + ' x ' + imageData.dimensions[1]
         this.imageInformationOld.bitsAllocated = bitsAllocated
@@ -458,6 +471,7 @@ export default defineComponent({
         this.imageInformationOld.highBit = highBit
         this.imageInformationOld.pixelRepresentation = pixelRepresentation
         this.imageInformationOld.samplesPerPixel = samplesPerPixel
+        */
 
         this.isMetadataExtracted = true
       } else {
