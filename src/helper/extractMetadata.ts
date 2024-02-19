@@ -8,8 +8,6 @@ import uids from './uids'
 
 export const extractMetadata = () => {
   const fetchDicomImageData = async (imageId: string) => {
-    console.log('extract metadata helper - fetching dicom image data for: ' + imageId)
-
     let dicomImageData
 
     await cornerstoneDICOMImageLoader.wadouri
@@ -37,7 +35,6 @@ export const extractMetadata = () => {
     return (tag.endsWith('_addSOPuids')) ? true : false
   }
 
-  //const extractDicomMetadata = async (imageId: string, tags: string[], language: string = 'en') => {
   const extractDicomMetadata = async (imageData: object, tags: string[], language: string = 'en') => {
     const extractedData: { label: string, value: string }[] = []
 
@@ -68,18 +65,6 @@ export const extractMetadata = () => {
       else if (isSOP && metadataValue != undefined){
         // adding description of the SOP class uids
         metadataValue += ' [' + uids[metadataValue] + ']'
-      }
-
-      // for testing only
-      if (metadataLabel.includes('rows') ||
-          metadataLabel.includes('columns') ||
-          metadataLabel.includes('bitsAllocated') ||
-          metadataLabel.includes('bitsStored') ||
-          metadataLabel.includes('highBit') ||
-          metadataLabel.includes('pixelRepresentation') ||
-          metadataLabel.includes('samplesPerPixel'))
-      {
-        console.log('label: ' + metadataLabel + ' / value: ' + metadataValue )
       }
 
       extractedData.push({

@@ -433,7 +433,6 @@ export default defineComponent({
       const imageData = this.viewport.getImageData() // returns IImageData object, see https://www.cornerstonejs.org/api/core/namespace/Types#IImageData
 
       if (imageId != (null || undefined) && typeof imageId == 'string') {
-        console.log('getting image metadata from viewport for image id: ' + imageId)
         const { pixelRepresentation, bitsAllocated, bitsStored, highBit, samplesPerPixel } =
           metaData.get('imagePixelModule', imageId)
 
