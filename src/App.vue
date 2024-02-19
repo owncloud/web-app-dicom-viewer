@@ -389,18 +389,13 @@ export default defineComponent({
       })
 
       // imageInformation
-      const imageInformationTags = ['photometricInterpretation', 'imageType', 'bitsAllocated', 'bitsStored', 'highBit', 'pixelRepresentation', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'samplesPerPixel', 'imageComments' ]
+      const imageInformationTags = ['photometricInterpretation', 'imageType', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'samplesPerPixel', 'imageComments' ]
       const imageInformation = extractDicomMetadata(this.dicomImageData, imageInformationTags, this.$language.current)
       imageInformation.then((result) => {
         this.imageInformation = result
       })
 
       // todo: add these values if possible in appropriate order
-      // not sure if order matters
-      // 4. bitsAllocated
-      // 5. bitsStored
-      // 6. highBit
-      // 7. pixelRepresentation
       // 14. samplesPerPixel
 
       // equipmentInformation
@@ -442,19 +437,19 @@ export default defineComponent({
       const imageData = this.viewport.getImageData() // returns IImageData object, see https://www.cornerstonejs.org/api/core/namespace/Types#IImageData
 
       if (imageId != (null || undefined) && typeof imageId == 'string') {
-        console.log('extracting metadata from viewport for image id: ' + imageId)
+        console.log('getting image metadata from viewport for image id: ' + imageId)
         const { pixelRepresentation, bitsAllocated, bitsStored, highBit, samplesPerPixel } =
           metaData.get('imagePixelModule', imageId)
 
-        // adding values to corresponding information section array
+        // adding values to image information array in corresponding order
         this.imageInformation.splice(0, 0, {
           label: 'rowsX_Columns',
           value: imageData.dimensions[0] + ' x ' + imageData.dimensions[1]
         })
-        this.imageInformation.push({ label: 'bitsAllocated', value: bitsAllocated })
-        this.imageInformation.push({ label: 'bitsStored', value: bitsStored })
-        this.imageInformation.push({ label: 'highBit', value: highBit })
-        this.imageInformation.push({ label: 'pixelRepresentation', value: pixelRepresentation })
+        this.imageInformation.splice(3, 0, { label: 'bitsAllocated', value: bitsAllocated })
+        this.imageInformation.splice(4, 0, { label: 'bitsStored', value: bitsStored })
+        this.imageInformation.splice(5, 0, { label: 'highBit', value: highBit })
+        this.imageInformation.splice(6, 0, { label: 'pixelRepresentation', value: pixelRepresentation })
         this.imageInformation.push({ label: 'samplesPerPixel', value: samplesPerPixel })
         /*
         this.imageInformationOld.rowsX_Columns =
