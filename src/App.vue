@@ -190,7 +190,6 @@ export default defineComponent({
   },
   data() {
     return {
-      isDicomFileRendered: false, // check if this is needed
       isMetadataExtracted: false,
       element: null,
       renderingEngine: null,
@@ -310,7 +309,6 @@ export default defineComponent({
 
       // render the image (updates every viewport in the rendering engine)
       this.viewport.render()
-      this.isDicomFileRendered = true
       this.setViewportCameraParallelScaleFactor()
 
       // setting metadata
@@ -334,7 +332,6 @@ export default defineComponent({
   beforeUnmount() {
     console.log('lifecycle @ beforeUnmount')
     this.renderingEngine.destroy()
-    this.isDicomFileRendered = false
     this.isMetadataExtracted = false
     this.isVipMetadataFetched = false
     this.isMetadataFetched = false
