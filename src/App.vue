@@ -85,7 +85,7 @@ import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { useGettext } from 'vue3-gettext'
 
-// other imports
+// other imports & declarations
 import { Resource } from '@ownclouders/web-client/src'
 import DicomControls from './components/DicomControls.vue'
 import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
@@ -94,10 +94,7 @@ import { extractMetadata } from './helper/extractMetadata'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
-// declaring some const & references
-const { ViewportType, Events } = Enums
-const shortDateTimeFormat = true // check if this is still used
-const longDateTimeFormat = false // check if this is still used
+const { ViewportType } = Enums
 
 // specify external dependencies
 cornerstoneDICOMImageLoader.external.cornerstone = cornerstone
@@ -138,13 +135,13 @@ try {
 }
 
 // register image loader
-// "loadImage" is used for stack, "createAndCacheVolume" for volumes (not needed at this point, maybe later...)
+// "loadImage" is used for stack, "createAndCacheVolume" for volumes (not used at this point),
 // see also https://www.cornerstonejs.org/docs/tutorials/basic-volume
 cornerstone.registerImageLoader('http', cornerstoneDICOMImageLoader.loadImage)
 cornerstone.registerImageLoader('https', cornerstoneDICOMImageLoader.loadImage)
 
 export default defineComponent({
-  //name: 'DicomViewer', // seems like this is not needed anymore for streamlined apps
+  //name: 'DicomViewer',
   components: {
     DicomControls,
     MetadataSidebar,
