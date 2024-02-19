@@ -37,14 +37,13 @@ export const extractMetadata = () => {
     return (tag.endsWith('_addSOPuids')) ? true : false
   }
 
-  // todo:
-  // - make this function work for single objects as well as array of objects?
-  // - or pass extracted data as parameter
-  const extractDicomMetadata = async (imageId: string, tags: string[], language: string = 'en') => {
+  //const extractDicomMetadata = async (imageId: string, tags: string[], language: string = 'en') => {
+  const extractDicomMetadata = async (imageData: object, tags: string[], language: string = 'en') => {
     const extractedData: { label: string, value: string }[] = []
 
     // get image data
-    const dicomImageData = await fetchDicomImageData(imageId)
+    //const dicomImageData = await fetchDicomImageData(imageId)
+    const dicomImageData = imageData
 
     // extracting data
     for (let i=0; i < tags.length; ++i) {
@@ -92,47 +91,6 @@ export const extractMetadata = () => {
     return extractedData
   }
 
-  const extractDicomMetadata2 = async (imageData: object, tags: string[], language: string = 'en') => {
-      const extractedData: { label: string, value: string }[] = []
-
-      // get image data
-      //const dicomImageData = await fetchDicomImageData(imageId)
-      const dicomImageData = imageData
-
-      // extracting data
-      for (let i=0; i < tags.length; ++i) {
-        // check if tag contains an extension for date or time or SOP formatting
-        let isDate = formatDateTagChecker(tags[i])
-        let isTime = formatTimeTagChecker(tags[i])
-        let isSOP = addSopTagChecker(tags[i])
-
-        let metadataLabel = tags[i]
-        if (isDate || isTime || isSOP) {
-          metadataLabel = metadataLabel.slice(0, -11) // cutting off the add-on (_formatDate or _formatTime or _addSOPuids) from the label
-        }
-
-        let metadataValue = dicomImageData.string(findDicomTagByValue(metadataLabel))
-
-        if (isDate && metadataValue != undefined && metadataValue.length >= 8) {
-          metadataValue = formatDate(metadataValue, language, DateTime.DATE_MED)
-        }
-        else if (isTime && metadataValue != undefined && metadataValue.length >= 4) {
-          metadataValue = formatTime(metadataValue, language, DateTime.TIME_24_WITH_SECONDS)
-        }
-        else if (isSOP && metadataValue != undefined){
-          // adding description of the SOP class uids
-          metadataValue += ' [' + uids[metadataValue] + ']'
-        }
-
-        extractedData.push({
-          label: metadataLabel,
-          value: metadataValue
-        })
-      }
-
-      return extractedData
-    }
-
   const formatDate = (date: string, language: string, dateFormat: DateTime): string | undefined => {
   // transforming date into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
   // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'DA'
@@ -175,5 +133,5 @@ export const extractMetadata = () => {
     return undefined
   }
 
-  return { fetchDicomImageData, findDicomTagByValue, formatDateTagChecker, formatTimeTagChecker, addSopTagChecker, formatDate, formatTime, extractDicomMetadata, extractDicomMetadata2 }
+  return { fetchDicomImageData, findDicomTagByValue, formatDateTagChecker, formatTimeTagChecker, addSopTagChecker, formatDate, formatTime, extractDicomMetadata }
 }
