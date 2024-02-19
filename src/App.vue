@@ -190,7 +190,6 @@ export default defineComponent({
   },
   data() {
     return {
-      isMetadataExtracted: false,
       element: null,
       renderingEngine: null,
       viewport: null,
@@ -200,6 +199,7 @@ export default defineComponent({
       currentImageRotation: 0,
       isVipMetadataFetched: false,
       isMetadataFetched: false,
+      isMetadataExtracted: false,
       isShowMetadataActivated: false,
       dicomFiles: [this.resource], // currently not used since only one file is displayed, show prev/next feature will be implemented later, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
       vipInformation: [
@@ -389,14 +389,11 @@ export default defineComponent({
       })
 
       // imageInformation
-      const imageInformationTags = ['photometricInterpretation', 'imageType', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'samplesPerPixel', 'imageComments' ]
+      const imageInformationTags = ['photometricInterpretation', 'imageType', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'imageComments' ]
       const imageInformation = extractDicomMetadata(this.dicomImageData, imageInformationTags, this.$language.current)
       imageInformation.then((result) => {
         this.imageInformation = result
       })
-
-      // todo: add these values if possible in appropriate order
-      // 14. samplesPerPixel
 
       // equipmentInformation
       const equipmentInformationTags = ['manufacturer', 'model', 'stationName', 'AE_Title', 'institutionName', 'softwareVersion', 'implementationVersionName' ]
@@ -427,13 +424,12 @@ export default defineComponent({
       })
 
       this.isMetadataFetched = true
-      // TODO: check that data only gets displayed after all metadata has been fetched
+      // TODO: check that data only gets displayed after all metadata has been fetched (including the data from viewport)
     },
     getImageMetadataFromViewport(imageId: string) {
       // get image related metadata directly from viewport
-      // proper values can't be extracted with extractDicomMetadata helper function since this tags are of value US (Unsigned Short),
+      // proper values of these tags can't be extracted with extractDicomMetadata helper function since this tags are of value US (Unsigned Short),
       // see https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_6.2.html
-      // todo: make sure that viewport is not null...
       const imageData = this.viewport.getImageData() // returns IImageData object, see https://www.cornerstonejs.org/api/core/namespace/Types#IImageData
 
       if (imageId != (null || undefined) && typeof imageId == 'string') {
@@ -450,20 +446,9 @@ export default defineComponent({
         this.imageInformation.splice(4, 0, { label: 'bitsStored', value: bitsStored })
         this.imageInformation.splice(5, 0, { label: 'highBit', value: highBit })
         this.imageInformation.splice(6, 0, { label: 'pixelRepresentation', value: pixelRepresentation })
-        this.imageInformation.push({ label: 'samplesPerPixel', value: samplesPerPixel })
-        /*
-        this.imageInformationOld.rowsX_Columns =
-          imageData.dimensions[0] + ' x ' + imageData.dimensions[1]
-        this.imageInformationOld.bitsAllocated = bitsAllocated
-        this.imageInformationOld.bitsStored = bitsStored
-        this.imageInformationOld.highBit = highBit
-        this.imageInformationOld.pixelRepresentation = pixelRepresentation
-        this.imageInformationOld.samplesPerPixel = samplesPerPixel
-        */
+        this.imageInformation.splice(13, 0, { label: 'samplesPerPixel', value: samplesPerPixel })
 
         this.isMetadataExtracted = true
-      } else {
-        console.log('no image meta data available available for extraction from viewport')
       }
     },
     setViewportCameraParallelScaleFactor() {
