@@ -392,7 +392,11 @@ export default defineComponent({
       // ensure dicom image data is fetched
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
-        this.isDicomImageDataFetched = true
+        if (!this.isDicomImageDataFetched) {
+          if (this.dicomImageData != null){
+            this.isDicomImageDataFetched = true
+          }
+        }
       }
 
       // patientInformation
