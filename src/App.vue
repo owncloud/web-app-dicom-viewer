@@ -364,7 +364,7 @@ export default defineComponent({
     async fetchVipMetadataInformation(imageId) {
       console.log('fetch vip meta data information for: ' + imageId)
 
-      const { fetchDicomImageData, extractDicomMetadata } = extractMetadata()
+      const { fetchDicomImageData, findDicomTagByValue, extractDicomMetadata } = extractMetadata()
 
       // fetching dicom image data
       if (!this.isDicomImageDataFetched) {
@@ -376,11 +376,11 @@ export default defineComponent({
         }
       }
 
-      this.vipInformation.patientName = this.dicomImageData.string('x00100010')
-      this.vipInformation.patientBirthdate = this.dicomImageData.string('x00100030')
-      this.vipInformation.institutionName = this.dicomImageData.string('x00080080')
-      this.vipInformation.instanceCreationDate = this.dicomImageData.string('x00080012')
-      this.vipInformation.instanceCreationTime = this.dicomImageData.string('x00080013')
+      this.vipInformation.patientName = this.dicomImageData.string(findDicomTagByValue('patientName'))
+      this.vipInformation.patientBirthdate = this.dicomImageData.string(findDicomTagByValue('patientBirthdate'))
+      this.vipInformation.institutionName = this.dicomImageData.string(findDicomTagByValue('institutionName'))
+      this.vipInformation.instanceCreationDate = this.dicomImageData.string(findDicomTagByValue('instanceCreationDate'))
+      this.vipInformation.instanceCreationTime = this.dicomImageData.string(findDicomTagByValue('instanceCreationTime'))
 
       this.isVipMetadataFetched = true
     },
