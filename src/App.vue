@@ -389,26 +389,19 @@ export default defineComponent({
       })
 
       // imageInformation
-      // this.getImageMetadataFromViewport(imageId)
-      // make sure that viewport has already been initialized when this is function is called
-
-      const imageInformationTags = ['rows', 'columns', 'photometricInterpretation', 'imageType', 'bitsAllocated', 'bitsStored', 'highBit', 'pixelRepresentation', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'samplesPerPixel', 'imageComments' ]
+      const imageInformationTags = ['photometricInterpretation', 'imageType', 'bitsAllocated', 'bitsStored', 'highBit', 'pixelRepresentation', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'samplesPerPixel', 'imageComments' ]
       const imageInformation = extractDicomMetadata(this.dicomImageData, imageInformationTags, this.$language.current)
       imageInformation.then((result) => {
         this.imageInformation = result
       })
 
-      // todo:
-      // the following tags currently do not return a valid value...
-      // they were previously extracted directly from viewport
+      // todo: add these values if possible in appropriate order
       // not sure if order matters
-      // 1. rowsX_Columns (rows, columns)
       // 4. bitsAllocated
       // 5. bitsStored
       // 6. highBit
       // 7. pixelRepresentation
       // 14. samplesPerPixel
-      // seems to be related to the fact that these tags are of value US (Unsigned Short), see https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_6.2.html
 
       // equipmentInformation
       const equipmentInformationTags = ['manufacturer', 'model', 'stationName', 'AE_Title', 'institutionName', 'softwareVersion', 'implementationVersionName' ]
@@ -454,7 +447,7 @@ export default defineComponent({
           metaData.get('imagePixelModule', imageId)
 
         // adding values to corresponding information section array
-        this.imageInformation.push({
+        this.imageInformation.splice(0, 0, {
           label: 'rowsX_Columns',
           value: imageData.dimensions[0] + ' x ' + imageData.dimensions[1]
         })
