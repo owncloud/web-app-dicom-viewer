@@ -66,7 +66,7 @@
       :scanningInformation="scanningInformation"
       :uidsInformation="uidsInformation"
       :otherInformation="otherInformation"
-      :is-metadata-extracted="isMetadataExtracted"
+      :is-metadata-extracted="(isMetadataFetched && isImageMetadataExtractedFromViewport)"
       @close-metadata-sidebar="toggleShowMetadata"
     />
   </div>
@@ -199,7 +199,8 @@ export default defineComponent({
       currentImageRotation: 0,
       isVipMetadataFetched: false,
       isMetadataFetched: false,
-      isMetadataExtracted: false,
+      isImageMetadataExtractedFromViewport: false,
+      isDicomImageDataFetched: false,
       isShowMetadataActivated: false,
       dicomFiles: [this.resource], // currently not used since only one file is displayed, show prev/next feature will be implemented later, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
       vipInformation: [
@@ -214,6 +215,7 @@ export default defineComponent({
       seriesInformation: [],
       instanceInformation: [],
       imageInformation: [],
+      imageInformationViewport: [],
       equipmentInformation: [],
       scanningInformation: [],
       uidsInformation: [],
@@ -281,7 +283,6 @@ export default defineComponent({
       this.setViewportCameraParallelScaleFactor()
 
       // setting metadata
-      // this.extractMetadataFromViewport(dicomResourceUrl)
       this.getImageMetadataFromViewport(dicomResourceUrl)
     } else {
       console.log('no valid dicom resource url: ' + this.url)
@@ -294,9 +295,9 @@ export default defineComponent({
   },
   beforeUnmount() {
     this.renderingEngine.destroy()
-    this.isMetadataExtracted = false
     this.isVipMetadataFetched = false
     this.isMetadataFetched = false
+    this.isImageMetadataExtractedFromViewport = false
     this.isDicomImageDataFetched = false
   },
   methods: {
@@ -375,7 +376,17 @@ export default defineComponent({
       const imageInformationTags = ['photometricInterpretation', 'imageType', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'imageComments' ]
       const imageInformation = extractDicomMetadata(this.dicomImageData, imageInformationTags, this.$language.current)
       imageInformation.then((result) => {
-        this.imageInformation = result
+        if (this.imageInformation.length == 0) {
+          // image information from viewport haven yet been added to this.imageInformation, will be added later through splice method to keep the right order
+          this.imageInformation = result
+        }
+        else {
+          // image information from viewport have already been added,
+          // with current implementation order of item changes slightly
+          var imageInformationFromViewport = this.imageInformation
+          var imageInformationFromResult = result
+          this.imageInformation = imageInformationFromViewport.concat(imageInformationFromResult)
+        }
       })
 
       // equipmentInformation
@@ -407,13 +418,14 @@ export default defineComponent({
       })
 
       this.isMetadataFetched = true
-      // TODO: check that data only gets displayed after all metadata has been fetched (including the data from viewport)
     },
     getImageMetadataFromViewport(imageId: string) {
       // get image related metadata directly from viewport
       // proper values of these tags can't be extracted with extractDicomMetadata helper function since this tags are of value US (Unsigned Short),
       // see https://dicom.nema.org/medical/dicom/current/output/chtml/part05/sect_6.2.html
-      const imageData = this.viewport.getImageData() // returns IImageData object, see https://www.cornerstonejs.org/api/core/namespace/Types#IImageData
+
+      const imageData = this.viewport.getImageData()
+      // returns IImageData object, see https://www.cornerstonejs.org/api/core/namespace/Types#IImageData
 
       if (imageId != (null || undefined) && typeof imageId == 'string') {
         const { pixelRepresentation, bitsAllocated, bitsStored, highBit, samplesPerPixel } =
@@ -430,7 +442,7 @@ export default defineComponent({
         this.imageInformation.splice(6, 0, { label: 'pixelRepresentation', value: pixelRepresentation })
         this.imageInformation.splice(13, 0, { label: 'samplesPerPixel', value: samplesPerPixel })
 
-        this.isMetadataExtracted = true
+        this.isImageMetadataExtractedFromViewport = true
       }
     },
     setViewportCameraParallelScaleFactor() {
