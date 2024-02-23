@@ -102,39 +102,39 @@ export default defineComponent({
       default: false
     },
     patientInformation: {
-      type: Array,
+      type: Object,
       required: true
     },
     studyInformation: {
-      type: Array,
+      type: Object,
       required: true
     },
     seriesInformation: {
-      type: Array,
+      type: Object,
       required: true
     },
     instanceInformation: {
-      type: Array,
+      type: Object,
       required: true
     },
     imageInformation: {
-      type: Array,
+      type: Object,
       required: true
     },
     equipmentInformation: {
-      type: Array,
+      type: Object,
       required: true
     },
     scanningInformation: {
-      type: Array,
+      type: Object,
       required: true
     },
     uidsInformation: {
-      type: Array,
+      type: Object,
       required: true
     },
     otherInformation: {
-      type: Array,
+      type: Object,
       required: true
     }
   },
