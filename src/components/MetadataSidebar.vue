@@ -13,7 +13,7 @@
       >
         <oc-icon name="arrow-left-s" fill-type="line" />
       </oc-button>
-      <h2 class="header__title oc-my-rm">DICOM metadata</h2>
+      <h2 class="header__title oc-my-rm">{{ dicomMetadataSidebarTitle }}</h2>
       <oc-button
         v-oc-tooltip="hideMetadataDescription"
         class="header__close"
@@ -143,6 +143,7 @@ export default defineComponent({
     const { $gettext } = useGettext()
 
     return {
+      dicomMetadataSidebarTitle: $gettext('DICOM metadata'),
       hideMetadataDescription: $gettext('Hide DICOM metadata'),
       backToMainDescription: $gettext('Back to DICOM viewer'), 
     }
