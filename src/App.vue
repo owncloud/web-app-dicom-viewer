@@ -384,8 +384,7 @@ export default defineComponent({
           // image information from viewport have already been added,
           // with current implementation order of item changes slightly
           var imageInformationFromViewport = this.imageInformation
-          var imageInformationFromResult = result
-          this.imageInformation = imageInformationFromViewport.concat(imageInformationFromResult)
+          this.imageInformation = imageInformationFromViewport.concat(result)
         }
       })
 
