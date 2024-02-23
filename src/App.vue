@@ -215,7 +215,6 @@ export default defineComponent({
       seriesInformation: [],
       instanceInformation: [],
       imageInformation: [],
-      imageInformationViewport: [],
       equipmentInformation: [],
       scanningInformation: [],
       uidsInformation: [],
@@ -282,10 +281,8 @@ export default defineComponent({
       this.viewport.render()
       this.setViewportCameraParallelScaleFactor()
 
-      // setting metadata
+      // getting image metadata from viewport
       this.getImageMetadataFromViewport(dicomResourceUrl)
-    } else {
-      console.log('no valid dicom resource url: ' + this.url)
     }
   },
   updated() {
@@ -377,14 +374,22 @@ export default defineComponent({
       const imageInformation = extractDicomMetadata(this.dicomImageData, imageInformationTags, this.$language.current)
       imageInformation.then((result) => {
         if (this.imageInformation.length == 0) {
-          // image information from viewport haven yet been added to this.imageInformation, will be added later through splice method to keep the right order
+          // image information from viewport haven yet been added to this.imageInformation
+          // will be added later in getImageMetadataFromViewport() through splice method to keep the right order
           this.imageInformation = result
         }
         else {
-          // image information from viewport have already been added,
-          // with current implementation order of item changes slightly
-          var imageInformationFromViewport = this.imageInformation
-          this.imageInformation = imageInformationFromViewport.concat(result)
+          // image information from viewport have already been added
+          // storing elements in temp variable
+          var tempImageInformation = this.imageInformation
+          // adding image information elements from viewport (tempImageInformation) in proper order
+          this.imageInformation =
+            tempImageInformation.slice(0, 1)
+            .concat(result.slice(0,2))
+            .concat(tempImageInformation.slice(1, 5))
+            .concat(result.slice(2,8))
+            .concat(tempImageInformation.slice(5, 6))
+            .concat(result.slice(8,9))
         }
       })
 
