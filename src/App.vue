@@ -555,7 +555,6 @@ export default defineComponent({
   margin: 0;
   padding: 0;
   overflow: hidden;
-  //height: 100%; //calc(100% - 52px);
 }
 
 .dicom-canvas {
@@ -567,7 +566,7 @@ export default defineComponent({
 .dicom-metadata {
   border: none;
   width: 500px;
-  height: auto; //100%;
+  height: auto;
   padding: 20px;
   margin-left: 20px;
 }
@@ -595,12 +594,6 @@ export default defineComponent({
   text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
   z-index: 2;
   margin: 10px;
-}
-
-.dicom-metadata-section-title {
-  margin-bottom: 0px;
-  padding-top: 16px !important;
-  border-top: 1px solid var(--oc-color-border);
 }
 
 .details-table {

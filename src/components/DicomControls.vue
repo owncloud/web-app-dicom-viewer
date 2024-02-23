@@ -3,8 +3,7 @@
     <div
       class="oc-background-brand oc-p-s oc-width-large oc-flex oc-flex-middle oc-flex-center oc-flex-around preview-controls-action-bar"
     >
-      <!-- prev / next -->
-      <!-- hide while functionality is not yet implemented, set class of the wrapper div to 'oc-width-xlarge' once that section is activated -->
+      <!-- hide prev / next section while functionality is not yet implemented, set class of the wrapper div to 'oc-width-xlarge' once that section is activated -->
       <!--
       <div class="oc-flex oc-flex-middle">
         <oc-button
@@ -33,8 +32,6 @@
         </oc-button>
       </div>
       -->
-
-      <!-- zoom -->
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageShrinkDescription"
@@ -68,8 +65,6 @@
           <oc-icon fill-type="line" name="zoom-in" variation="inherit" />
         </oc-button>
       </div>
-
-      <!-- rotation -->
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageRotateLeftDescription"
@@ -92,8 +87,6 @@
           <oc-icon fill-type="line" name="clockwise" variation="inherit" />
         </oc-button>
       </div>
-
-      <!-- flip -->
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageFlipHorizontalDescription"
@@ -118,8 +111,6 @@
           <!-- "arrow-left-right" is used as placeholder until "flip-vertical" is included in web's design-system -->
         </oc-button>
       </div>
-
-      <!-- invert -->
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageInvertDescription"
@@ -132,8 +123,6 @@
           <oc-icon fill-type="fill" name="contrast" variation="inherit" />
         </oc-button>
       </div>
-
-      <!-- reset -->
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageResetDescription"
@@ -146,8 +135,6 @@
           <oc-icon fill-type="line" name="arrow-go-back" variation="inherit" />
         </oc-button>
       </div>
-
-      <!-- metadata -->
       <div class="oc-flex-middle oc-flex oc-mr-m">
         <oc-button
           v-oc-tooltip="
@@ -179,6 +166,7 @@ import { Resource } from '@ownclouders/web-client/src'
 export default defineComponent({
   name: 'DicomControls',
   props: {
+    // files, activeIndex & isFolderLoading are currently not used since prev / next functionality is not yet implemented
     files: {
       type: Array as PropType<Resource[]>,
       required: true

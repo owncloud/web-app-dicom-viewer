@@ -49,7 +49,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dicom-metadata-section-title {
-  //margin: 4px 0px 8px 0px;
   margin-bottom: 0px;
   padding-top: 16px !important;
   border-top: 1px solid var(--oc-color-border);
@@ -60,8 +59,7 @@ export default defineComponent({
   border-top: none;
 }
 
-.details-table th,
-td {
+.details-table th, td {
   vertical-align: top;
 }
 </style>
