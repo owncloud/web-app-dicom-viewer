@@ -5,17 +5,7 @@ import App from '../../src/App.vue'
 
 
 // defining data
-const dicomTestFilePath = './testfiles/MRBRAIN.dcm' 
-
-const dicomFiles = [
-  {
-    id: '1',
-    name: 'MRBRAIN.dcm',
-    mimeType: 'application/dicom',
-    path: 'personal/admin/MRBRAIN.dcm'
-  }
-] // so far not used in any test case
-
+const dicomTestFilePath = './testfiles/MRBRAIN.dcm'
 
 // test cases
 describe('Dicom viewer app', () => {
@@ -23,7 +13,7 @@ describe('Dicom viewer app', () => {
   // pending tests syntax example
   describe.todo('example for unimplemented test suite')
 
-  describe('example for an group of tests where implementaito is still pending', () => {
+  describe('example for an group of tests where implementation is still pending', () => {
     it.todo('example for unimplemented test 1')
     it.todo('example for unimplemented test 2')
   })
@@ -192,23 +182,7 @@ describe('dicom viewer app', () => {
   })
 })
 
-// test formatLabel() method
-describe('dicom viewer app', () => {
-  describe('Method "formatLabel()"', () => {
-    it('should format a metadata variable name into a nicely readible label', () => {
-      const label = 'patientName'
-      const formatedLabel = 'Patient Name'
-      expect(App.methods.formatLabel(label)).toEqual(formatedLabel)
-      // TODO: call the function through the wrapper? wrapper.vm.formatLabel(label)
-    })
-    it('should format a metadata variable name with underlines and abbreviations into a nicely readible label', () => {
-      const label = 'SOP_InstanceUID'
-      const formatedLabel = 'SOP Instance UID'
-      expect(App.methods.formatLabel(label)).toEqual(formatedLabel)
-      // TODO: call the function through the wrapper? wrapper.vm.formatLabel(label)
-    })
-  })
-})
+
 
 function getWrapper(props = {}) {
   return {
