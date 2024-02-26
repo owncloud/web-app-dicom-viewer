@@ -4,20 +4,22 @@ import { AppWrapperRoute,
 import App from './App.vue'
 import { useGettext } from 'vue3-gettext'
 
+const appId = 'dicom-viewer'
+
 export default defineWebApplication({
   setup(args) {
     const { $gettext } = useGettext()
 
     const appInfo = {
       name: $gettext('DICOM Viewer'),
-      id: 'dicom-viewer',
+      id: appId,
       icon: 'resource-type-medical',
       iconFillType: 'fill',
       iconColor: 'var(--oc-color-icon-medical)',
       extensions: [
         {
           extension: 'dcm',
-          routeName: 'dicom-viewer',
+          routeName: appId,
           label: $gettext('Preview'),
           canBeDefault: true
         }
@@ -28,7 +30,7 @@ export default defineWebApplication({
       {
         path: '/:driveAliasAndItem(.*)?',
         component: AppWrapperRoute(App, {
-          applicationId: 'dicom-viewer',
+          applicationId: appId,
           urlForResourceOptions: {
             disposition: 'inline'
           }
