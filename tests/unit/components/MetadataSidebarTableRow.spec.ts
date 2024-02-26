@@ -69,9 +69,7 @@ describe('MetadataSidebarTableRow component', () => {
     it('should format a metadata variable name with underlines and abbreviations into a nicely readible label', () => {
       const label = 'SOP_InstanceUID'
       const formattedLabel = 'SOP Instance UID'
-
       const { wrapper } = getWrapper()
-      console.log('formatted label: ' + wrapper.vm.formatLabel(label))
       expect(wrapper.vm.formatLabel(label)).toEqual(formattedLabel)
     })
   })
