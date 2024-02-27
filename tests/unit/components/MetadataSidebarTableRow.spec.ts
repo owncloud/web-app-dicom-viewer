@@ -59,6 +59,20 @@ describe('MetadataSidebarTableRow component', () => {
       expect(wrapper.html()).not.toContain('dicom-metadata-first-section')
     })
   })
+  describe('formatting labels', () => {
+    it('should format a metadata variable name into a nicely readible label', () => {
+      const label = 'patientName'
+      const formattedLabel = 'Patient Name'
+      const { wrapper } = getWrapper()
+      expect(wrapper.vm.formatLabel(label)).toEqual(formattedLabel)
+    })
+    it('should format a metadata variable name with underlines and abbreviations into a nicely readible label', () => {
+      const label = 'SOP_InstanceUID'
+      const formattedLabel = 'SOP Instance UID'
+      const { wrapper } = getWrapper()
+      expect(wrapper.vm.formatLabel(label)).toEqual(formattedLabel)
+    })
+  })
 })
 
 function getWrapper(props = {}) {
