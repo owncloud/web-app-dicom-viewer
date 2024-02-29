@@ -41,7 +41,7 @@ export default defineComponent({
 
       const result = label.replace(/([A-Z]+)/g, ' $1').replace('_', '')
 
-      return upperFirst(result)
+      return upperFirst(result.trim())
     }
   }
 })
