@@ -1,5 +1,5 @@
-import { shallowMount } from '@vue/test-utils' 
-import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
+import { shallowMount } from '@vue/test-utils'
+import { defaultPlugins } from '../../../src/helper/defaultPlugins.ts'
 
 import MetadataSidebarTableRow from '../../../src/components/MetadataSidebarTableRow.vue'
 
