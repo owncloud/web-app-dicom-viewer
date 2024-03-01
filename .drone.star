@@ -9,7 +9,10 @@ dir = {
 }
 
 def main(ctx):
-    return checkStarlark() + unitTestPipeline(ctx) + e2eTests()
+    return checkStarlark() + \
+        pnpmlint(ctx) + \
+        unitTestPipeline(ctx) + \
+        e2eTests()
 
 def checkStarlark():
     return [{
@@ -85,6 +88,65 @@ def unitTestPipeline(ctx):
         },
     }]
 
+def pnpmlint(ctx):
+    pipelines = []
+
+    result = {
+        "kind": "pipeline",
+        "type": "docker",
+        "name": "lint",
+        "steps": skipIfUnchanged(ctx, "lint") +
+                 installPnpm() +
+                 lint(),
+        "trigger": {
+            "ref": [
+                "refs/heads/master",
+                "refs/heads/stable-*",
+                "refs/tags/**",
+                "refs/pull/**",
+            ],
+        },
+    }
+
+    pipelines.append(result)
+
+    return pipelines
+
+def skipIfUnchanged(ctx, type):
+    skip_step = {
+        "name": "skip-if-unchanged",
+        "image": OC_CI_DRONE_SKIP_PIPELINE,
+        "when": {
+            "event": [
+                "pull_request",
+            ],
+        },
+    }
+
+    base_skip_steps = [
+        "^.github/.*",
+        "^dev/.*",
+        "^l10n/.*",
+        "README.md",
+    ]
+
+    if type == "lint":
+        skip_step["settings"] = {
+            "ALLOW_SKIP_CHANGED": base_skip_steps,
+        }
+        return [skip_step]
+
+    if type == "unit-tests":
+        unit_skip_steps = [
+            "^tests/unit/.*",
+        ]
+        skip_step["settings"] = {
+            "ALLOW_SKIP_CHANGED": unit_skip_steps,
+        }
+        return [skip_step]
+
+    return []
+
 def installPnpm():
     return [{
         "name": "pnpm-install",
@@ -96,6 +158,14 @@ def installPnpm():
         ],
     }]
 
+def lint():
+    return [{
+        "name": "lint",
+        "image": OC_CI_NODEJS,
+        "commands": [
+            "pnpm lint",
+        ],
+    }]
 def serveExtension():
     return [
         {
