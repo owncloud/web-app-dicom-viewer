@@ -7,9 +7,9 @@
       >{{ metadataSectionName }} </p>
     </th>
   </tr>
-  <tr v-for="(value, key) in metadataSectionData" :key="key">
-    <th scope="col" class="oc-pr-s">{{ formatLabel(key.toString()) }}</th>
-    <td class="oc-text-break">{{ value || '–' }}</td>
+  <tr v-for="element in metadataSectionData" :key="element.id">
+    <th scope="col" class="oc-pr-s">{{ formatLabel(element.label) }}</th>
+    <td class="oc-text-break">{{ element.value || '–' }}</td>
   </tr>
 </template>
 
@@ -49,7 +49,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dicom-metadata-section-title {
-  //margin: 4px 0px 8px 0px;
   margin-bottom: 0px;
   padding-top: 16px !important;
   border-top: 1px solid var(--oc-color-border);
@@ -60,8 +59,7 @@ export default defineComponent({
   border-top: none;
 }
 
-.details-table th,
-td {
+.details-table th, td {
   vertical-align: top;
 }
 </style>

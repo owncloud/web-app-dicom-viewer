@@ -26,78 +26,67 @@
     </div>
     <div v-if="isMetadataExtracted" id="dicom-metadata-sidebar-content" class="oc-p-s">
       <table class="details-table">
-
         <metadata-sidebar-table-row
           v-bind="$props.patientInformation"
           :metadataSectionName="'Patient Information'"
           :metadataSectionData="$props.patientInformation"
           :is-first-section="true"
         />
-        
         <metadata-sidebar-table-row
           v-bind="$props.studyInformation"
           :metadataSectionName="'Study Information'"
           :metadataSectionData="$props.studyInformation"
           :is-first-section="false"
         />
-
         <metadata-sidebar-table-row
           v-bind="$props.seriesInformation"
           :metadataSectionName="'Series Information'"
           :metadataSectionData="$props.seriesInformation"
           :is-first-section="false"
         />
-
         <metadata-sidebar-table-row
           v-bind="$props.instanceInformation"
           :metadataSectionName="'Instance Information'"
           :metadataSectionData="$props.instanceInformation"
           :is-first-section="false"
         />
-
         <metadata-sidebar-table-row
           v-bind="$props.imageInformation"
           :metadataSectionName="'Image Information'"
           :metadataSectionData="$props.imageInformation"
           :is-first-section="false"
         />
-
         <metadata-sidebar-table-row
           v-bind="$props.equipmentInformation"
           :metadataSectionName="'Equipment Information'"
           :metadataSectionData="$props.equipmentInformation"
           :is-first-section="false"
         />
-
         <metadata-sidebar-table-row
           v-bind="$props.scanningInformation"
           :metadataSectionName="'Scanning Information'"
           :metadataSectionData="$props.scanningInformation"
           :is-first-section="false"
         />
-
         <metadata-sidebar-table-row
           v-bind="$props.uidsInformation"
           :metadataSectionName="'UIDS Information'"
           :metadataSectionData="$props.uidsInformation"
           :is-first-section="false"
         />
-        
         <metadata-sidebar-table-row
           v-bind="$props.otherInformation"
           :metadataSectionName="'Other Information'"
           :metadataSectionData="$props.otherInformation"
           :is-first-section="false"
         />
-
       </table>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
+import { defineComponent } from 'vue'
 import { useGettext } from 'vue3-gettext'
-import upperFirst from 'lodash-es/upperFirst'
 
 import MetadataSidebarTableRow from './MetadataSidebarTableRow.vue'
 
@@ -159,20 +148,6 @@ export default defineComponent({
       backToMainDescription: $gettext('Back to DICOM viewer'), 
     }
   },
-  methods: {
-    formatLabel(label: string) {
-      // formatting camelcase labels into easily readible labels by adding a gap befor each upper case letter
-      // there is no space added if there are multiple upper case letters in a row (e.g. ID)
-      // in cases where such an abbreviation is followed by another word and underline should be added in the variable name, e.g. "SOP_InstanceUID" becomes "SOP Instance UID"
-
-      const result = label.replace(/([A-Z]+)/g, ' $1').replace('_', '')
-
-      // optionally make first letter of each word lower?
-      // return upperFirst(result.toLowerCase())
-
-      return upperFirst(result)
-    }
-  }
 })
 </script>
 
@@ -190,10 +165,9 @@ export default defineComponent({
 
 #dicom-metadata-sidebar-content {
   height: calc(100% - 55px);
-  // it seems that the bottom is cut off without the offset
-  // the amount of 55px was determined by manual testing with chrome on a mac
-  // it seems to have something to do with the amount of padding that has been added to the sidebar header
-  // TODO: double check on other devices
+  // bottom of sidebar content is cut off without this offset
+  // the amount of 55px was determined by manual testing with chrome on mac
+  // seems to be related to amount of padding being added to sidebar header
   overflow-y: scroll;
 }
 
@@ -202,6 +176,6 @@ export default defineComponent({
 }
 
 .details-table tr {
-  height: 1rem; // reducing hight, originally 1.5rem
+  height: 1rem; // reducing height, originally 1.5rem
 }
 </style>

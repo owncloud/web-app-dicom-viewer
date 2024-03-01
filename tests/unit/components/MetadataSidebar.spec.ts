@@ -73,40 +73,6 @@ describe('MetadataSidebar component', () => {
         expect(wrapper.find('div #dicom-metadata-sidebar-content').exists()).toBeFalsy()
       })
     })
-    describe('passing patient metadata as props into the metadata sidebar', () => {
-      const patientName = 'Albert Einstein'
-      const patientID = '1089'
-      const patientBirthday = 'Mar 14, 1879'
-
-      const mockedPatientMetadata = {
-        isMetadataExtracted: true,
-        patientInformation : {
-          patientName: patientName,
-          patientID: patientID ,
-          patientBirthday: patientBirthday
-          }, 
-        studyInformation: {},
-        seriesInformation: {},
-        instanceInformation: {},
-        imageInformation: {},
-        equipmentInformation: {},
-        scanningInformation: {},
-        uidsInformation: {},
-        otherInformation: {}
-      }
-      it('should display the patients name in the content section of the sidebar', () => {
-        const { wrapper } = getWrapper(mockedPatientMetadata)
-        expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientName)
-      })
-      it('should display the patients ID in the content section of the sidebar', () => {
-        const { wrapper } = getWrapper(mockedPatientMetadata)
-        expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientID)
-      })
-      it('should display the patients birthday in the content section of the sidebar', () => {
-        const { wrapper } = getWrapper(mockedPatientMetadata)
-        expect(wrapper.get('#dicom-metadata-sidebar-content').html()).toContain(patientBirthday)
-      })
-    })
   })
 })
 

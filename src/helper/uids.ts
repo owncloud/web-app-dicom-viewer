@@ -3,17 +3,6 @@
 // DICOM Standard here: http://dicom.nema.org/medical/dicom/current/output/html/part06.html
 // see the blog post about it here: http://chafey.blogspot.com/2015/08/parsing-dicom-standard-with-javascript.html
 
-/*
- (function () {
- var elements = document.querySelectorAll('#table_A-1 ~ div tbody tr');
- var result = "";for(var i=0; i < elements.length; i++) {
- result += "'" + elements[i].childNodes[1].childNodes[1].innerText.replace(/[^\x20-\x7E]+/g, '')  + "':'" +
- elements[i].childNodes[3].childNodes[1].innerText.replace(/[^\x20-\x7E]+/g, '') + "',\n";
- }
- return result;
- })();
- */
-
 const uids = {
   '1.2.840.10008.1.1': 'Verification SOP Class',
   '1.2.840.10008.1.2': 'Implicit VR Little Endian: Default Transfer Syntax for DICOM',
