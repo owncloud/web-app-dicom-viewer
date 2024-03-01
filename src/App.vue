@@ -195,6 +195,7 @@ export default defineComponent({
       viewport: null,
       viewportCameraParallelScale: 1,
       dicomUrl: null,
+      dicomImageData:null,
       currentImageZoom: 1,
       currentImageRotation: 0,
       isVipMetadataFetched: false,
@@ -203,13 +204,13 @@ export default defineComponent({
       isDicomImageDataFetched: false,
       isShowMetadataActivated: false,
       dicomFiles: [this.resource], // currently not used since only one file is displayed, show prev/next feature will be implemented later, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
-      vipInformation: [
-        { patientName: '' },
-        { patientBirthdate: '' },
-        { institutionName: '' },
-        { instanceCreationDate: '' },
-        { instanceCreationTime: '' }
-        ],
+      vipInformation: {
+        patientName: '',
+        patientBirthdate: '' ,
+        institutionName: '',
+        instanceCreationDate: '',
+        instanceCreationTime: '',
+      },
       patientInformation: [],
       studyInformation: [],
       seriesInformation: [],
