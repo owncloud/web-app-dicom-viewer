@@ -28,56 +28,56 @@
       <table class="details-table">
         <metadata-sidebar-table-row
           v-bind="$props.patientInformation"
-          :metadataSectionName="'Patient Information'"
-          :metadataSectionData="$props.patientInformation"
+          :metadata-section-name="'Patient Information'"
+          :metadata-section-data="$props.patientInformation"
           :is-first-section="true"
         />
         <metadata-sidebar-table-row
           v-bind="$props.studyInformation"
-          :metadataSectionName="'Study Information'"
-          :metadataSectionData="$props.studyInformation"
+          :metadata-section-name="'Study Information'"
+          :metadata-section-data="$props.studyInformation"
           :is-first-section="false"
         />
         <metadata-sidebar-table-row
           v-bind="$props.seriesInformation"
-          :metadataSectionName="'Series Information'"
-          :metadataSectionData="$props.seriesInformation"
+          :metadata-section-name="'Series Information'"
+          :metadata-section-data="$props.seriesInformation"
           :is-first-section="false"
         />
         <metadata-sidebar-table-row
           v-bind="$props.instanceInformation"
-          :metadataSectionName="'Instance Information'"
-          :metadataSectionData="$props.instanceInformation"
+          :metadata-section-name="'Instance Information'"
+          :metadata-section-data="$props.instanceInformation"
           :is-first-section="false"
         />
         <metadata-sidebar-table-row
           v-bind="$props.imageInformation"
-          :metadataSectionName="'Image Information'"
-          :metadataSectionData="$props.imageInformation"
+          :metadata-section-name="'Image Information'"
+          :metadata-section-data="$props.imageInformation"
           :is-first-section="false"
         />
         <metadata-sidebar-table-row
           v-bind="$props.equipmentInformation"
-          :metadataSectionName="'Equipment Information'"
-          :metadataSectionData="$props.equipmentInformation"
+          :metadata-section-name="'Equipment Information'"
+          :metadata-section-data="$props.equipmentInformation"
           :is-first-section="false"
         />
         <metadata-sidebar-table-row
           v-bind="$props.scanningInformation"
-          :metadataSectionName="'Scanning Information'"
-          :metadataSectionData="$props.scanningInformation"
+          :metadata-section-name="'Scanning Information'"
+          :metadata-section-data="$props.scanningInformation"
           :is-first-section="false"
         />
         <metadata-sidebar-table-row
           v-bind="$props.uidsInformation"
-          :metadataSectionName="'UIDS Information'"
-          :metadataSectionData="$props.uidsInformation"
+          :metadata-section-name="'UIDS Information'"
+          :metadata-section-data="$props.uidsInformation"
           :is-first-section="false"
         />
         <metadata-sidebar-table-row
           v-bind="$props.otherInformation"
-          :metadataSectionName="'Other Information'"
-          :metadataSectionData="$props.otherInformation"
+          :metadata-section-name="'Other Information'"
+          :metadata-section-data="$props.otherInformation"
           :is-first-section="false"
         />
       </table>
@@ -93,7 +93,7 @@ import MetadataSidebarTableRow from './MetadataSidebarTableRow.vue'
 export default defineComponent({
   name: 'MetadataSidebar',
   components: {
-    MetadataSidebarTableRow,
+    MetadataSidebarTableRow
   },
   props: {
     isMetadataExtracted: {
@@ -145,15 +145,15 @@ export default defineComponent({
     return {
       dicomMetadataSidebarTitle: $gettext('DICOM metadata'),
       hideMetadataDescription: $gettext('Hide DICOM metadata'),
-      backToMainDescription: $gettext('Back to DICOM viewer'), 
+      backToMainDescription: $gettext('Back to DICOM viewer')
     }
-  },
+  }
 })
 </script>
 
 <style lang="scss" scoped>
 .dicom-metadata-sidebar {
-  border-left: 1px solid var(--oc-color-border); 
+  border-left: 1px solid var(--oc-color-border);
   position: relative;
   overflow: hidden;
   max-width: var(--oc-breakpoint-medium-default);

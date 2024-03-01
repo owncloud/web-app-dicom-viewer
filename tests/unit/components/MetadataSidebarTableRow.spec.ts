@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils' 
+import { shallowMount } from '@vue/test-utils'
 import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
 
 import MetadataSidebarTableRow from '../../../src/components/MetadataSidebarTableRow.vue'
@@ -28,8 +28,8 @@ describe('MetadataSidebarTableRow component', () => {
         { label: 'patientName', value: patientName },
         { label: 'patientID', value: patientID },
         { label: 'patientBirthday', value: patientBirthday }
-        ],
-      isFirstSection: true,
+      ],
+      isFirstSection: true
     }
     it('should display the section title in the .dicom-metadata-section-title header part of the table', () => {
       const { wrapper } = getWrapper(mockedData)
@@ -37,7 +37,7 @@ describe('MetadataSidebarTableRow component', () => {
     })
     it('should create a data row (td) for each element of the section data object in the table', () => {
       let numberOfElements = 0
-      for (let element in mockedData.metadataSectionData) {
+      for (const element in mockedData.metadataSectionData) {
         numberOfElements += 1
       }
       const { wrapper } = getWrapper(mockedData)

@@ -1,10 +1,12 @@
-<template> 
+<template>
   <tr class="dicom-metadata-section">
     <th colspan="2">
-      <p 
+      <p
         class="oc-py-s oc-font-semibold dicom-metadata-section-title"
         :class="isFirstSection ? 'dicom-metadata-first-section' : ''"
-      >{{ metadataSectionName }} </p>
+      >
+        {{ metadataSectionName }}
+      </p>
     </th>
   </tr>
   <tr v-for="element in metadataSectionData" :key="element.id">
@@ -27,7 +29,7 @@ export default defineComponent({
     metadataSectionData: {
       type: Object,
       required: true
-    }, 
+    },
     isFirstSection: {
       type: Boolean,
       default: false
@@ -59,7 +61,8 @@ export default defineComponent({
   border-top: none;
 }
 
-.details-table th, td {
+.details-table th,
+td {
   vertical-align: top;
 }
 </style>
