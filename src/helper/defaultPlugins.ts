@@ -40,7 +40,6 @@ export interface DefaultPluginsOptions {
 
 export const defaultPlugins = ({
   abilities = [],
-  designSystem = true,
   gettext = true,
   pinia = true
 }: DefaultPluginsOptions = {}) => {

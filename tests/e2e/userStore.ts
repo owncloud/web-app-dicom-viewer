@@ -15,7 +15,7 @@ const userStore = new Map<string, User>([
   ]
 ])
 
-export const getUser = async function ({ user }) {
+export const getUser = function ({ user }) {
   const userKey = user.toLowerCase()
   if (!userStore.has(userKey)) {
     throw new Error(`user with key '${userKey}' not found`)

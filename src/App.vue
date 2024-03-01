@@ -10,10 +10,15 @@
       <div id="dicom-canvas" class="dicom-canvas oc-position-relative oc-mb-xl">
         <vip-metadata-overlay
           v-show="isVipMetadataFetched"
-          :patientName ="vipInformation.patientName"
-          :patientBirthdate ="formatOverlayDate(vipInformation.patientBirthdate)"
-          :institutionName ="vipInformation.institutionName"
-          :instanceCreationDateTime ="formatOverlayDateAndTime(vipInformation.instanceCreationDate, vipInformation.instanceCreationTime)"
+          :patient-name="vipInformation.patientName"
+          :patient-birthdate="formatOverlayDate(vipInformation.patientBirthdate)"
+          :institution-name="vipInformation.institutionName"
+          :instance-creation-date-time="
+            formatOverlayDateAndTime(
+              vipInformation.instanceCreationDate,
+              vipInformation.instanceCreationTime
+            )
+          "
         />
       </div>
       <div id="dicom-viewer-toggle-metadata-sidebar" class="oc-flex oc-position-absolute">
@@ -87,7 +92,11 @@ import { useGettext } from 'vue3-gettext'
 import DicomControls from './components/DicomControls.vue'
 import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
-import { fetchDicomImageData, findDicomTagByValue, extractDicomMetadata } from './helper/extractMetadata'
+import {
+  fetchDicomImageData,
+  findDicomTagByValue,
+  extractDicomMetadata
+} from './helper/extractMetadata'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
@@ -148,33 +157,6 @@ export default defineComponent({
     url: {
       type: String,
       required: true
-    },
-    patientInformation: {
-      type: Array
-    },
-    studyInformation: {
-      type: Array
-    },
-    seriesInformation: {
-      type: Array
-    },
-    instanceInformation: {
-      type: Array
-    },
-    imageInformation: {
-      type: Array
-    },
-    equipmentInformation: {
-      type: Array
-    },
-    scanningInformation: {
-      type: Array
-    },
-    uidsInformation: {
-      type: Array
-    },
-    otherInformation: {
-      type: Array
     }
   },
   setup(props) {
@@ -192,7 +174,7 @@ export default defineComponent({
       viewport: null,
       viewportCameraParallelScale: 1,
       dicomUrl: null,
-      dicomImageData:null,
+      dicomImageData: null,
       currentImageZoom: 1,
       currentImageRotation: 0,
       isVipMetadataFetched: false,
@@ -203,10 +185,10 @@ export default defineComponent({
       dicomFiles: [this.resource], // currently not used since only one file is displayed, show prev/next feature will be implemented later, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
       vipInformation: {
         patientName: '',
-        patientBirthdate: '' ,
+        patientBirthdate: '',
         institutionName: '',
         instanceCreationDate: '',
-        instanceCreationTime: '',
+        instanceCreationTime: ''
       },
       patientInformation: [],
       studyInformation: [],
@@ -303,11 +285,10 @@ export default defineComponent({
         console.error('Error initalizing cornerstone core', e)
       }
     },
-    async addWadouriPrefix(url: string) {
+    addWadouriPrefix(url: string) {
       return 'wadouri:' + url
     },
     async fetchVipMetadataInformation(imageId) {
-
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
         if (!this.isDicomImageDataFetched) {
@@ -336,7 +317,6 @@ export default defineComponent({
       this.isVipMetadataFetched = true
     },
     async fetchMetadataInformation(imageId) {
-
       // ensure dicom image data has been fetched
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
@@ -621,7 +601,9 @@ export default defineComponent({
           date.substring(6, 8) +
           'T00:00:00'
 
-        let formattedDate = DateTime.fromISO(tempDateTimeString).setLocale(this.$language.current).toLocaleString(DateTime.DATE_SHORT)
+        let formattedDate = DateTime.fromISO(tempDateTimeString)
+          .setLocale(this.$language.current)
+          .toLocaleString(DateTime.DATE_SHORT)
 
         return upperFirst(formattedDate)
       }

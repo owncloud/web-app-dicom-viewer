@@ -4,7 +4,7 @@ import App from './App.vue'
 import { useGettext } from 'vue3-gettext'
 
 export default defineWebApplication({
-  setup(args) {
+  setup() {
     const { $gettext } = useGettext()
 
     const appInfo = {

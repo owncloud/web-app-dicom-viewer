@@ -37,9 +37,9 @@ describe('MetadataSidebarTableRow component', () => {
     })
     it('should create a data row (td) for each element of the section data object in the table', () => {
       let numberOfElements = 0
-      for (const element in mockedData.metadataSectionData) {
+      mockedData.metadataSectionData.forEach(() => {
         numberOfElements += 1
-      }
+      })
       const { wrapper } = getWrapper(mockedData)
       expect(wrapper.findAll('td').length).toBe(numberOfElements)
     })
