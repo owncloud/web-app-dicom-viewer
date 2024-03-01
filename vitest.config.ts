@@ -22,7 +22,7 @@ export default defineConfig({
     },
     coverage: {
       provider: 'v8',
-      reporter: 'lcov'
+      reporter: ['lcov', 'text']
     }
     /*
     // solution suggested by CLI, might be related to this issue: https://github.com/koebel/web/pull/2/files
