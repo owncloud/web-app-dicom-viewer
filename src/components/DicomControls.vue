@@ -1,5 +1,5 @@
 <template>
-  <div class="oc-position-medium oc-position-bottom-center preview-controls">
+  <div class="oc-position-bottom-center preview-controls">
     <div
       class="oc-background-brand oc-p-s oc-width-large oc-flex oc-flex-middle oc-flex-center oc-flex-around preview-controls-action-bar"
     >
@@ -274,6 +274,7 @@ export default defineComponent({
 
 .preview-controls {
   z-index: 1000;
+  margin: 10px auto;
 }
 
 .preview-controls-action-count {
