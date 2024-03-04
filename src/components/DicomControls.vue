@@ -132,7 +132,7 @@
           :aria-label="imageResetDescription"
           @click="$emit('resetViewport')"
         >
-          <oc-icon fill-type="line" name="arrow-go-back" variation="inherit" />
+          <oc-icon fill-type="line" name="refresh" variation="inherit" />
         </oc-button>
       </div>
       <div class="oc-flex-middle oc-flex oc-mr-m">
