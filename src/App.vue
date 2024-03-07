@@ -24,7 +24,6 @@
           "
           class="preview-controls-show-metadata oc-m-s oc-p-xs"
           appearance="raw"
-          variation="brand"
           :aria-label="
             isShowMetadataActivated ? imageHideMetadataDescription : imageShowMetadataDescription
           "
