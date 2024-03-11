@@ -6,8 +6,7 @@ import dicomTags from './dicomTags'
 import uids from './uids'
 
 
-export const extractMetadata = () => {
-  const fetchDicomImageData = async (imageId: string) => {
+  export const fetchDicomImageData = async (imageId: string) => {
     let dicomImageData
 
     await cornerstoneDICOMImageLoader.wadouri
@@ -19,23 +18,23 @@ export const extractMetadata = () => {
     return dicomImageData
   }
 
-  const findDicomTagByValue = (value: string): string | undefined => {
+  export const findDicomTagByValue = (value: string): string | undefined => {
     return Object.keys(dicomTags).find(key => dicomTags[key] === value)
   }
 
-  const formatDateTagChecker = (tag: string): boolean => {
+  export const formatDateTagChecker = (tag: string): boolean => {
     return (tag.endsWith('_formatDate')) ? true : false
   }
 
-  const formatTimeTagChecker = (tag: string): boolean => {
+  export const formatTimeTagChecker = (tag: string): boolean => {
     return (tag.endsWith('_formatTime')) ? true : false
   }
 
-  const addSopTagChecker = (tag: string): boolean => {
+  export const addSopTagChecker = (tag: string): boolean => {
     return (tag.endsWith('_addSOPuids')) ? true : false
   }
 
-  const extractDicomMetadata = async (imageData: object, tags: string[], language: string = 'en') => {
+  export const extractDicomMetadata = async (imageData: object, tags: string[], language: string = 'en') => {
     const extractedData: { label: string, value: string }[] = []
 
     // extracting data
@@ -72,7 +71,7 @@ export const extractMetadata = () => {
     return extractedData
   }
 
-  const formatDate = (date: string, language: string, dateFormat: DateTime): string | undefined => {
+  export const formatDate = (date: string, language: string, dateFormat: DateTime): string | undefined => {
   // transforming date into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
   // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'DA'
   // date output format: e.g. DateTime.DATE_MED, DateTime.DATE_SHORT, see https://moment.github.io/luxon/api-docs/index.html
@@ -93,7 +92,7 @@ export const extractMetadata = () => {
     return undefined
   }
 
-  const formatTime = (time: string, language: string, timeFormat: DateTime): string | undefined => {
+  export const formatTime = (time: string, language: string, timeFormat: DateTime): string | undefined => {
   // transform time string retrieved from dicom metadata into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
   // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'TM'
   // time output format: e.g. DateTime.TIME_SIMPLE, DateTime.TIME_24_WITH_SECONDS, see https://moment.github.io/luxon/api-docs/index.html
@@ -113,6 +112,3 @@ export const extractMetadata = () => {
     }
     return undefined
   }
-
-  return { fetchDicomImageData, findDicomTagByValue, formatDateTagChecker, formatTimeTagChecker, addSopTagChecker, formatDate, formatTime, extractDicomMetadata }
-}
