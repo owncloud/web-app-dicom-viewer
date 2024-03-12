@@ -1,8 +1,8 @@
 ---
 name: Feature request
 about: Suggest an idea for improving Web
-title: ''
-labels: ''
+title: '[Feature]: <title>'
+labels: 'enhancement'
 assignees: ''
 
 ---
