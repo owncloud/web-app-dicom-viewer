@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, flushPromises } from '@vue/test-utils'
 import App from '../../src/App.vue'
 import { vi } from 'vitest'
 import { defaultPlugins } from '../../src/helper/defaultPlugins'
@@ -14,13 +14,17 @@ vi.mock('vue3-gettext', () => ({
 
 vi.mock('@cornerstonejs/core', () => {
   return {
-    successCallback: vi.fn(),
-    errorCallback: vi.fn(),
     RenderingEngine: class RenderingEngine {
       getViewport() {
         return {
           setStack: vi.fn(),
-          render: vi.fn()
+          render: vi.fn(),
+          getCamera: vi.fn().mockImplementation(() => {
+            return { parallelScale: 137.3853139193763 }
+          }),
+          getImageData: vi.fn().mockImplementation(() => {
+            return { dimensions: [] }
+          })
         }
       }
       enableElement() {}
@@ -28,10 +32,21 @@ vi.mock('@cornerstonejs/core', () => {
     Types: vi.fn(),
     Enums: {
       ViewportType: {
-        STACK: '' // "stack",
+        STACK: ''
       }
     },
-    metaData: vi.fn(),
+    metaData: {
+      get: vi.fn().mockImplementation(() => {
+        return {
+          pixelRepresentation: '',
+          bitsAllocated: '',
+          bitsStored: '',
+          highBit: '',
+          samplesPerPixel: ''
+        }
+      })
+    },
+
     init: vi.fn(),
     getConfiguration: vi.fn().mockImplementation(() => {
       return { rendering: '' }
@@ -60,12 +75,52 @@ vi.mock('dicom-parser', () => ({
 }))
 
 describe('App component', () => {
-  describe('Methods', () => {
-    vi.spyOn(App.methods, 'fetchVipMetadataInformation').mockImplementation(vi.fn())
-    vi.spyOn(App.methods, 'fetchMetadataInformation').mockImplementation(vi.fn())
-    const wrapper = getWrapper()
+  const spyFetchVipMetadataInformation = vi
+    .spyOn(App.methods, 'fetchVipMetadataInformation')
+    .mockImplementation(vi.fn())
+  const spyFetchMetadataInformation = vi
+    .spyOn(App.methods, 'fetchMetadataInformation')
+    .mockImplementation(vi.fn())
+  const spyAddWadouriPrefix = vi
+    .spyOn(App.methods, 'addWadouriPrefix')
+    .mockReturnValue('wadouri:https://test')
+  const spyInitCornerstoneCore = vi
+    .spyOn(App.methods, 'initCornerstoneCore')
+    .mockImplementation(vi.fn())
 
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should not fetch overlay metadata when the url is not provided', async () => {
+    getWrapper()
+    await flushPromises()
+
+    expect(spyAddWadouriPrefix).toHaveBeenCalledTimes(0)
+    expect(spyFetchVipMetadataInformation).toHaveBeenCalledTimes(0)
+    expect(spyFetchMetadataInformation).toHaveBeenCalledTimes(0)
+    expect(spyInitCornerstoneCore).toHaveBeenCalledTimes(1)
+  })
+  it('should fetch overlay metadata when the url is provided', async () => {
+    getWrapper({ props: { url: 'https://test' } })
+    await flushPromises()
+
+    expect(spyAddWadouriPrefix).toHaveBeenCalledTimes(1)
+    expect(spyAddWadouriPrefix).toHaveBeenCalledWith('https://test')
+    expect(spyFetchVipMetadataInformation).toHaveBeenCalledTimes(1)
+    expect(spyFetchVipMetadataInformation).toHaveBeenCalledWith('wadouri:https://test')
+    expect(spyFetchMetadataInformation).toHaveBeenCalledTimes(1)
+    expect(spyFetchMetadataInformation).toHaveBeenCalledWith('wadouri:https://test')
+    expect(spyInitCornerstoneCore).toHaveBeenCalledTimes(1)
+  })
+
+  describe('Methods', () => {
+    const wrapper = getWrapper()
     describe('method: wadouri', () => {
+      beforeAll(() => {
+        spyAddWadouriPrefix.mockRestore()
+      })
+
       it('should add "wadouri" prefix', async () => {
         expect(await wrapper.vm.addWadouriPrefix('https://dummy_url')).toBe(
           'wadouri:https://dummy_url'

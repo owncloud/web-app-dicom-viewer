@@ -41,7 +41,9 @@ After(async function (): Promise<void> {
 
 const sendRequest = function ({ method, path }): Promise<any> {
   const headers = {
-    Authorization: `Basic ${Buffer.from(`${config.adminUser}:${config.adminPassword}`).toString('base64')}`
+    Authorization: `Basic ${Buffer.from(`${config.adminUser}:${config.adminPassword}`).toString(
+      'base64'
+    )}`
   }
   return axios({
     method,
