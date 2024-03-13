@@ -89,7 +89,7 @@ import { Resource } from '@ownclouders/web-client/src'
 import DicomControls from './components/DicomControls.vue'
 import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
-import { extractMetadata } from './helper/extractMetadata'
+import { fetchDicomImageData, findDicomTagByValue, extractDicomMetadata } from './helper/extractMetadata'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
@@ -309,7 +309,6 @@ export default defineComponent({
       return 'wadouri:' + url
     },
     async fetchVipMetadataInformation(imageId) {
-      const { fetchDicomImageData, findDicomTagByValue } = extractMetadata()
 
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
@@ -329,7 +328,6 @@ export default defineComponent({
       this.isVipMetadataFetched = true
     },
     async fetchMetadataInformation(imageId) {
-      const { fetchDicomImageData, extractDicomMetadata } = extractMetadata()
 
       // ensure dicom image data has been fetched
       if (!this.isDicomImageDataFetched) {
