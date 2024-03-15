@@ -24,7 +24,7 @@ The current implementation allows to preview .dcm files and display their corres
   "external_apps": [
     {
       "id": "dicom-viewer",
-      "path": "http://localhost:9999/js/web-app-dicom-viewer.js",
+      "path": "https://host.docker.internal:9999/js/web-app-dicom-viewer.js",
       "config": {
         "mimeTypes": [
           "application/dicom",
