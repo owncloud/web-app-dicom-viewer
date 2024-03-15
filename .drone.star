@@ -1,9 +1,15 @@
 OC_CI_NODEJS = "owncloudci/nodejs:18"
 OC_CI_BUILDIFIER = "owncloudci/bazel-buildifier:latest"
 SONARSOURCE_SONAR_SCANNER_CLI = "sonarsource/sonar-scanner-cli:5.0"
+OC_CI_WAIT_FOR = "owncloudci/wait-for:latest"
+OCIS_IMAGE = "owncloud/ocis:5.0.0-rc.6"
+
+dir = {
+    "webConfig": "/drone/src/tests/drone/web.config.json",
+}
 
 def main(ctx):
-    return checkStarlark() + unitTestPipeline(ctx)
+    return checkStarlark() + unitTestPipeline(ctx) + e2eTests()
 
 def checkStarlark():
     return [{
@@ -89,3 +95,102 @@ def installPnpm():
             "pnpm install",
         ],
     }]
+
+def serveExtension():
+    return [
+        {
+            "name": "generate-certs",
+            "image": OC_CI_NODEJS,
+            "commands": [
+                "mkdir -p dev/docker/traefik/certificates",
+                "cd dev/docker/traefik/certificates",
+                "openssl req -x509 -newkey rsa:2048 -keyout server.key -out server.crt -nodes -days 365 -subj '/CN=extension'",
+            ],
+        },
+        {
+            "name": "extension",
+            "image": OC_CI_NODEJS,
+            "detach": True,
+            "commands": [
+                "pnpm build:w",
+            ],
+        },
+    ]
+
+def installBrowsers():
+    return [{
+        "name": "install-browsers",
+        "image": OC_CI_NODEJS,
+        "environment": {
+            "PLAYWRIGHT_BROWSERS_PATH": ".playwright",
+        },
+        "commands": [
+            "pnpm exec playwright install --with-deps chromium",
+        ],
+    }]
+
+def e2eTests():
+    environment = {
+        "HEADLESS": "true",
+        "retry": "1",
+        "BASE_URL_OCIS": "https://ocis:9200",
+    }
+
+    return [{
+        "kind": "pipeline",
+        "type": "docker",
+        "name": "e2e-tests",
+        "depends_on": ["check-starlark", "unit-tests"],
+        "steps": installPnpm() +
+                 installBrowsers() +
+                 serveExtension() +
+                 ocisService() +
+                 [
+                     {
+                         "name": "e2e-tests",
+                         "image": OC_CI_NODEJS,
+                         "environment": environment,
+                         "commands": [
+                             "pnpm run test:e2e tests/e2e/features/*.feature",
+                         ],
+                     },
+                 ],
+        "trigger": {
+            "ref": [
+                "refs/heads/main",
+                "refs/pull/**",
+            ],
+        },
+    }]
+
+def ocisService():
+    environment = {
+        "IDM_ADMIN_PASSWORD": "admin",
+        "OCIS_INSECURE": True,
+        "OCIS_LOG_LEVEL": "error",
+        "OCIS_URL": "https://ocis:9200",
+        "PROXY_ENABLE_BASIC_AUTH": True,
+        "WEB_UI_CONFIG_FILE": "%s" % dir["webConfig"],
+    }
+
+    return [
+        {
+            "type": "docker",
+            "name": "ocis",
+            "image": OCIS_IMAGE,
+            "detach": True,
+            "environment": environment,
+            "commands": [
+                "cd /usr/bin",
+                "ocis init",
+                "ocis server",
+            ],
+        },
+        {
+            "name": "wait-for-ocis-server",
+            "image": OC_CI_WAIT_FOR,
+            "commands": [
+                "wait-for -it ocis:9200 -t 300",
+            ],
+        },
+    ]

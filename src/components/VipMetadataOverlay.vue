@@ -1,7 +1,7 @@
 <template>
   <div id="dicom-viewer-vip-metadata" class="oc-position-absolute" >
     <div class="oc-pr-s oc-font-semibold">
-      <span>{{ patientName || patientNameNotDefined }}, </span>
+      <span>{{ patientName || patientNameNotDefined }}</span>,
       <span>*{{ patientBirthdate || birthdateNotDefined }}</span>
     </div>
     <div class="oc-pr-s oc-font-semibold">
