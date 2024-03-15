@@ -2,7 +2,7 @@ OC_CI_NODEJS = "owncloudci/nodejs:18"
 OC_CI_BUILDIFIER = "owncloudci/bazel-buildifier:latest"
 SONARSOURCE_SONAR_SCANNER_CLI = "sonarsource/sonar-scanner-cli:5.0"
 OC_CI_WAIT_FOR = "owncloudci/wait-for:latest"
-OCIS_IMAGE = "owncloud/ocis:latest"
+OCIS_IMAGE = "owncloud/ocis:5.0.0-rc.6"
 
 dir = {
     "webConfig": "/drone/src/tests/drone/web.config.json",
@@ -115,18 +115,11 @@ def serveExtension():
                 "pnpm build:w",
             ],
         },
-        {
-            "name": "wait-for-extension",
-            "image": OC_CI_WAIT_FOR,
-            "commands": [
-                "wait-for -it extension:9999 -t 300",
-            ],
-        },
     ]
 
-def installPlaywright():
+def installBrowsers():
     return [{
-        "name": "playwright-install",
+        "name": "install-browsers",
         "image": OC_CI_NODEJS,
         "environment": {
             "PLAYWRIGHT_BROWSERS_PATH": ".playwright",
@@ -141,8 +134,6 @@ def e2eTests():
         "HEADLESS": "true",
         "retry": "1",
         "BASE_URL_OCIS": "https://ocis:9200",
-        "REPORT_TRACING": "true",
-        "REPORT_DIR": "reports/e2e",
     }
 
     return [{
@@ -150,7 +141,7 @@ def e2eTests():
         "type": "docker",
         "name": "e2e-tests",
         "steps": installPnpm() +
-                 installPlaywright() +
+                 installBrowsers() +
                  serveExtension() +
                  ocisService() +
                  [
@@ -174,13 +165,11 @@ def e2eTests():
 def ocisService():
     environment = {
         "IDM_ADMIN_PASSWORD": "admin",
-        "OCIS_INSECURE": "true",
+        "OCIS_INSECURE": True,
         "OCIS_LOG_LEVEL": "error",
         "OCIS_URL": "https://ocis:9200",
         "PROXY_ENABLE_BASIC_AUTH": True,
         "WEB_UI_CONFIG_FILE": "%s" % dir["webConfig"],
-        "STORAGE_HOME_DRIVER": "ocis",
-        "STORAGE_USERS_DRIVER": "ocis",
     }
 
     return [
@@ -192,8 +181,8 @@ def ocisService():
             "environment": environment,
             "commands": [
                 "cd /usr/bin",
-                "./ocis init",
-                "./ocis server",
+                "ocis init",
+                "ocis server",
             ],
         },
         {
