@@ -140,6 +140,7 @@ def e2eTests():
         "kind": "pipeline",
         "type": "docker",
         "name": "e2e-tests",
+        "depends_on": ["check-starlark", "unit-tests"],
         "steps": installPnpm() +
                  installBrowsers() +
                  serveExtension() +
