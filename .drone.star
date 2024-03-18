@@ -65,6 +65,7 @@ def unitTestPipeline(ctx):
         "kind": "pipeline",
         "type": "docker",
         "name": "unit-tests",
+        "depends_on": ["check-starlark", "lint"],
         "steps": installPnpm() +
                  [
                      {
@@ -94,12 +95,18 @@ def pnpmlint(ctx):
         "type": "docker",
         "name": "lint",
         "steps": installPnpm() +
-                 lint(),
+                 [
+                     {
+                         "name": "lint",
+                         "image": OC_CI_NODEJS,
+                         "commands": [
+                             "pnpm lint",
+                         ],
+                     },
+                 ],
         "trigger": {
             "ref": [
                 "refs/heads/master",
-                "refs/heads/stable-*",
-                "refs/tags/**",
                 "refs/pull/**",
             ],
         },
@@ -113,15 +120,6 @@ def installPnpm():
             'npm install --silent --global --force "$(jq -r ".packageManager" < package.json)"',
             "pnpm config set store-dir ./.pnpm-store",
             "pnpm install",
-        ],
-    }]
-
-def lint():
-    return [{
-        "name": "lint",
-        "image": OC_CI_NODEJS,
-        "commands": [
-            "pnpm lint",
         ],
     }]
 
@@ -169,7 +167,7 @@ def e2eTests():
         "kind": "pipeline",
         "type": "docker",
         "name": "e2e-tests",
-        "depends_on": ["check-starlark", "unit-tests"],
+        "depends_on": ["unit-tests"],
         "steps": installPnpm() +
                  installBrowsers() +
                  serveExtension() +
