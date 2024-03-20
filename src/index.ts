@@ -1,11 +1,10 @@
 import translations from '../l10n/translations.json'
-import { AppWrapperRoute,
-  defineWebApplication } from '@ownclouders/web-pkg'
+import { AppWrapperRoute, defineWebApplication } from '@ownclouders/web-pkg'
 import App from './App.vue'
 import { useGettext } from 'vue3-gettext'
 
 export default defineWebApplication({
-  setup(args) {
+  setup() {
     const { $gettext } = useGettext()
 
     const appInfo = {
@@ -45,7 +44,7 @@ export default defineWebApplication({
     return {
       appInfo,
       routes,
-      translations,
+      translations
       //extensions: extensions(args)
     }
   }

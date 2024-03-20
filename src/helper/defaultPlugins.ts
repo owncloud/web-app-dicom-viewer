@@ -5,8 +5,7 @@ import { abilitiesPlugin } from '@casl/vue'
 import { createMongoAbility, SubjectRawRule } from '@casl/ability'
 import { createPinia } from 'pinia'
 
-
-// copied from web-client/src/helpers/resource/types.ts 
+// copied from web-client/src/helpers/resource/types.ts
 // because it seems like the import through '@ownclouders/web-client/src/helpers/resource/types' doesn't include this...
 export type AbilityActions =
   | 'create'
@@ -41,7 +40,6 @@ export interface DefaultPluginsOptions {
 
 export const defaultPlugins = ({
   abilities = [],
-  designSystem = true,
   gettext = true,
   pinia = true
 }: DefaultPluginsOptions = {}) => {

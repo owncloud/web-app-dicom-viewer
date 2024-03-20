@@ -10,10 +10,15 @@
       <div id="dicom-canvas" class="dicom-canvas oc-position-relative oc-mb-xl">
         <vip-metadata-overlay
           v-show="isVipMetadataFetched"
-          :patientName ="vipInformation.patientName"
-          :patientBirthdate ="formatOverlayDate(vipInformation.patientBirthdate)"
-          :institutionName ="vipInformation.institutionName"
-          :instanceCreationDateTime ="formatOverlayDateAndTime(vipInformation.instanceCreationDate, vipInformation.instanceCreationTime)"
+          :patient-name="vipInformation.patientName"
+          :patient-birthdate="formatOverlayDate(vipInformation.patientBirthdate)"
+          :institution-name="vipInformation.institutionName"
+          :instance-creation-date-time="
+            formatOverlayDateAndTime(
+              vipInformation.instanceCreationDate,
+              vipInformation.instanceCreationTime
+            )
+          "
         />
       </div>
       <div id="dicom-viewer-toggle-metadata-sidebar" class="oc-flex oc-position-absolute">
@@ -56,16 +61,16 @@
     </div>
     <metadata-sidebar
       v-show="isShowMetadataActivated"
-      :patientInformation="patientInformation"
-      :studyInformation="studyInformation"
-      :seriesInformation="seriesInformation"
-      :instanceInformation="instanceInformation"
-      :imageInformation="imageInformation"
-      :equipmentInformation="equipmentInformation"
-      :scanningInformation="scanningInformation"
-      :uidsInformation="uidsInformation"
-      :otherInformation="otherInformation"
-      :is-metadata-extracted="(isMetadataFetched && isImageMetadataExtractedFromViewport)"
+      :patient-information="patientInformation"
+      :study-information="studyInformation"
+      :series-information="seriesInformation"
+      :instance-information="instanceInformation"
+      :image-information="imageInformation"
+      :equipment-information="equipmentInformation"
+      :scanning-information="scanningInformation"
+      :uids-information="uidsInformation"
+      :other-information="otherInformation"
+      :is-metadata-extracted="isMetadataFetched && isImageMetadataExtractedFromViewport"
       @close-metadata-sidebar="toggleShowMetadata"
     />
   </div>
@@ -81,15 +86,17 @@ import { RenderingEngine, Types, Enums, metaData } from '@cornerstonejs/core'
 
 // vue imports
 import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
 import { useGettext } from 'vue3-gettext'
 
 // other imports & declarations
-import { Resource } from '@ownclouders/web-client/src'
 import DicomControls from './components/DicomControls.vue'
 import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
-import { fetchDicomImageData, findDicomTagByValue, extractDicomMetadata } from './helper/extractMetadata'
+import {
+  fetchDicomImageData,
+  findDicomTagByValue,
+  extractDicomMetadata
+} from './helper/extractMetadata'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
@@ -150,33 +157,6 @@ export default defineComponent({
     url: {
       type: String,
       required: true
-    },
-    patientInformation: {
-      type: Array
-    },
-    studyInformation: {
-      type: Array
-    },
-    seriesInformation: {
-      type: Array
-    },
-    instanceInformation: {
-      type: Array
-    },
-    imageInformation: {
-      type: Array
-    },
-    equipmentInformation: {
-      type: Array
-    },
-    scanningInformation: {
-      type: Array
-    },
-    uidsInformation: {
-      type: Array
-    },
-    otherInformation: {
-      type: Array
     }
   },
   setup(props) {
@@ -194,7 +174,7 @@ export default defineComponent({
       viewport: null,
       viewportCameraParallelScale: 1,
       dicomUrl: null,
-      dicomImageData:null,
+      dicomImageData: null,
       currentImageZoom: 1,
       currentImageRotation: 0,
       isVipMetadataFetched: false,
@@ -205,10 +185,10 @@ export default defineComponent({
       dicomFiles: [this.resource], // currently not used since only one file is displayed, show prev/next feature will be implemented later, see https://github.com/owncloud/web-app-dicom-viewer/issues/7
       vipInformation: {
         patientName: '',
-        patientBirthdate: '' ,
+        patientBirthdate: '',
         institutionName: '',
         instanceCreationDate: '',
-        instanceCreationTime: '',
+        instanceCreationTime: ''
       },
       patientInformation: [],
       studyInformation: [],
@@ -218,7 +198,7 @@ export default defineComponent({
       equipmentInformation: [],
       scanningInformation: [],
       uidsInformation: [],
-      otherInformation: [],
+      otherInformation: []
     }
   },
   // vue js lifecylce functions
@@ -305,116 +285,247 @@ export default defineComponent({
         console.error('Error initalizing cornerstone core', e)
       }
     },
-    async addWadouriPrefix(url: string) {
+    addWadouriPrefix(url: string) {
       return 'wadouri:' + url
     },
     async fetchVipMetadataInformation(imageId) {
-
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
         if (!this.isDicomImageDataFetched) {
-          if (this.dicomImageData != null){
+          if (this.dicomImageData != null) {
             this.isDicomImageDataFetched = true
           }
         }
       }
 
-      this.vipInformation.patientName = this.dicomImageData.string(findDicomTagByValue('patientName'))
-      this.vipInformation.patientBirthdate = this.dicomImageData.string(findDicomTagByValue('patientBirthdate'))
-      this.vipInformation.institutionName = this.dicomImageData.string(findDicomTagByValue('institutionName'))
-      this.vipInformation.instanceCreationDate = this.dicomImageData.string(findDicomTagByValue('instanceCreationDate'))
-      this.vipInformation.instanceCreationTime = this.dicomImageData.string(findDicomTagByValue('instanceCreationTime'))
+      this.vipInformation.patientName = this.dicomImageData.string(
+        findDicomTagByValue('patientName')
+      )
+      this.vipInformation.patientBirthdate = this.dicomImageData.string(
+        findDicomTagByValue('patientBirthdate')
+      )
+      this.vipInformation.institutionName = this.dicomImageData.string(
+        findDicomTagByValue('institutionName')
+      )
+      this.vipInformation.instanceCreationDate = this.dicomImageData.string(
+        findDicomTagByValue('instanceCreationDate')
+      )
+      this.vipInformation.instanceCreationTime = this.dicomImageData.string(
+        findDicomTagByValue('instanceCreationTime')
+      )
 
       this.isVipMetadataFetched = true
     },
     async fetchMetadataInformation(imageId) {
-
       // ensure dicom image data has been fetched
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
         if (!this.isDicomImageDataFetched) {
-          if (this.dicomImageData != null){
+          if (this.dicomImageData != null) {
             this.isDicomImageDataFetched = true
           }
         }
       }
 
       // patientInformation
-      const patientInformationTags = ['patientName', 'patientID', 'patientBirthdate_formatDate', 'patientSex', 'patientWeight' ]
-      const patientInformation = extractDicomMetadata(this.dicomImageData, patientInformationTags, this.$language.current)
+      const patientInformationTags = [
+        'patientName',
+        'patientID',
+        'patientBirthdate_formatDate',
+        'patientSex',
+        'patientWeight'
+      ]
+      const patientInformation = extractDicomMetadata(
+        this.dicomImageData,
+        patientInformationTags,
+        this.$language.current
+      )
       patientInformation.then((result) => {
         this.patientInformation = result
       })
 
       // studyInformation
-      const studyInformationTags = ['studyDescription', 'protocolName', 'accessionNumber', 'studyID', 'studyDate_formatDate', 'studyTime_formatTime' ]
-      const studyInformation = extractDicomMetadata(this.dicomImageData, studyInformationTags, this.$language.current)
+      const studyInformationTags = [
+        'studyDescription',
+        'protocolName',
+        'accessionNumber',
+        'studyID',
+        'studyDate_formatDate',
+        'studyTime_formatTime'
+      ]
+      const studyInformation = extractDicomMetadata(
+        this.dicomImageData,
+        studyInformationTags,
+        this.$language.current
+      )
       studyInformation.then((result) => {
         this.studyInformation = result
       })
 
       // seriesInformation
-      const seriesInformationTags = ['seriesDescription', 'seriesNumber', 'modality', 'bodyPart', 'seriesDate_formatDate', 'seriesTime_formatTime' ]
-      const seriesInformation = extractDicomMetadata(this.dicomImageData, seriesInformationTags, this.$language.current)
+      const seriesInformationTags = [
+        'seriesDescription',
+        'seriesNumber',
+        'modality',
+        'bodyPart',
+        'seriesDate_formatDate',
+        'seriesTime_formatTime'
+      ]
+      const seriesInformation = extractDicomMetadata(
+        this.dicomImageData,
+        seriesInformationTags,
+        this.$language.current
+      )
       seriesInformation.then((result) => {
         this.seriesInformation = result
       })
 
       // instanceInformation
-      const instanceInformationTags = ['instanceNumber', 'acquisitionNumber', 'acquisitionDate_formatDate', 'acquisitionTime_formatTime', 'instanceCreationDate_formatDate', 'instanceCreationTime_formatTime', 'contentDate_formatDate', 'contentTime_formatTime' ]
-      const instanceInformation = extractDicomMetadata(this.dicomImageData, instanceInformationTags, this.$language.current)
+      const instanceInformationTags = [
+        'instanceNumber',
+        'acquisitionNumber',
+        'acquisitionDate_formatDate',
+        'acquisitionTime_formatTime',
+        'instanceCreationDate_formatDate',
+        'instanceCreationTime_formatTime',
+        'contentDate_formatDate',
+        'contentTime_formatTime'
+      ]
+      const instanceInformation = extractDicomMetadata(
+        this.dicomImageData,
+        instanceInformationTags,
+        this.$language.current
+      )
       instanceInformation.then((result) => {
         this.instanceInformation = result
       })
 
       // imageInformation
-      const imageInformationTags = ['photometricInterpretation', 'imageType', 'rescaleSlope', 'rescaleIntercept', 'imagePositionPatient', 'imageOrientationPatient', 'patientPosition', 'pixelSpacing', 'imageComments' ]
-      const imageInformation = extractDicomMetadata(this.dicomImageData, imageInformationTags, this.$language.current)
+      const imageInformationTags = [
+        'photometricInterpretation',
+        'imageType',
+        'rescaleSlope',
+        'rescaleIntercept',
+        'imagePositionPatient',
+        'imageOrientationPatient',
+        'patientPosition',
+        'pixelSpacing',
+        'imageComments'
+      ]
+      const imageInformation = extractDicomMetadata(
+        this.dicomImageData,
+        imageInformationTags,
+        this.$language.current
+      )
       imageInformation.then((result) => {
         if (this.imageInformation.length == 0) {
           // image information from viewport haven yet been added to this.imageInformation
           // will be added later in getImageMetadataFromViewport() through splice method to keep the right order
           this.imageInformation = result
-        }
-        else {
+        } else {
           // image information from viewport have already been added
           // storing elements in temp variable
           var tempImageInformation = this.imageInformation
           // adding image information elements from viewport (tempImageInformation) in proper order
-          this.imageInformation =
-            tempImageInformation.slice(0, 1)
-            .concat(result.slice(0,2))
+          this.imageInformation = tempImageInformation
+            .slice(0, 1)
+            .concat(result.slice(0, 2))
             .concat(tempImageInformation.slice(1, 5))
-            .concat(result.slice(2,8))
+            .concat(result.slice(2, 8))
             .concat(tempImageInformation.slice(5, 6))
-            .concat(result.slice(8,9))
+            .concat(result.slice(8, 9))
         }
       })
 
       // equipmentInformation
-      const equipmentInformationTags = ['manufacturer', 'model', 'stationName', 'AE_Title', 'institutionName', 'softwareVersion', 'implementationVersionName' ]
-      const equipmentInformation = extractDicomMetadata(this.dicomImageData, equipmentInformationTags, this.$language.current)
+      const equipmentInformationTags = [
+        'manufacturer',
+        'model',
+        'stationName',
+        'AE_Title',
+        'institutionName',
+        'softwareVersion',
+        'implementationVersionName'
+      ]
+      const equipmentInformation = extractDicomMetadata(
+        this.dicomImageData,
+        equipmentInformationTags,
+        this.$language.current
+      )
       equipmentInformation.then((result) => {
         this.equipmentInformation = result
       })
 
       // scanningInformation
-      const scanningInformationTags = ['scanningSequence', 'sequenceVariant', 'scanOptions', 'sliceThickness', 'repetitionTime', 'echoTime', 'inversionTime', 'imagingFrequency', 'imagedNucleus', 'echoNumbers', 'magneticFieldStrength', 'spacingBetweenSlices', 'numberOfPhaseEncodingSteps', 'echoTrainLength' ]
-      const scanningInformation = extractDicomMetadata(this.dicomImageData, scanningInformationTags, this.$language.current)
+      const scanningInformationTags = [
+        'scanningSequence',
+        'sequenceVariant',
+        'scanOptions',
+        'sliceThickness',
+        'repetitionTime',
+        'echoTime',
+        'inversionTime',
+        'imagingFrequency',
+        'imagedNucleus',
+        'echoNumbers',
+        'magneticFieldStrength',
+        'spacingBetweenSlices',
+        'numberOfPhaseEncodingSteps',
+        'echoTrainLength'
+      ]
+      const scanningInformation = extractDicomMetadata(
+        this.dicomImageData,
+        scanningInformationTags,
+        this.$language.current
+      )
       scanningInformation.then((result) => {
         this.scanningInformation = result
       })
 
       // uidsInformation
-      const uidsInformationTags = ['studyUID', 'seriesUID', 'instanceUID', 'SOP_ClassUID_addSOPuids', 'transferSyntaxUID', 'frameOfReferenceUID' ]
-      const uidsInformation = extractDicomMetadata(this.dicomImageData, uidsInformationTags, this.$language.current)
+      const uidsInformationTags = [
+        'studyUID',
+        'seriesUID',
+        'instanceUID',
+        'SOP_ClassUID_addSOPuids',
+        'transferSyntaxUID',
+        'frameOfReferenceUID'
+      ]
+      const uidsInformation = extractDicomMetadata(
+        this.dicomImageData,
+        uidsInformationTags,
+        this.$language.current
+      )
       uidsInformation.then((result) => {
         this.uidsInformation = result
       })
 
       // otherInformation
-      const otherInformationTags = ['specificCharacterSet', 'referringPhysicianName', 'MR_AcquisitionType', 'numberOfAverages', 'percentSampling', 'percentPhaseFieldOfView', 'lowRR_Value', 'highRR_Value', 'intervalsAcquired', 'intervalsRejected', 'heartRate', 'receiveCoilName', 'transmitCoilName', 'inPlanePhaseEncodingDirection', 'flipAngle', 'positionReferenceIndicator', 'windowCenter', 'windowWidth']
-      const otherInformation = extractDicomMetadata(this.dicomImageData, otherInformationTags, this.$language.current)
+      const otherInformationTags = [
+        'specificCharacterSet',
+        'referringPhysicianName',
+        'MR_AcquisitionType',
+        'numberOfAverages',
+        'percentSampling',
+        'percentPhaseFieldOfView',
+        'lowRR_Value',
+        'highRR_Value',
+        'intervalsAcquired',
+        'intervalsRejected',
+        'heartRate',
+        'receiveCoilName',
+        'transmitCoilName',
+        'inPlanePhaseEncodingDirection',
+        'flipAngle',
+        'positionReferenceIndicator',
+        'windowCenter',
+        'windowWidth'
+      ]
+      const otherInformation = extractDicomMetadata(
+        this.dicomImageData,
+        otherInformationTags,
+        this.$language.current
+      )
       otherInformation.then((result) => {
         this.otherInformation = result
       })
@@ -441,7 +552,10 @@ export default defineComponent({
         this.imageInformation.splice(3, 0, { label: 'bitsAllocated', value: bitsAllocated })
         this.imageInformation.splice(4, 0, { label: 'bitsStored', value: bitsStored })
         this.imageInformation.splice(5, 0, { label: 'highBit', value: highBit })
-        this.imageInformation.splice(6, 0, { label: 'pixelRepresentation', value: pixelRepresentation })
+        this.imageInformation.splice(6, 0, {
+          label: 'pixelRepresentation',
+          value: pixelRepresentation
+        })
         this.imageInformation.splice(13, 0, { label: 'samplesPerPixel', value: samplesPerPixel })
 
         this.isImageMetadataExtractedFromViewport = true
@@ -468,7 +582,9 @@ export default defineComponent({
           ':' +
           time.substring(4, 6)
 
-        let formattedDate = DateTime.fromISO(tempDateTimeString).setLocale(this.$language.current).toLocaleString(DateTime.DATETIME_MED)
+        let formattedDate = DateTime.fromISO(tempDateTimeString)
+          .setLocale(this.$language.current)
+          .toLocaleString(DateTime.DATETIME_MED)
 
         return upperFirst(formattedDate)
       }
@@ -485,7 +601,9 @@ export default defineComponent({
           date.substring(6, 8) +
           'T00:00:00'
 
-        let formattedDate = DateTime.fromISO(tempDateTimeString).setLocale(this.$language.current).toLocaleString(DateTime.DATE_SHORT)
+        let formattedDate = DateTime.fromISO(tempDateTimeString)
+          .setLocale(this.$language.current)
+          .toLocaleString(DateTime.DATE_SHORT)
 
         return upperFirst(formattedDate)
       }
@@ -601,5 +719,4 @@ export default defineComponent({
 
   border-bottom: 1px solid var(--oc-color-border);
 }
-
 </style>

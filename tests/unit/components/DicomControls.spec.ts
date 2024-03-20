@@ -1,6 +1,6 @@
-import { Resource } from '@ownclouders/web-client/src' 
-import { shallowMount } from '@vue/test-utils' 
-import { mock } from 'vitest-mock-extended' 
+import { Resource } from '@ownclouders/web-client/src'
+import { shallowMount } from '@vue/test-utils'
+import { mock } from 'vitest-mock-extended'
 import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
 
 import DicomControls from '../../../src/components/DicomControls.vue'
@@ -17,7 +17,7 @@ const selectors = {
   controlsFlipVertical: '.preview-controls-flip-vertical',
   controlsInvert: '.preview-controls-invert',
   controlsReset: '.preview-controls-reset',
-  controlsShowMetadata: '.preview-controls-show-metadata',
+  controlsShowMetadata: '.preview-controls-show-metadata'
 }
 
 const descriptions = {
@@ -36,13 +36,13 @@ const descriptions = {
   imageHideMetadataDescription: 'Hide DICOM metadata'
 }
 
-const visibleOnlyOnScreensBiggerThan639px = 'oc-visible@s' 
+const visibleOnlyOnScreensBiggerThan639px = 'oc-visible@s'
 const visibleOnlyOnScreensBiggerThan959px = 'oc-visible@m'
 
 const defaultScreenSize = window.innerWidth
-const smallScreen = 600  // smaller than 640px 
+const smallScreen = 600 // smaller than 640px
 const mediumScreen = 800 // wider than 600px, smaller than 960px
-const wideScreen = 1200  // wider than 960px
+const wideScreen = 1200 // wider than 960px
 
 // test cases
 describe('DicomControls component', () => {
@@ -71,7 +71,9 @@ describe('DicomControls component', () => {
       })
       it('should display previous description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsPrevious).attributes('aria-label')).toBe(descriptions.previousDescription)
+        expect(wrapper.find(selectors.controlsPrevious).attributes('aria-label')).toBe(
+          descriptions.previousDescription
+        )
       })
     })
     describe('next button', () => {
@@ -86,7 +88,9 @@ describe('DicomControls component', () => {
       })
       it('should display next description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsNext).attributes('aria-label')).toBe(descriptions.nextDescription)
+        expect(wrapper.find(selectors.controlsNext).attributes('aria-label')).toBe(
+          descriptions.nextDescription
+        )
       })
     })
   })
@@ -103,7 +107,9 @@ describe('DicomControls component', () => {
       })
       it('should display shrink description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsImageShrink).attributes('aria-label')).toBe(descriptions.imageShrinkDescription)
+        expect(wrapper.find(selectors.controlsImageShrink).attributes('aria-label')).toBe(
+          descriptions.imageShrinkDescription
+        )
       })
     })
     describe('original size button', () => {
@@ -122,13 +128,17 @@ describe('DicomControls component', () => {
         // testing for visibility seems to be an issue of https://github.com/vuejs/vue-test-utils/issues/2073, see also https://v1.test-utils.vuejs.org/api/wrapper/#isvisible
         const { wrapper } = getWrapper()
         resizeWindowSize(smallScreen)
-        expect(wrapper.find(selectors.controlsImageOriginalSize).attributes('class')).toContain(visibleOnlyOnScreensBiggerThan639px)
+        expect(wrapper.find(selectors.controlsImageOriginalSize).attributes('class')).toContain(
+          visibleOnlyOnScreensBiggerThan639px
+        )
       })
       it('should be hidden if screen size is medium screen and "isShowMetadataActivated" is true', () => {
         // element should exist but not be visible (css class .oc-visible\@s with "display: none !important;" should be applied)
         const { wrapper } = getWrapper({ isShowMetadataActivated: true })
         resizeWindowSize(mediumScreen)
-        expect(wrapper.find(selectors.controlsImageOriginalSize).attributes('class')).toContain(visibleOnlyOnScreensBiggerThan959px)
+        expect(wrapper.find(selectors.controlsImageOriginalSize).attributes('class')).toContain(
+          visibleOnlyOnScreensBiggerThan959px
+        )
       })
       it('should emit "setZoom"-event on click', async () => {
         const { wrapper } = getWrapper()
@@ -137,7 +147,9 @@ describe('DicomControls component', () => {
       })
       it('should display original size description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsImageOriginalSize).attributes('aria-label')).toBe(descriptions.imageOriginalSizeDescription)
+        expect(wrapper.find(selectors.controlsImageOriginalSize).attributes('aria-label')).toBe(
+          descriptions.imageOriginalSizeDescription
+        )
       })
     })
     describe('zoom button', () => {
@@ -152,7 +164,9 @@ describe('DicomControls component', () => {
       })
       it('should display zoom description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsImageZoom).attributes('aria-label')).toBe(descriptions.imageZoomDescription)
+        expect(wrapper.find(selectors.controlsImageZoom).attributes('aria-label')).toBe(
+          descriptions.imageZoomDescription
+        )
       })
     })
   })
@@ -169,7 +183,9 @@ describe('DicomControls component', () => {
       })
       it('should display rotate left description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsRotateLeft).attributes('aria-label')).toBe(descriptions.imageRotateLeftDescription)
+        expect(wrapper.find(selectors.controlsRotateLeft).attributes('aria-label')).toBe(
+          descriptions.imageRotateLeftDescription
+        )
       })
     })
     describe('rotate right button', () => {
@@ -184,7 +200,9 @@ describe('DicomControls component', () => {
       })
       it('should display rotate right description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsRotateRight).attributes('aria-label')).toBe(descriptions.imageRotateRightDescription)
+        expect(wrapper.find(selectors.controlsRotateRight).attributes('aria-label')).toBe(
+          descriptions.imageRotateRightDescription
+        )
       })
     })
   })
@@ -201,7 +219,9 @@ describe('DicomControls component', () => {
       })
       it('should display horizontal flip description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsFlipHorizontal).attributes('aria-label')).toBe(descriptions.imageFlipHorizontalDescription)
+        expect(wrapper.find(selectors.controlsFlipHorizontal).attributes('aria-label')).toBe(
+          descriptions.imageFlipHorizontalDescription
+        )
       })
     })
     describe('flip vertical button', () => {
@@ -216,7 +236,9 @@ describe('DicomControls component', () => {
       })
       it('should display vertical flip description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsFlipVertical).attributes('aria-label')).toBe(descriptions.imageFlipVerticalDescription)
+        expect(wrapper.find(selectors.controlsFlipVertical).attributes('aria-label')).toBe(
+          descriptions.imageFlipVerticalDescription
+        )
       })
     })
   })
@@ -233,7 +255,9 @@ describe('DicomControls component', () => {
       })
       it('should display invert description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsInvert).attributes('aria-label')).toBe(descriptions.imageInvertDescription)
+        expect(wrapper.find(selectors.controlsInvert).attributes('aria-label')).toBe(
+          descriptions.imageInvertDescription
+        )
       })
     })
     describe('reset button', () => {
@@ -248,7 +272,9 @@ describe('DicomControls component', () => {
       })
       it('should display reset description as area label (hover text)', () => {
         const { wrapper } = getWrapper()
-        expect(wrapper.find(selectors.controlsReset).attributes('aria-label')).toBe(descriptions.imageResetDescription)
+        expect(wrapper.find(selectors.controlsReset).attributes('aria-label')).toBe(
+          descriptions.imageResetDescription
+        )
       })
     })
   })
@@ -264,11 +290,15 @@ describe('DicomControls component', () => {
     })
     it('should display hide metadata description as area label (hover text) if "isShowMetadataActivated" is true', () => {
       const { wrapper } = getWrapper({ isShowMetadataActivated: true })
-      expect(wrapper.find(selectors.controlsShowMetadata).attributes('aria-label')).toBe(descriptions.imageHideMetadataDescription)
+      expect(wrapper.find(selectors.controlsShowMetadata).attributes('aria-label')).toBe(
+        descriptions.imageHideMetadataDescription
+      )
     })
     it('should display show metadata description as area label (hover text) if "isShowMetadataActivated" is false', () => {
       const { wrapper } = getWrapper({ isShowMetadataActivated: false })
-      expect(wrapper.find(selectors.controlsShowMetadata).attributes('aria-label')).toBe(descriptions.imageShowMetadataDescription)
+      expect(wrapper.find(selectors.controlsShowMetadata).attributes('aria-label')).toBe(
+        descriptions.imageShowMetadataDescription
+      )
     })
   })
 })
@@ -284,7 +314,7 @@ function getWrapper(props = {}) {
       },
       global: {
         plugins: [...defaultPlugins()]
-      }, 
+      }
     })
   }
 }

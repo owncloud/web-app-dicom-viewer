@@ -9,7 +9,10 @@ dir = {
 }
 
 def main(ctx):
-    return checkStarlark() + unitTestPipeline(ctx) + e2eTests()
+    return checkStarlark() + \
+           pnpmlint(ctx) + \
+           unitTestPipeline(ctx) + \
+           e2eTests()
 
 def checkStarlark():
     return [{
@@ -62,6 +65,7 @@ def unitTestPipeline(ctx):
         "kind": "pipeline",
         "type": "docker",
         "name": "unit-tests",
+        "depends_on": ["check-starlark", "lint"],
         "steps": installPnpm() +
                  [
                      {
@@ -80,6 +84,29 @@ def unitTestPipeline(ctx):
         "trigger": {
             "ref": [
                 "refs/heads/main",
+                "refs/pull/**",
+            ],
+        },
+    }]
+
+def pnpmlint(ctx):
+    return [{
+        "kind": "pipeline",
+        "type": "docker",
+        "name": "lint",
+        "steps": installPnpm() +
+                 [
+                     {
+                         "name": "lint",
+                         "image": OC_CI_NODEJS,
+                         "commands": [
+                             "pnpm lint",
+                         ],
+                     },
+                 ],
+        "trigger": {
+            "ref": [
+                "refs/heads/master",
                 "refs/pull/**",
             ],
         },
@@ -140,7 +167,7 @@ def e2eTests():
         "kind": "pipeline",
         "type": "docker",
         "name": "e2e-tests",
-        "depends_on": ["check-starlark", "unit-tests"],
+        "depends_on": ["unit-tests"],
         "steps": installPnpm() +
                  installBrowsers() +
                  serveExtension() +

@@ -1,5 +1,4 @@
-import { mount, shallowMount } from '@vue/test-utils' 
-import { mock } from 'vitest-mock-extended' 
+import { shallowMount } from '@vue/test-utils'
 import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
 
 import MetadataSidebar from '../../../src/components/MetadataSidebar.vue'
@@ -9,7 +8,7 @@ const selectors = {
   controlsClose: '.header__close'
 }
 
-const hiddenOnScreensBiggerThan639px = 'oc-hidden@s' 
+const hiddenOnScreensBiggerThan639px = 'oc-hidden@s'
 
 const defaultScreenSize = window.innerWidth
 const smallScreenSize = 600 // smaller than 640px
@@ -47,7 +46,9 @@ describe('MetadataSidebar component', () => {
         const { wrapper } = getWrapper()
         resizeWindowSize(wideScreenSize)
         expect(wrapper.find(selectors.controlsBack).exists()).toBeTruthy()
-        expect(wrapper.find(selectors.controlsBack).attributes('class')).toContain(hiddenOnScreensBiggerThan639px)
+        expect(wrapper.find(selectors.controlsBack).attributes('class')).toContain(
+          hiddenOnScreensBiggerThan639px
+        )
       })
     })
     describe('close button', () => {

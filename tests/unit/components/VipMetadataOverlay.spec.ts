@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils' 
+import { shallowMount } from '@vue/test-utils'
 import { defaultPlugins } from '../../../src/helper/defaultPlugins.js'
 
 import VipMetadataOverlay from '../../../src/components/VipMetadataOverlay.vue'
@@ -24,8 +24,8 @@ describe('VipMetadataOverlay component', () => {
 
       const patientVipMetadata = {
         patientName: patientName,
-        patientBirthday: patientBirthday, 
-        institutionName: institutionName, 
+        patientBirthday: patientBirthday,
+        institutionName: institutionName,
         instanceCreationDateTime: instanceCreationDateTime
       }
 

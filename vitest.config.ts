@@ -1,17 +1,17 @@
-import { defineConfig } from "vitest/config" // 'vite'
+import { defineConfig } from 'vitest/config' // 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
   test: {
-    globals: true, 
+    globals: true,
     //environment: 'happy-dom',
     environment: 'jsdom',
     reporters: ['verbose'],
     server: {
       deps: {
         inline: [
-          "@kitware/vtk.js", 
+          '@kitware/vtk.js',
           '@kitware\\+vtk.js',
           'd3-array',
           'd3-scale',
@@ -45,7 +45,3 @@ export default defineConfig({
     }*/
   }
 })
-
-
-
-    
