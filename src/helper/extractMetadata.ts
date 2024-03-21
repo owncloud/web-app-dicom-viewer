@@ -31,11 +31,7 @@ export const addSopTagChecker = (tag: string): boolean => {
   return tag.endsWith('_addSOPuids') ? true : false
 }
 
-export const extractDicomMetadata = async (
-  imageData: object,
-  tags: string[],
-  language: string = 'en'
-) => {
+export const extractDicomMetadata = async (imageData: object, tags: string[], language = 'en') => {
   const extractedData: { label: string; value: string }[] = []
 
   // extracting data

@@ -202,19 +202,16 @@ export default defineComponent({
     }
   },
   // vue js lifecylce functions
-  async created() {
-    // get resource, ensure resource url is not empty!
-    if (this.url != null && this.url != undefined && this.url != '') {
-      this.dicomUrl = await this.addWadouriPrefix(this.url)
-    }
 
-    // get vip metadata
-    await this.fetchVipMetadataInformation(await this.addWadouriPrefix(this.url))
-
-    // prefetch all other metadata (in separate function for performance reasons)
-    await this.fetchMetadataInformation(await this.addWadouriPrefix(this.url))
-  },
   async mounted() {
+    if (this.url) {
+      this.dicomUrl = await this.addWadouriPrefix(this.url)
+      // get vip metadata
+      await this.fetchVipMetadataInformation(this.dicomUrl)
+
+      // prefetch all other metadata (in separate function for performance reasons)
+      await this.fetchMetadataInformation(this.dicomUrl)
+    }
     // check if cornerstone core is initialized
     if (!cornerstone.isCornerstoneInitialized()) {
       await this.initCornerstoneCore()
@@ -248,11 +245,9 @@ export default defineComponent({
     this.viewport = <Types.IStackViewport>this.renderingEngine.getViewport(viewportId)
 
     // add resource to stack, ensure resource url is not empty!
-    if (this.url != null && this.url != undefined && this.url != '') {
-      let dicomResourceUrl = await this.addWadouriPrefix(this.url)
-
+    if (this.dicomUrl) {
       // define a stack containing a single image
-      const dicomStack = [dicomResourceUrl]
+      const dicomStack = [this.dicomUrl]
 
       // set stack on the viewport (currently only one image in the stack, therefore no frame # required)
       await this.viewport.setStack(dicomStack)
@@ -262,7 +257,7 @@ export default defineComponent({
       this.setViewportCameraParallelScaleFactor()
 
       // getting image metadata from viewport
-      this.getImageMetadataFromViewport(dicomResourceUrl)
+      this.getImageMetadataFromViewport(this.dicomUrl)
     }
   },
   updated() {
@@ -277,6 +272,7 @@ export default defineComponent({
     this.isImageMetadataExtractedFromViewport = false
     this.isDicomImageDataFetched = false
   },
+
   methods: {
     async initCornerstoneCore() {
       try {
@@ -291,10 +287,8 @@ export default defineComponent({
     async fetchVipMetadataInformation(imageId) {
       if (!this.isDicomImageDataFetched) {
         this.dicomImageData = await fetchDicomImageData(imageId)
-        if (!this.isDicomImageDataFetched) {
-          if (this.dicomImageData != null) {
-            this.isDicomImageDataFetched = true
-          }
+        if (this.dicomImageData != null) {
+          this.isDicomImageDataFetched = true
         }
       }
 
