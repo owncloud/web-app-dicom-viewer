@@ -20,15 +20,15 @@ export const findDicomTagByValue = (value: string): string | undefined => {
 }
 
 export const formatDateTagChecker = (tag: string): boolean => {
-  return tag.endsWith('_formatDate') ? true : false
+  return tag.endsWith('_formatDate')
 }
 
 export const formatTimeTagChecker = (tag: string): boolean => {
-  return tag.endsWith('_formatTime') ? true : false
+  return tag.endsWith('_formatTime')
 }
 
 export const addSopTagChecker = (tag: string): boolean => {
-  return tag.endsWith('_addSOPuids') ? true : false
+  return tag.endsWith('_addSOPuids')
 }
 
 export const extractDicomMetadata = async (imageData: object, tags: string[], language = 'en') => {
