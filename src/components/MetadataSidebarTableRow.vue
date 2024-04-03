@@ -1,6 +1,6 @@
 <template>
   <tr class="dicom-metadata-section">
-    <th colspan="2">
+    <th colspan="2" scope="colgroup">
       <p
         class="oc-py-s oc-font-semibold dicom-metadata-section-title"
         :class="isFirstSection ? 'dicom-metadata-first-section' : ''"
