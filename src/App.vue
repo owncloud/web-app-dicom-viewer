@@ -123,7 +123,7 @@ if (navigator.hardwareConcurrency) {
   maxWebWorkers = Math.min(navigator.hardwareConcurrency, 7)
 }
 
-var config = {
+let config = {
   maxWebWorkers,
   startWebWorkersOnDemand: true,
   taskConfiguration: {
@@ -281,7 +281,7 @@ export default defineComponent({
         console.error('Error initalizing cornerstone core', e)
       }
     },
-    addWadouriPrefix(url: string) {
+    addWadouriPrefix(url: string): string {
       return 'wadouri:' + url
     },
     async fetchVipMetadataInformation(imageId) {
@@ -419,7 +419,7 @@ export default defineComponent({
         } else {
           // image information from viewport have already been added
           // storing elements in temp variable
-          var tempImageInformation = this.imageInformation
+          let tempImageInformation = this.imageInformation
           // adding image information elements from viewport (tempImageInformation) in proper order
           this.imageInformation = tempImageInformation
             .slice(0, 1)
@@ -626,7 +626,6 @@ export default defineComponent({
     },
     setRotation(newRotation) {
       this.currentImageRotation = newRotation
-      const { rotation } = this.viewport.getProperties()
       this.viewport.setProperties({ rotation: this.currentImageRotation })
       this.viewport.render()
     },
