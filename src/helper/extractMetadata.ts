@@ -35,13 +35,13 @@ export const extractDicomMetadata = async (imageData: object, tags: string[], la
   const extractedData: { label: string; value: string }[] = []
 
   // extracting data
-  for (let i = 0; i < tags.length; ++i) {
+  for (const element of tags) {
     // check if tag contains an extension for date or time or SOP formatting
-    const isDate = formatDateTagChecker(tags[i])
-    const isTime = formatTimeTagChecker(tags[i])
-    const isSOP = addSopTagChecker(tags[i])
+    const isDate = formatDateTagChecker(element)
+    const isTime = formatTimeTagChecker(element)
+    const isSOP = addSopTagChecker(element)
 
-    let metadataLabel = tags[i]
+    let metadataLabel = element
     if (isDate || isTime || isSOP) {
       metadataLabel = metadataLabel.slice(0, -11) // cutting off the add-on (_formatDate or _formatTime or _addSOPuids) from the label
     }
