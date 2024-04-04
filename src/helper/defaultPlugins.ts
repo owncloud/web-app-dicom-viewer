@@ -1,4 +1,3 @@
-//import DesignSystem from 'design-system'
 import { createGettext } from 'vue3-gettext'
 import { h } from 'vue'
 import { abilitiesPlugin } from '@casl/vue'
@@ -50,14 +49,6 @@ export const defaultPlugins = ({
       app.use(abilitiesPlugin, createMongoAbility(abilities))
     }
   })
-
-  /*
-  TODO: check if this is needed, if so, try to fix import
-
-  if (designSystem) {
-    plugins.push(DesignSystem)
-  }
-  */
 
   if (gettext) {
     plugins.push(createGettext({ translations: {}, silent: true }))

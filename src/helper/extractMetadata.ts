@@ -20,28 +20,28 @@ export const findDicomTagByValue = (value: string): string | undefined => {
 }
 
 export const formatDateTagChecker = (tag: string): boolean => {
-  return tag.endsWith('_formatDate') ? true : false
+  return tag.endsWith('_formatDate')
 }
 
 export const formatTimeTagChecker = (tag: string): boolean => {
-  return tag.endsWith('_formatTime') ? true : false
+  return tag.endsWith('_formatTime')
 }
 
 export const addSopTagChecker = (tag: string): boolean => {
-  return tag.endsWith('_addSOPuids') ? true : false
+  return tag.endsWith('_addSOPuids')
 }
 
 export const extractDicomMetadata = async (imageData: object, tags: string[], language = 'en') => {
   const extractedData: { label: string; value: string }[] = []
 
   // extracting data
-  for (let i = 0; i < tags.length; ++i) {
+  for (const tag of tags) {
     // check if tag contains an extension for date or time or SOP formatting
-    const isDate = formatDateTagChecker(tags[i])
-    const isTime = formatTimeTagChecker(tags[i])
-    const isSOP = addSopTagChecker(tags[i])
+    const isDate = formatDateTagChecker(tag)
+    const isTime = formatTimeTagChecker(tag)
+    const isSOP = addSopTagChecker(tag)
 
-    let metadataLabel = tags[i]
+    let metadataLabel = tag
     if (isDate || isTime || isSOP) {
       metadataLabel = metadataLabel.slice(0, -11) // cutting off the add-on (_formatDate or _formatTime or _addSOPuids) from the label
     }
