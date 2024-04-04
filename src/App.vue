@@ -123,7 +123,7 @@ if (navigator.hardwareConcurrency) {
   maxWebWorkers = Math.min(navigator.hardwareConcurrency, 7)
 }
 
-let config = {
+const config = {
   maxWebWorkers,
   startWebWorkersOnDemand: true,
   taskConfiguration: {
@@ -419,7 +419,7 @@ export default defineComponent({
         } else {
           // image information from viewport have already been added
           // storing elements in temp variable
-          let tempImageInformation = this.imageInformation
+          const tempImageInformation = this.imageInformation
           // adding image information elements from viewport (tempImageInformation) in proper order
           this.imageInformation = tempImageInformation
             .slice(0, 1)
