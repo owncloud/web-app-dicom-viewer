@@ -36,6 +36,9 @@ export const extractDicomMetadata = async (imageData: object, tags: string[], la
 
   // extracting data
   for (const tag of tags) {
+    if (tag === undefined || tag === null) {
+      continue
+    }
     // check if tag contains an extension for date or time or SOP formatting
     const isDate = formatDateTagChecker(tag)
     const isTime = formatTimeTagChecker(tag)
