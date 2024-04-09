@@ -1,17 +1,16 @@
 import { Given, When, Then } from '@cucumber/cucumber'
-import { state } from '../hooks'
+import { expect } from '@playwright/test'
+import util from 'util'
 import { config } from '../config.js'
 
 import { DicomViewer } from '../pageObjects/DicomViewer'
-import { getUser } from '../userStore'
+
+const dicomViewer = new DicomViewer()
 import { apiUpload } from '../api/apiUpload'
 
 Given('the user {string} has logged in', async function (user: string): Promise<void> {
-  const page = state.page
-  const dicomViewer = new DicomViewer()
-  await page.goto(config.baseUrlOcis)
-  const stepUser = await getUser({ user })
-  await dicomViewer.login({ username: stepUser.displayName, password: stepUser.password })
+  await global.page.goto(config.baseUrlOcis)
+  await dicomViewer.login(user)
 })
 
 Given(
@@ -22,36 +21,36 @@ Given(
 )
 
 When('the user previews the dicom file {string}', async function (filename: string): Promise<void> {
-  const dicomViewer = new DicomViewer()
   await dicomViewer.previewDicomFile({ filename })
 })
 
-When('the user checks VIP metadata for dicom file', async function (): Promise<void> {
-  const dicomViewer = new DicomViewer()
-  await dicomViewer.checkVIPMetadata()
-})
-
-When('the user checks the extended metadata for dicom file', async function (): Promise<void> {
-  const dicomViewer = new DicomViewer()
-  await dicomViewer.checkExtendedMetadata()
-})
-
 Then(
-  /^the user should see patient name "([^"]*)" in (VIP metadata|metadata sidebar)$/,
-  async function (patientName: string, metadataLocation: string): Promise<void> {
-    const dicomViewer = new DicomViewer()
-    await dicomViewer.checkPatientName({ patientName, metadataLocation })
+  'the user should see the dicom file {string}',
+  async function (filename: string): Promise<void> {
+    await expect(global.page.locator(dicomViewer.elements.dicomCanvasSelector)).toBeVisible()
+    await expect(
+      global.page.locator(util.format(dicomViewer.elements.appbarResourceNameSelector, filename))
+    ).toBeVisible()
+    await expect(global.page.locator(dicomViewer.elements.dicomVIPMetadataSelector)).toBeVisible()
   }
 )
 
-Then('the user closes the DICOM file preview', async function () {
-  const dicomViewer = new DicomViewer()
-  await dicomViewer.closeDicomFilePreview()
+When('the user checks the extended metadata for dicom file', async function (): Promise<void> {
+  await global.page.locator(dicomViewer.elements.dicomExtendedMetadataBtnSelector).click()
+  await expect(global.page.locator(dicomViewer.elements.dicomMetadataSidebarSelector)).toBeVisible()
 })
 
-Then('the user logs out', async function (): Promise<void> {
-  const page = state.page
-  const dicomViewer = new DicomViewer()
-  await dicomViewer.logout()
-  await page.locator(dicomViewer.elements.loginFormSelector).waitFor()
+Then(
+  /^the user should see patient name "([^"]*)" in the (VIP metadata section|metadata sidebar)$/,
+  async function (patientName: string, metadataLocation: string): Promise<void> {
+    await expect(await dicomViewer.getPatientName(metadataLocation)).toBe(patientName)
+  }
+)
+
+When('the user closes the metadata sidebar', async function () {
+  await dicomViewer.closeMetadataSidebar()
+})
+
+Then('the metadata sidebar should not be displayed', async function (): Promise<void> {
+  await expect(global.page.locator(dicomViewer.elements.dicomMetadataSidebarSelector)).toBeHidden()
 })
