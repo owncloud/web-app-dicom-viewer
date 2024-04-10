@@ -5,8 +5,8 @@ Feature: Preview dicom image
 
 
   Scenario: user previews dicom image
-    Given the user "Admin" has logged in
-    And the user has uploaded the dicom file "MRBRAIN.dcm"
+    Given the dicom file "MRBRAIN.dcm" has been uploaded
+    And the user "Admin" has logged in
     When the user previews the dicom file "MRBRAIN.dcm"
     And the user checks VIP metadata for dicom file
     Then the user should see patient name "MR/BRAIN/GRASE/1024" in VIP metadata

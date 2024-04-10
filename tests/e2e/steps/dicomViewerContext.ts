@@ -14,7 +14,7 @@ Given('the user {string} has logged in', async function (user: string): Promise<
 })
 
 Given(
-  'the user has uploaded the dicom file {string}',
+  'the dicom file {string} has been uploaded',
   async function (filename: string): Promise<void> {
     const dicomViewer = new DicomViewer()
     await dicomViewer.upload({ filename })
