@@ -4,34 +4,6 @@
       class="oc-background-brand oc-p-s oc-width-large oc-flex oc-flex-middle oc-flex-center oc-flex-around preview-controls-action-bar"
     >
       <!-- hide prev / next section while functionality is not yet implemented, set class of the wrapper div to 'oc-width-xlarge' once that section is activated -->
-      <!--
-      <div class="oc-flex oc-flex-middle">
-        <oc-button
-          v-oc-tooltip="previousDescription"
-          class="preview-controls-previous"
-          appearance="raw-inverse"
-          variation="brand"
-          :aria-label="previousDescription"
-          @click="$emit('togglePrevious')"
-        >
-          <oc-icon size="large" name="arrow-drop-left" variation="inherit" />
-        </oc-button>
-        <p v-if="!isFolderLoading" class="oc-m-rm preview-controls-action-count">
-          <span aria-hidden="true" v-text="ariaHiddenFileCount" />
-          <span class="oc-invisible-sr" v-text="screenreaderFileCount" />
-        </p>
-        <oc-button
-          v-oc-tooltip="nextDescription"
-          class="preview-controls-next"
-          appearance="raw-inverse"
-          variation="brand"
-          :aria-label="nextDescription"
-          @click="$emit('toggleNext')"
-        >
-          <oc-icon size="large" name="arrow-drop-right" variation="inherit" />
-        </oc-button>
-      </div>
-      -->
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageShrinkDescription"
