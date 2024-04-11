@@ -1,9 +1,6 @@
 import { Page, expect } from '@playwright/test'
 import { state } from '../hooks'
-import { config } from '../config.js'
 import util from 'util'
-import { sendRequest } from '../APIHelper'
-import fs from 'fs'
 
 export class DicomViewer {
   page: Page = state.page
@@ -40,18 +37,6 @@ export class DicomViewer {
   async logout(): Promise<void> {
     await this.page.locator(this.elements.userMenuButtonSelector).click()
     await this.page.locator(this.elements.logoutSelector).click()
-  }
-
-  async upload({ filename }): Promise<void> {
-    const response = await sendRequest({
-      method: 'PUT',
-      path: `remote.php/dav/files/${config.adminUser}/${filename}`,
-      header: { 'Content-Type': 'application/octet-stream' },
-      data: fs.readFileSync(`${config.assets}/${filename}`)
-    })
-    if (response.status !== 201) {
-      throw new Error(`Failed to upload file ${filename}`)
-    }
   }
 
   async previewDicomFile({ filename }): Promise<void> {

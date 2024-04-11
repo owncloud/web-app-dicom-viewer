@@ -3,7 +3,7 @@ import { Browser, chromium, Page } from '@playwright/test'
 import { xml2js } from 'xml-js'
 import { _ } from 'lodash'
 import { config } from './config.js'
-import { sendRequest } from './APIHelper'
+import { sendRequest } from './api/APIHelper'
 
 export const state: {
   browser: Browser
