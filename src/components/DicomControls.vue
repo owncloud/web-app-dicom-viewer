@@ -3,7 +3,6 @@
     <div
       class="oc-background-brand oc-p-s oc-width-large oc-flex oc-flex-middle oc-flex-center oc-flex-around preview-controls-action-bar"
     >
-      <!-- hide prev / next section while functionality is not yet implemented, set class of the wrapper div to 'oc-width-xlarge' once that section is activated -->
       <div class="oc-flex oc-flex-middle">
         <oc-button
           v-oc-tooltip="imageShrinkDescription"
