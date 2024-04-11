@@ -26,7 +26,7 @@
     </div>
     <div v-if="isMetadataExtracted" id="dicom-metadata-sidebar-content" class="oc-p-s">
       <table class="details-table">
-        <caption>DICOM-metadata-details-table</caption>
+        <caption>⏎··········DICOM metadata details table⏎········</caption>
         <metadata-sidebar-table-row
           v-bind="$props.patientInformation"
           :metadata-section-name="'Patient Information'"
