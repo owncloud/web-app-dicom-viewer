@@ -1,10 +1,9 @@
 import { Before, BeforeAll, After, AfterAll, setDefaultTimeout } from '@cucumber/cucumber'
 import { Browser, chromium, Page } from '@playwright/test'
-import axios from 'axios'
-import join from 'join-path'
 import { xml2js } from 'xml-js'
 import { _ } from 'lodash'
 import { config } from './config.js'
+import { sendRequest } from './api/APIHelper'
 
 export const state: {
   browser: Browser
@@ -34,25 +33,12 @@ AfterAll(async function (): Promise<void> {
 })
 
 After(async function (): Promise<void> {
-  await deleteAllDicomFiles()
+  await deleteDicomFile()
   await emptyTrashbin()
   await state.page.close()
 })
 
-const sendRequest = function ({ method, path }): Promise<any> {
-  const headers = {
-    Authorization: `Basic ${Buffer.from(`${config.adminUser}:${config.adminPassword}`).toString(
-      'base64'
-    )}`
-  }
-  return axios({
-    method,
-    url: join(config.baseUrlOcis, path),
-    headers
-  })
-}
-
-const deleteAllDicomFiles = async function (): Promise<void> {
+const deleteDicomFile = async function (): Promise<void> {
   const response = await sendRequest({ method: 'PROPFIND', path: 'remote.php/dav/files/admin' })
   const xmlResponse = response.data
   const result = xml2js(xmlResponse, { compact: true })

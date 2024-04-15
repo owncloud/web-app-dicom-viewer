@@ -1,6 +1,5 @@
 import { Page, expect } from '@playwright/test'
 import { state } from '../hooks'
-import { config } from '../config.js'
 import util from 'util'
 
 export class DicomViewer {
@@ -38,15 +37,6 @@ export class DicomViewer {
   async logout(): Promise<void> {
     await this.page.locator(this.elements.userMenuButtonSelector).click()
     await this.page.locator(this.elements.logoutSelector).click()
-  }
-
-  async upload({ filename }): Promise<void> {
-    await this.page.locator(this.elements.resourceUploadButton).click()
-    await this.page
-      .locator(this.elements.fileUploadInput)
-      .setInputFiles(`${config.assets}/${filename}`)
-    await this.page.locator(this.elements.uploadInfoCloseButton).click()
-    await this.page.locator(util.format(this.elements.resourceNameSelector, filename)).waitFor()
   }
 
   async previewDicomFile({ filename }): Promise<void> {

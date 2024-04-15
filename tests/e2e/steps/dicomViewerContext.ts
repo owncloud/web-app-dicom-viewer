@@ -4,6 +4,7 @@ import { config } from '../config.js'
 
 import { DicomViewer } from '../pageObjects/DicomViewer'
 import { getUser } from '../userStore'
+import { apiUpload } from '../api/apiUpload'
 
 Given('the user {string} has logged in', async function (user: string): Promise<void> {
   const page = state.page
@@ -14,10 +15,9 @@ Given('the user {string} has logged in', async function (user: string): Promise<
 })
 
 Given(
-  'the user has uploaded the dicom file {string}',
+  'the dicom file {string} has been uploaded',
   async function (filename: string): Promise<void> {
-    const dicomViewer = new DicomViewer()
-    await dicomViewer.upload({ filename })
+    await apiUpload({ filename })
   }
 )
 
