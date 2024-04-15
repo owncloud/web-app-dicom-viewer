@@ -19,15 +19,15 @@ export const findDicomTagByValue = (value: string): string | undefined => {
   return Object.keys(dicomTags).find((key) => dicomTags[key] === value)
 }
 
-export const formatDateTagChecker = (tag: string): boolean => {
+const formatDateTagChecker = (tag: string): boolean => {
   return tag.endsWith('_formatDate')
 }
 
-export const formatTimeTagChecker = (tag: string): boolean => {
+const formatTimeTagChecker = (tag: string): boolean => {
   return tag.endsWith('_formatTime')
 }
 
-export const addSopTagChecker = (tag: string): boolean => {
+const addSopTagChecker = (tag: string): boolean => {
   return tag.endsWith('_addSOPuids')
 }
 
@@ -36,6 +36,9 @@ export const extractDicomMetadata = async (imageData: object, tags: string[], la
 
   // extracting data
   for (const tag of tags) {
+    if (tag === undefined || tag === null) {
+      continue
+    }
     // check if tag contains an extension for date or time or SOP formatting
     const isDate = formatDateTagChecker(tag)
     const isTime = formatTimeTagChecker(tag)
@@ -66,11 +69,7 @@ export const extractDicomMetadata = async (imageData: object, tags: string[], la
   return extractedData
 }
 
-export const formatDate = (
-  date: string,
-  language: string,
-  dateFormat: DateTime
-): string | undefined => {
+const formatDate = (date: string, language: string, dateFormat: DateTime): string | undefined => {
   // transforming date into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
   // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'DA'
   // date output format: e.g. DateTime.DATE_MED, DateTime.DATE_SHORT, see https://moment.github.io/luxon/api-docs/index.html
@@ -88,11 +87,7 @@ export const formatDate = (
   return undefined
 }
 
-export const formatTime = (
-  time: string,
-  language: string,
-  timeFormat: DateTime
-): string | undefined => {
+const formatTime = (time: string, language: string, timeFormat: DateTime): string | undefined => {
   // transform time string retrieved from dicom metadata into a string that is valid for formatDateFromISO ('YYYY-MM-DDTHH:MM:SS')
   // description of input format see https://dicom.nema.org/dicom/2013/output/chtml/part05/sect_6.2.html, VR Name 'TM'
   // time output format: e.g. DateTime.TIME_SIMPLE, DateTime.TIME_24_WITH_SECONDS, see https://moment.github.io/luxon/api-docs/index.html
