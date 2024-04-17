@@ -1,9 +1,7 @@
-import { Page, expect } from '@playwright/test'
-import { state } from '../hooks'
 import util from 'util'
+import { getUser } from '../userStore'
 
 export class DicomViewer {
-  page: Page = state.page
   elements: Readonly<Record<string, string>> = {
     userNameSelector: '#oc-login-username',
     passwordSelector: '#oc-login-password',
@@ -21,57 +19,54 @@ export class DicomViewer {
     dicomVIPMetadataSelector: '#dicom-viewer-vip-metadata',
     dicomExtendedMetadataBtnSelector: '.preview-controls .preview-controls-show-metadata',
     dicomMetadataSidebarSelector: '#dicom-metadata-sidebar-content',
-    filePreviewCloseButtonSelector: '#app-top-bar-close',
+    closeSidebarSelector: 'div[id="dicom-metadata-sidebar-header"] button.header__close',
     vipMetadataPatientNameSelector: '//*[@id="dicom-viewer-vip-metadata"]/div/span',
     sidebarMetadataPatientNameSelector:
       '//*[@id="dicom-metadata-sidebar-content"]/table/tr/th[contains(text(), "Patient Name")]/following-sibling::td'
   }
 
-  async login({ username, password }): Promise<void> {
-    await this.page.locator(this.elements.userNameSelector).fill(username)
-    await this.page.locator(this.elements.passwordSelector).fill(password)
-    await this.page.locator(this.elements.loginButtonSelector).click()
-    await this.page.locator(this.elements.webContentSelector).waitFor()
+  async login(user): Promise<void> {
+    const stepUser = await getUser({ user })
+    await global.page.locator(this.elements.userNameSelector).fill(stepUser.displayName)
+    await global.page.locator(this.elements.passwordSelector).fill(stepUser.password)
+    await global.page.locator(this.elements.loginButtonSelector).click()
+    await global.page.locator(this.elements.webContentSelector).waitFor()
   }
 
   async logout(): Promise<void> {
-    await this.page.locator(this.elements.userMenuButtonSelector).click()
-    await this.page.locator(this.elements.logoutSelector).click()
+    await global.page.locator(this.elements.userMenuButtonSelector).click()
+    await global.page.locator(this.elements.logoutSelector).click()
   }
 
   async previewDicomFile({ filename }): Promise<void> {
-    await this.page.locator(util.format(this.elements.resourceNameSelector, filename)).click()
-    await expect(this.page.locator(this.elements.dicomCanvasSelector)).toBeVisible()
-    await expect(
-      this.page.locator(util.format(this.elements.appbarResourceNameSelector, filename))
-    ).toBeVisible()
+    await global.page.locator(util.format(this.elements.resourceNameSelector, filename)).click()
   }
 
-  async checkVIPMetadata(): Promise<void> {
-    await expect(this.page.locator(this.elements.dicomVIPMetadataSelector)).toBeVisible()
+  async getOverlayPatientName(metadataLocation): Promise<void> {
+    return await global.page
+      .locator(this.elements.vipMetadataPatientNameSelector)
+      .first()
+      .innerText()
   }
-
-  async checkExtendedMetadata(): Promise<void> {
-    await this.page.locator(this.elements.dicomExtendedMetadataBtnSelector).click()
-    await expect(this.page.locator(this.elements.dicomMetadataSidebarSelector)).toBeVisible()
-  }
-
-  async checkPatientName({ patientName, metadataLocation }): Promise<void> {
-    let actualPatientName
-    if (metadataLocation === 'VIP metadata') {
-      actualPatientName = await this.page
-        .locator(this.elements.vipMetadataPatientNameSelector)
-        .first()
-        .innerText()
-    } else {
-      actualPatientName = await this.page
-        .locator(this.elements.sidebarMetadataPatientNameSelector)
-        .innerText()
+  async getPatientName(metadataLocation): Promise<void> {
+    let patientName
+    switch (metadataLocation) {
+      case 'VIP metadata section':
+        patientName = await global.page
+          .locator(this.elements.vipMetadataPatientNameSelector)
+          .first()
+          .innerText()
+        break
+      case 'metadata sidebar':
+        patientName = await global.page
+          .locator(this.elements.sidebarMetadataPatientNameSelector)
+          .first()
+          .innerText()
     }
-    await expect(actualPatientName).toBe(patientName)
+    return patientName
   }
 
-  async closeDicomFilePreview(): Promise<void> {
-    await this.page.locator(this.elements.filePreviewCloseButtonSelector).click()
+  async closeMetadataSidebar(): Promise<void> {
+    await global.page.locator(this.elements.closeSidebarSelector).click()
   }
 }
