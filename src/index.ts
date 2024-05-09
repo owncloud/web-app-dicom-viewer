@@ -6,17 +6,18 @@ import { useGettext } from 'vue3-gettext'
 export default defineWebApplication({
   setup() {
     const { $gettext } = useGettext()
+    const appId = 'com.github.owncloud.web.dicom.viewer'
 
     const appInfo = {
       name: $gettext('DICOM Viewer'),
-      id: 'dicom-viewer',
+      id: appId,
       icon: 'resource-type-medical',
       iconFillType: 'fill',
       iconColor: 'var(--oc-color-icon-medical)',
       extensions: [
         {
           extension: 'dcm',
-          routeName: 'dicom-viewer',
+          routeName: appId,
           label: $gettext('Preview'),
           canBeDefault: true
         }
@@ -25,14 +26,14 @@ export default defineWebApplication({
 
     const routes = [
       {
+        name: appId,
         path: '/:driveAliasAndItem(.*)?',
         component: AppWrapperRoute(App, {
-          applicationId: 'dicom-viewer',
+          applicationId: appId,
           urlForResourceOptions: {
             disposition: 'inline'
           }
         }),
-        name: 'dicom-viewer',
         meta: {
           authContext: 'hybrid',
           title: $gettext('DICOM Viewer'),
@@ -45,7 +46,6 @@ export default defineWebApplication({
       appInfo,
       routes,
       translations
-      //extensions: extensions(args)
     }
   }
 })
