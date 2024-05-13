@@ -1,27 +1,27 @@
 services:
   ocis:
-    image: ${OCIS_IMAGE:-owncloud/ocis:latest}
+    image: ${OCIS_IMAGE:-owncloud/ocis:5.0}
     container_name: web_ocis
     entrypoint: /bin/sh
     command: ['-c', 'ocis init || true && ocis server']
     environment:
       # OCIS
       OCIS_URL: ${OCIS_URL:-https://host.docker.internal:9200}
-      OCIS_INSECURE: "${OCIS_INSECURE:-true}"
-      OCIS_LOG_LEVEL: "${OCIS_LOG_LEVEL:-error}"
-      OCIS_LOG_PRETTY: "${OCIS_LOG_PRETTY:-true}"
-      OCIS_LOG_COLOR: "${OCIS_LOG_COLOR:-true}"
+      OCIS_INSECURE: '${OCIS_INSECURE:-true}'
+      OCIS_LOG_LEVEL: '${OCIS_LOG_LEVEL:-error}'
+      OCIS_LOG_PRETTY: '${OCIS_LOG_PRETTY:-true}'
+      OCIS_LOG_COLOR: '${OCIS_LOG_COLOR:-true}'
 
       # WEB
       WEB_UI_CONFIG_FILE: ${WEB_UI_CONFIG_FILE:-/web/config.json}
 
       # IDM
-      IDM_CREATE_DEMO_USERS: "${DEMO_USERS:-true}"
-      IDM_ADMIN_PASSWORD: "${ADMIN_PASSWORD:-admin}"
+      IDM_CREATE_DEMO_USERS: '${DEMO_USERS:-true}'
+      IDM_ADMIN_PASSWORD: '${ADMIN_PASSWORD:-admin}'
 
       # PROXY
-      PROXY_ENABLE_BASIC_AUTH: "${PROXY_ENABLE_BASIC_AUTH:-true}"
-      PROXY_TLS: "false"
+      PROXY_ENABLE_BASIC_AUTH: '${PROXY_ENABLE_BASIC_AUTH:-true}'
+      PROXY_TLS: 'false'
     volumes:
       - ${OCIS_WEB_CONFIG:-./dev/docker/web.config.json}:/web/config.json:ro
     extra_hosts:
@@ -41,20 +41,25 @@ services:
   traefik:
     image: traefik:v2.10.1
     restart: unless-stopped
-    entrypoint: ["/bin/sh", "-c", "[ -f /certificates/server.key ] && ./entrypoint.sh $$@ || (apk add openssl && openssl req -subj '/CN=host.docker.internal' -x509 -sha256 -nodes -days 3650 -newkey rsa:2048 -keyout /certificates/server.key -out /certificates/server.crt && chmod -R 777 /certificates && ./entrypoint.sh $$@)"]
+    entrypoint:
+      [
+        '/bin/sh',
+        '-c',
+        "[ -f /certificates/server.key ] && ./entrypoint.sh $$@ || (apk add openssl && openssl req -subj '/CN=host.docker.internal' -x509 -sha256 -nodes -days 3650 -newkey rsa:2048 -keyout /certificates/server.key -out /certificates/server.crt && chmod -R 777 /certificates && ./entrypoint.sh $$@)"
+      ]
     command:
-      - "--pilot.dashboard=false"
-      - "--log.level=DEBUG"
-      - "--api.dashboard=true"
-      - "--api.insecure=true"
-      - "--providers.file.directory=/configs"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.ocis.address=:9200"
-      - "--entrypoints.websecure.address=:443"
-      - "--entrypoints.websecure.http.middlewares=https_config@docker"
-      - "--entrypoints.websecure.http.tls.options=default"
+      - '--pilot.dashboard=false'
+      - '--log.level=DEBUG'
+      - '--api.dashboard=true'
+      - '--api.insecure=true'
+      - '--providers.file.directory=/configs'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+      - '--entrypoints.ocis.address=:9200'
+      - '--entrypoints.websecure.address=:443'
+      - '--entrypoints.websecure.http.middlewares=https_config@docker'
+      - '--entrypoints.websecure.http.tls.options=default'
     labels:
       traefik.enable: true
       traefik.http.routers.http_catchall.rule: HostRegexp(`{any:.+}`)
@@ -63,16 +68,16 @@ services:
       traefik.http.middlewares.https_config.headers.sslRedirect: true
       traefik.http.middlewares.https_config.headers.stsSeconds: 63072000
       traefik.http.middlewares.https_config.headers.stsIncludeSubdomains: true
-      traefik.http.middlewares.cors.headers.accesscontrolallowmethods: "*"
-      traefik.http.middlewares.cors.headers.accesscontrolallowheaders: "*"
-      traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist: "*"
-      traefik.http.middlewares.cors.headers.accesscontrolexposeheaders: "*"
+      traefik.http.middlewares.cors.headers.accesscontrolallowmethods: '*'
+      traefik.http.middlewares.cors.headers.accesscontrolallowheaders: '*'
+      traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist: '*'
+      traefik.http.middlewares.cors.headers.accesscontrolexposeheaders: '*'
       traefik.http.middlewares.cors.headers.accesscontrolmaxage: 100
       traefik.http.middlewares.cors.headers.addvaryheader: true
     ports:
-      - "8080:8080"
-      - "9200:9200"
+      - '8080:8080'
+      - '9200:9200'
     volumes:
-      - "./dev/docker/traefik/certificates:/certificates"
-      - "./dev/docker/traefik/configs:/configs"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - './dev/docker/traefik/certificates:/certificates'
+      - './dev/docker/traefik/configs:/configs'
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
