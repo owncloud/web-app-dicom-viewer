@@ -1,0 +1,5 @@
+{
+  "id": "com.github.owncloud.web.dicom.viewer",
+  "entrypoint": "js/web-app-dicom-viewer.js",
+  "config": {}
+}

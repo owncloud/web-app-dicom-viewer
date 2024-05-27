@@ -1,0 +1,14 @@
+services:
+  ocis:
+    image: owncloud/ocis:latest
+    environment:
+      WEB_UI_CONFIG_FILE: null
+      WEB_ASSET_APPS_PATH: /web/apps
+      PROXY_CSP_CONFIG_FILE_LOCATION: /etc/ocis/csp.yml
+    volumes:
+      - ./dist:/web/apps/dicom-viewer:ro
+      - ./dev/docker/csp.yml:/etc/ocis/csp.yml
+
+  extension:
+    profiles:
+      - skip
