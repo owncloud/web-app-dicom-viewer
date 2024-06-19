@@ -1,7 +1,7 @@
 # ownCloud Web DICOM Viewer
 
 [![Build Status](https://drone.owncloud.com/api/badges/owncloud/web-app-dicom-viewer/status.svg)](https://drone.owncloud.com/owncloud/web-app-dicom-viewer)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=owncloud_web-app-dicom-viewer&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=owncloud_web-app-dicom-viewer) 
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=owncloud_web-app-dicom-viewer&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=owncloud_web-app-dicom-viewer)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=owncloud_web-app-dicom-viewer&metric=coverage)](https://sonarcloud.io/summary/new_code?id=owncloud_web-app-dicom-viewer)
 
 The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://github.com/owncloud/web) to preview DICOM files (medical images and their corresponding metadata) in the browser. The preview of the medical images is based on MIT licensed [cornerstone3D](https://github.com/cornerstonejs/cornerstone3D).
@@ -16,7 +16,29 @@ The current implementation allows to preview .dcm files and display their corres
 - **Supported architectures:**\
   `amd64`
 
-## Config
+## Installation
+
+### 1. Install dependencies
+
+```
+pnpm install
+```
+
+### 2. Build extension
+
+Build the extension using watch for development.
+
+```
+pnpm build:w
+```
+
+### 3. Load apps
+
+We can load the app into the oCIS server in two different ways, depending on the version of oCIS:
+
+#### 1. For oCIS 5.0.0 (Seperate extension server)
+
+Configure the extension in `web.config.json`
 
 ```json
 {
@@ -36,9 +58,18 @@ The current implementation allows to preview .dcm files and display their corres
     }
   ]
 }
- 
+
 ```
 
+#### 2. For oCIS >= 5.1
+
+Copy `docker-compose.override.example.yml` to `docker-compose.override.yml`.
+
+### 4. Run oCIS server
+
+```
+docker compose up
+```
 
 ## Docker Tags and respective Dockerfile links
 
