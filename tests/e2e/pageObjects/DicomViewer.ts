@@ -42,7 +42,7 @@ export class DicomViewer {
     await global.page.locator(util.format(this.elements.resourceNameSelector, filename)).click()
   }
 
-  async getOverlayPatientName(metadataLocation): Promise<void> {
+  async getOverlayPatientName(): Promise<void> {
     return await global.page
       .locator(this.elements.vipMetadataPatientNameSelector)
       .first()
