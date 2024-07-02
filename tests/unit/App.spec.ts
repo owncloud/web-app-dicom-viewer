@@ -27,7 +27,10 @@ vi.mock('@cornerstonejs/core', () => {
           })
         }
       }
+      // Disable eslint rule for this function
+      /* eslint-disable @typescript-eslint/no-empty-function */
       enableElement() {}
+      /* eslint-enable @typescript-eslint/no-empty-function */
     },
     Types: vi.fn(),
     Enums: {
@@ -66,7 +69,10 @@ vi.mock('@cornerstonejs/dicom-image-loader', () => ({
   configure: vi.fn(),
   loadImage: vi.fn(),
   webWorkerManager: {
+    // Disable eslint rule for this arrow function
+    /* eslint-disable @typescript-eslint/no-empty-function */
     initialize: vi.fn().mockImplementation(() => {})
+    /* eslint-enable @typescript-eslint/no-empty-function */
   }
 }))
 
