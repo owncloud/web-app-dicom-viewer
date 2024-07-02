@@ -241,6 +241,12 @@ export default defineComponent({
     // enable element
     this.renderingEngine.enableElement(viewportInput)
 
+    var canvas = document.querySelector('canvas')
+    if (canvas) {
+      canvas.style.height = '100%'
+      canvas.style.width = '100%'
+    }
+
     // get stack viewport that was created
     this.viewport = <Types.IStackViewport>this.renderingEngine.getViewport(viewportId)
 
