@@ -40,6 +40,13 @@ const deleteDicomFile = async function (): Promise<void> {
   await sendRequest({ method: 'DELETE', path: href })
 }
 
-const emptyTrashbin = async function (): Promise<void> {
-  await sendRequest({ method: 'DELETE', path: 'remote.php/dav/trash-bin/admin' })
+const emptyTrashbin = async function (): Promise<any> {
+  const response = await sendRequest({
+    method: 'DELETE',
+    path: 'remote.php/dav/trash-bin/admin'
+  })
+  if (response.status !== 204) {
+    throw new Error(`Failed to empty trashbin`)
+  }
+  return response.status
 }
