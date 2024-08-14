@@ -3,7 +3,7 @@ import { chromium } from '@playwright/test'
 import { xml2js } from 'xml-js'
 import { _ } from 'lodash'
 import { config } from './config.js'
-import { sendRequest } from './api/APIHelper'
+import { sendRequest } from './api/apiHelper'
 
 setDefaultTimeout(config.timeout * 1000)
 
