@@ -30,14 +30,20 @@ After(async function (): Promise<void> {
   await global.page.close()
 })
 
-const deleteDicomFile = async function (): Promise<void> {
+const deleteDicomFile = async function (): Promise<any> {
   const response = await sendRequest({ method: 'PROPFIND', path: 'remote.php/dav/files/admin' })
   const xmlResponse = response.data
   const result = xml2js(xmlResponse, { compact: true })
   const resp = _.get(result, 'd:multistatus.d:response')
   const href = _.get(resp[1], 'd:href._text')
-
-  await sendRequest({ method: 'DELETE', path: href })
+  const response2 = await sendRequest({
+    method: 'DELETE',
+    path: href
+  })
+  if (response2.status !== 204) {
+    throw new Error(`Failed to delete file`)
+  }
+  return response2.status
 }
 
 const emptyTrashbin = async function (): Promise<any> {
