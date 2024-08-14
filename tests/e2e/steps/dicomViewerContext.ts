@@ -3,9 +3,9 @@ import { expect } from '@playwright/test'
 import util from 'util'
 import { config } from '../config.js'
 
-import { DicomViewer } from '../pageObjects/DicomViewer'
+import { dicomViewerPage } from '../pageObjects/dicomViewerPage'
 
-const dicomViewer = new DicomViewer()
+const dicomViewer = new dicomViewerPage()
 import { apiUpload } from '../api/apiUpload'
 
 Given('the user {string} has logged in', async function (user: string): Promise<void> {
