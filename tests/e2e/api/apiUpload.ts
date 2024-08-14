@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { config } from '../config.js'
-import { sendRequest } from './APIHelper'
+import { sendRequest } from './apiHelper'
 
 export const apiUpload = async function ({ filename }): Promise<void> {
   const response = await sendRequest({
