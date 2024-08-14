@@ -1,7 +1,7 @@
 import util from 'util'
 import { getUser } from '../userStore'
 
-export class DicomViewer {
+export class dicomViewerPage {
   elements: Readonly<Record<string, string>> = {
     userNameSelector: '#oc-login-username',
     passwordSelector: '#oc-login-password',
