@@ -1,7 +1,7 @@
 Feature: Preview dicom image
-  As a user
-  I want to preview a DICOM file
-  so that I can preview DICOM image and its metadata
+  As a user who has a DICOM file
+  I want to preview the file
+  so that I can reassure that it contains the right image and check its metadata
 
 
   Scenario: user previews dicom image
