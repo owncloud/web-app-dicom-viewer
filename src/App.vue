@@ -260,7 +260,9 @@ export default defineComponent({
 
       // set initial parallel scale factor and render the image (updates every viewport in the rendering engine)
       this.setViewportCameraParallelScaleFactor()
-      this.setZoom(this.currentImageZoom)
+      // this.setZoom(this.currentImageZoom)
+      // TODO: figure out how to refresh viewport (display image with modified parallel scale factor)
+
       this.viewport.render()
 
       // getting image metadata from viewport
