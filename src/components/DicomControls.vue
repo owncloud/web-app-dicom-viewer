@@ -96,8 +96,7 @@
           :aria-label="imageFlipHorizontalDescription"
           @click="$emit('setHorizontalFlip')"
         >
-          <oc-icon fill-type="line" name="arrow-left-right" variation="inherit" />
-          <!-- "arrow-left-right" is used as placeholder until "flip-horizontal" is included in web's design-system -->
+          <oc-icon fill-type="line" name="flip-horizontal-2" variation="inherit" />
         </oc-button>
         <oc-button
           v-oc-tooltip="imageFlipVerticalDescription"
@@ -107,8 +106,7 @@
           :aria-label="imageFlipVerticalDescription"
           @click="$emit('setVerticalFlip')"
         >
-          <oc-icon fill-type="line" name="arrow-up-down" variation="inherit" />
-          <!-- "arrow-left-right" is used as placeholder until "flip-vertical" is included in web's design-system -->
+          <oc-icon fill-type="line" name="flip-vertical-2" variation="inherit" />
         </oc-button>
       </div>
       <div class="oc-flex oc-flex-middle">
