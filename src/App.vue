@@ -562,7 +562,8 @@ export default defineComponent({
     },
     setViewportCameraParallelScaleFactor() {
       const camera = this.viewport.getCamera()
-      this.viewportCameraParallelScale = camera.parallelScale * 0.925 // add small correction factor to remove purple border around image
+      this.viewportCameraParallelScale = camera.parallelScale * 0.925
+      // add small correction factor to remove purple border around image
     },
     // functions for styling data
     formatOverlayDateAndTime(date: string, time: string) {
