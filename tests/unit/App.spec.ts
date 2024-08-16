@@ -21,7 +21,7 @@ vi.mock('@cornerstonejs/core', () => {
           render: vi.fn(),
           setCamera: vi.fn(),
           getCamera: vi.fn().mockImplementation(() => {
-            return { parallelScale: 137.3853139193763 }
+            return { parallelScale: 127.08141537542309 }
           }),
           getImageData: vi.fn().mockImplementation(() => {
             return { dimensions: [] }

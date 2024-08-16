@@ -258,9 +258,10 @@ export default defineComponent({
       // set stack on the viewport (currently only one image in the stack, therefore no frame # required)
       await this.viewport.setStack(dicomStack)
 
-      // render the image (updates every viewport in the rendering engine)
-      this.viewport.render()
+      // set initial parallel scale factor and render the image (updates every viewport in the rendering engine)
       this.setViewportCameraParallelScaleFactor()
+      this.setZoom(this.currentImageZoom)
+      this.viewport.render()
 
       // getting image metadata from viewport
       this.getImageMetadataFromViewport(this.dicomUrl)
@@ -268,8 +269,6 @@ export default defineComponent({
   },
   updated() {
     // this.viewport.resize()
-    // also check if it is needed to recalculate scale factor
-    // this.setViewportCameraParallelScaleFactor()
   },
   beforeUnmount() {
     this.renderingEngine.destroy()
@@ -563,7 +562,8 @@ export default defineComponent({
     },
     setViewportCameraParallelScaleFactor() {
       const camera = this.viewport.getCamera()
-      this.viewportCameraParallelScale = camera.parallelScale
+      this.viewportCameraParallelScale = camera.parallelScale * 0.925
+      // add small correction factor to remove purple border around image
     },
     // functions for styling data
     formatOverlayDateAndTime(date: string, time: string) {
