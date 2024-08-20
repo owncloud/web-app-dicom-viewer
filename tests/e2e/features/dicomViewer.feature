@@ -1,12 +1,12 @@
 Feature: Preview dicom image
-  As a user
-  I want to preview a DICOM file
-  so that I can preview DICOM image and its metadata
+  As a user who has a DICOM file
+  I want to preview the file
+  so that I can assure myself that it contains the right image and check its metadata
 
 
   Scenario: user previews dicom image
     Given the dicom file "MRBRAIN.dcm" has been uploaded
-    And the user "Admin" has logged in
+    And the user "admin" has logged in
     When the user previews the dicom file "MRBRAIN.dcm"
     Then the user should see the dicom file "MRBRAIN.dcm"
     And the user should see patient name "MR/BRAIN/GRASE/1024" in the VIP metadata section
