@@ -36,10 +36,21 @@ const deleteDicomFile = async function (): Promise<void> {
   const result = xml2js(xmlResponse, { compact: true })
   const resp = _.get(result, 'd:multistatus.d:response')
   const href = _.get(resp[1], 'd:href._text')
-
-  await sendRequest({ method: 'DELETE', path: href })
+  const response2 = await sendRequest({
+    method: 'DELETE',
+    path: href
+  })
+  if (response2.status !== 204) {
+    throw new Error(`Failed to delete dicom file`)
+  }
 }
 
 const emptyTrashbin = async function (): Promise<void> {
-  await sendRequest({ method: 'DELETE', path: 'remote.php/dav/trash-bin/admin' })
+  const response = await sendRequest({
+    method: 'DELETE',
+    path: 'remote.php/dav/trash-bin/admin'
+  })
+  if (response.status !== 204) {
+    throw new Error(`Failed to empty trashbin`)
+  }
 }
