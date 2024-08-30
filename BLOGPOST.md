@@ -7,7 +7,7 @@ https://owncloud.com/news/rolling-release/
 
 
 TITLE:
-Preview medical Images in oCIS with the dicom-viewer web extension
+Preview Medical Images in oCIS with the Dicom Viewer Web Extension
 
 TAGINE:
 Through the new oCIS web extensions system, you can now also easily preview your medial images without installing any additional software
@@ -15,9 +15,15 @@ Through the new oCIS web extensions system, you can now also easily preview your
 TEXT:
 Have you ever received some medical images from your doctor or a lab after a checkup and were curious to have a sneak peak of the pics? Or has a lab technician ever handed you over a CD with your pics and asked to forward them to your GP, physiotherapist or health insurance?
 
-The oCIS dicom viewer web extension offers an easy way to preview medical images of .dcm type without installing any additional software. Plus the extension allows to access the extensive corresponding meta data attributes that are part of this file format, a distinguishing feature unique to our app - because we love data and want to make any useful information easily available to you. And of course the file can be shared securely with anyone you desire as it is integrated into the oCIS ecosystem.
+The oCIS Dicom Viewer web extension offers an easy way to preview medical images such as Ultrasound, Xray, CT, MRI, etc. plus their corresponding meta data of DICOM standard without installing any additional software. Plus the extension allows to access the extensive corresponding meta data attributes that are part of the .dcm file format, a distinguishing feature unique to our app - because we love data and want to make any useful information easily available to you. And of course the file can be shared securely with anyone you desire as it is integrated into the oCIS ecosystem.
+
+Capabilities of the Dicom Viewer App
+The current release allows to preview .dcm files and display all their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom in and out, rotation, flipping, colour inversion on the image preview.
 
 
+
+How has it been implemented?
+This web extension was developed in collaboration between ownCloud and JankariTech, a Software Development company in Nepal. The implementation is based on the open-source (MIT licensed) cornerstone3D JavaScript library (https://github.com/cornerstonejs/cornerstone3D). The app UI is implemented in a responsive manner, and guarantees optimal display on any end device you wish to use.
 
 
 
