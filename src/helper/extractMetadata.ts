@@ -2,7 +2,7 @@ import * as cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
-import dicomTags from './dicomTags'
+import { dicomTags } from './dicomTags'
 import uids from './uids'
 
 export const fetchDicomImageData = async (imageId: string) => {
@@ -108,4 +108,8 @@ const formatTime = (time: string, language: string, timeFormat: DateTime): strin
     return upperFirst(formattedTime)
   }
   return undefined
+}
+
+export const getDicomTagDescription = (otherInformation: object) => {
+  return Object.values(otherInformation)
 }

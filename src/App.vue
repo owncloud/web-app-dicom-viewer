@@ -79,6 +79,7 @@
 <script lang="ts">
 // import cornerstone packages
 import dicomParser from 'dicom-parser'
+import { otherInformationDicomTags } from './helper/dicomTags'
 import * as cornerstone from '@cornerstonejs/core'
 import * as cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader'
 
@@ -95,7 +96,8 @@ import MetadataSidebar from './components/MetadataSidebar.vue'
 import {
   fetchDicomImageData,
   findDicomTagByValue,
-  extractDicomMetadata
+  extractDicomMetadata,
+  getDicomTagDescription
 } from './helper/extractMetadata'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
@@ -500,29 +502,9 @@ export default defineComponent({
       })
 
       // otherInformation
-      const otherInformationTags = [
-        'specificCharacterSet',
-        'referringPhysicianName',
-        'MR_AcquisitionType',
-        'numberOfAverages',
-        'percentSampling',
-        'percentPhaseFieldOfView',
-        'lowRR_Value',
-        'highRR_Value',
-        'intervalsAcquired',
-        'intervalsRejected',
-        'heartRate',
-        'receiveCoilName',
-        'transmitCoilName',
-        'inPlanePhaseEncodingDirection',
-        'flipAngle',
-        'positionReferenceIndicator',
-        'windowCenter',
-        'windowWidth'
-      ]
       const otherInformation = extractDicomMetadata(
         this.dicomImageData,
-        otherInformationTags,
+        getDicomTagDescription(otherInformationDicomTags),
         this.$language.current
       )
       otherInformation.then((result) => {
