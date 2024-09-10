@@ -79,7 +79,7 @@
 <script lang="ts">
 // import cornerstone packages
 import dicomParser from 'dicom-parser'
-import { otherInformationDicomTags } from './helper/dicomTags'
+import { dicomTags, additionalTagValueRepresentation } from './helper/dicomTags'
 import * as cornerstone from '@cornerstonejs/core'
 import * as cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader'
 
@@ -300,19 +300,19 @@ export default defineComponent({
       }
 
       this.vipInformation.patientName = this.dicomImageData.string(
-        findDicomTagByValue('patientName')
+        findDicomTagByValue('patientName', dicomTags)
       )
       this.vipInformation.patientBirthdate = this.dicomImageData.string(
-        findDicomTagByValue('patientBirthdate')
+        findDicomTagByValue('patientBirthdate', dicomTags)
       )
       this.vipInformation.institutionName = this.dicomImageData.string(
-        findDicomTagByValue('institutionName')
+        findDicomTagByValue('institutionName', dicomTags)
       )
       this.vipInformation.instanceCreationDate = this.dicomImageData.string(
-        findDicomTagByValue('instanceCreationDate')
+        findDicomTagByValue('instanceCreationDate', dicomTags)
       )
       this.vipInformation.instanceCreationTime = this.dicomImageData.string(
-        findDicomTagByValue('instanceCreationTime')
+        findDicomTagByValue('instanceCreationTime', dicomTags)
       )
 
       this.isVipMetadataFetched = true
@@ -339,6 +339,7 @@ export default defineComponent({
       const patientInformation = extractDicomMetadata(
         this.dicomImageData,
         patientInformationTags,
+        dicomTags,
         this.$language.current
       )
       patientInformation.then((result) => {
@@ -357,6 +358,7 @@ export default defineComponent({
       const studyInformation = extractDicomMetadata(
         this.dicomImageData,
         studyInformationTags,
+        dicomTags,
         this.$language.current
       )
       studyInformation.then((result) => {
@@ -375,6 +377,7 @@ export default defineComponent({
       const seriesInformation = extractDicomMetadata(
         this.dicomImageData,
         seriesInformationTags,
+        dicomTags,
         this.$language.current
       )
       seriesInformation.then((result) => {
@@ -395,6 +398,7 @@ export default defineComponent({
       const instanceInformation = extractDicomMetadata(
         this.dicomImageData,
         instanceInformationTags,
+        dicomTags,
         this.$language.current
       )
       instanceInformation.then((result) => {
@@ -416,6 +420,7 @@ export default defineComponent({
       const imageInformation = extractDicomMetadata(
         this.dicomImageData,
         imageInformationTags,
+        dicomTags,
         this.$language.current
       )
       imageInformation.then((result) => {
@@ -451,6 +456,7 @@ export default defineComponent({
       const equipmentInformation = extractDicomMetadata(
         this.dicomImageData,
         equipmentInformationTags,
+        dicomTags,
         this.$language.current
       )
       equipmentInformation.then((result) => {
@@ -477,6 +483,7 @@ export default defineComponent({
       const scanningInformation = extractDicomMetadata(
         this.dicomImageData,
         scanningInformationTags,
+        dicomTags,
         this.$language.current
       )
       scanningInformation.then((result) => {
@@ -495,6 +502,7 @@ export default defineComponent({
       const uidsInformation = extractDicomMetadata(
         this.dicomImageData,
         uidsInformationTags,
+        dicomTags,
         this.$language.current
       )
       uidsInformation.then((result) => {
@@ -502,9 +510,11 @@ export default defineComponent({
       })
 
       // otherInformation
+      const otherInformationTags = getDicomTagDescription(additionalTagValueRepresentation)
       const otherInformation = extractDicomMetadata(
         this.dicomImageData,
-        getDicomTagDescription(otherInformationDicomTags),
+        otherInformationTags,
+        additionalTagValueRepresentation,
         this.$language.current
       )
       otherInformation.then((result) => {
