@@ -14,13 +14,11 @@ export const fetchDicomImageData = async (imageId: string) => {
   return dicomImageData
 }
 
-export const findDicomTagByValue = (
+export const findValueByDicomTagDescription = (
   value: string,
-  tagValueRepresentationList: object
+  dicomTags: object
 ): string | undefined => {
-  return Object.keys(tagValueRepresentationList).find(
-    (key) => tagValueRepresentationList[key] === value
-  )
+  return Object.keys(dicomTags).find((key) => dicomTags[key] === value)
 }
 
 const formatDateTagChecker = (tag: string): boolean => {
@@ -38,7 +36,7 @@ const addSopTagChecker = (tag: string): boolean => {
 export const extractDicomMetadata = async (
   imageData: object,
   tags: string[],
-  tagValueRepresentationList: object,
+  dicomTags: object,
   language = 'en'
 ) => {
   const extractedData: { label: string; value: string }[] = []
@@ -59,7 +57,7 @@ export const extractDicomMetadata = async (
     }
 
     let metadataValue = await imageData.string(
-      findDicomTagByValue(metadataLabel, tagValueRepresentationList)
+      findValueByDicomTagDescription(metadataLabel, dicomTags)
     )
 
     if (isDate && metadataValue != undefined && metadataValue.length >= 8) {
@@ -121,6 +119,6 @@ const formatTime = (time: string, language: string, timeFormat: DateTime): strin
   return undefined
 }
 
-export const getDicomTagDescription = (otherInformation: object) => {
-  return Object.values(otherInformation)
+export const getDicomTagDescription = (dicomTags: object) => {
+  return Object.values(dicomTags)
 }

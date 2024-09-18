@@ -79,7 +79,7 @@
 <script lang="ts">
 // import cornerstone packages
 import dicomParser from 'dicom-parser'
-import { dicomTags, additionalTagValueRepresentation } from './helper/dicomTags'
+import { dicomTags, additionalDicomTags } from './helper/dicomTags'
 import * as cornerstone from '@cornerstonejs/core'
 import * as cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader'
 
@@ -95,7 +95,7 @@ import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
 import {
   fetchDicomImageData,
-  findDicomTagByValue,
+  findValueByDicomTagDescription,
   extractDicomMetadata,
   getDicomTagDescription
 } from './helper/extractMetadata'
@@ -300,19 +300,19 @@ export default defineComponent({
       }
 
       this.vipInformation.patientName = this.dicomImageData.string(
-        findDicomTagByValue('patientName', dicomTags)
+        findValueByDicomTagDescription('patientName', dicomTags)
       )
       this.vipInformation.patientBirthdate = this.dicomImageData.string(
-        findDicomTagByValue('patientBirthdate', dicomTags)
+        findValueByDicomTagDescription('patientBirthdate', dicomTags)
       )
       this.vipInformation.institutionName = this.dicomImageData.string(
-        findDicomTagByValue('institutionName', dicomTags)
+        findValueByDicomTagDescription('institutionName', dicomTags)
       )
       this.vipInformation.instanceCreationDate = this.dicomImageData.string(
-        findDicomTagByValue('instanceCreationDate', dicomTags)
+        findValueByDicomTagDescription('instanceCreationDate', dicomTags)
       )
       this.vipInformation.instanceCreationTime = this.dicomImageData.string(
-        findDicomTagByValue('instanceCreationTime', dicomTags)
+        findValueByDicomTagDescription('instanceCreationTime', dicomTags)
       )
 
       this.isVipMetadataFetched = true
@@ -510,11 +510,11 @@ export default defineComponent({
       })
 
       // otherInformation
-      const otherInformationTags = getDicomTagDescription(additionalTagValueRepresentation)
+      const otherInformationTags = getDicomTagDescription(additionalDicomTags)
       const otherInformation = extractDicomMetadata(
         this.dicomImageData,
         otherInformationTags,
-        additionalTagValueRepresentation,
+        additionalDicomTags,
         this.$language.current
       )
       otherInformation.then((result) => {

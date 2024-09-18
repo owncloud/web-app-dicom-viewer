@@ -71,7 +71,7 @@ export const dicomTags = {
   x00020010: 'transferSyntaxUID',
   x00200052: 'frameOfReferenceUID'
 }
-export const additionalTagValueRepresentation = {
+export const additionalDicomTags = {
   x00080005: 'specificCharacterSet',
   x00080090: 'referringPhysicianName',
   x00180023: 'MR_AcquisitionType',
