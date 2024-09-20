@@ -2,7 +2,6 @@ import * as cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
 
-import dicomTags from './dicomTags'
 import uids from './uids'
 
 export const fetchDicomImageData = async (imageId: string) => {
@@ -15,7 +14,10 @@ export const fetchDicomImageData = async (imageId: string) => {
   return dicomImageData
 }
 
-export const findDicomTagByValue = (value: string): string | undefined => {
+export const findValueByDicomTagDescription = (
+  value: string,
+  dicomTags: object
+): string | undefined => {
   return Object.keys(dicomTags).find((key) => dicomTags[key] === value)
 }
 
@@ -31,7 +33,12 @@ const addSopTagChecker = (tag: string): boolean => {
   return tag.endsWith('_addSOPuids')
 }
 
-export const extractDicomMetadata = async (imageData: object, tags: string[], language = 'en') => {
+export const extractDicomMetadata = async (
+  imageData: object,
+  tags: string[],
+  dicomTags: object,
+  language = 'en'
+) => {
   const extractedData: { label: string; value: string }[] = []
 
   // extracting data
@@ -49,7 +56,9 @@ export const extractDicomMetadata = async (imageData: object, tags: string[], la
       metadataLabel = metadataLabel.slice(0, -11) // cutting off the add-on (_formatDate or _formatTime or _addSOPuids) from the label
     }
 
-    let metadataValue = await imageData.string(findDicomTagByValue(metadataLabel))
+    let metadataValue = await imageData.string(
+      findValueByDicomTagDescription(metadataLabel, dicomTags)
+    )
 
     if (isDate && metadataValue != undefined && metadataValue.length >= 8) {
       metadataValue = formatDate(metadataValue, language, DateTime.DATE_MED)
@@ -108,4 +117,8 @@ const formatTime = (time: string, language: string, timeFormat: DateTime): strin
     return upperFirst(formattedTime)
   }
   return undefined
+}
+
+export const getDicomTagDescription = (dicomTags: object) => {
+  return Object.values(dicomTags)
 }

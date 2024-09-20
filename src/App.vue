@@ -79,6 +79,7 @@
 <script lang="ts">
 // import cornerstone packages
 import dicomParser from 'dicom-parser'
+import { dicomTags, additionalDicomTags } from './helper/dicomTags'
 import * as cornerstone from '@cornerstonejs/core'
 import * as cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader'
 
@@ -94,8 +95,9 @@ import VipMetadataOverlay from './components/VipMetadataOverlay.vue'
 import MetadataSidebar from './components/MetadataSidebar.vue'
 import {
   fetchDicomImageData,
-  findDicomTagByValue,
-  extractDicomMetadata
+  findValueByDicomTagDescription,
+  extractDicomMetadata,
+  getDicomTagDescription
 } from './helper/extractMetadata'
 import { DateTime } from 'luxon'
 import upperFirst from 'lodash-es/upperFirst'
@@ -298,19 +300,19 @@ export default defineComponent({
       }
 
       this.vipInformation.patientName = this.dicomImageData.string(
-        findDicomTagByValue('patientName')
+        findValueByDicomTagDescription('patientName', dicomTags)
       )
       this.vipInformation.patientBirthdate = this.dicomImageData.string(
-        findDicomTagByValue('patientBirthdate')
+        findValueByDicomTagDescription('patientBirthdate', dicomTags)
       )
       this.vipInformation.institutionName = this.dicomImageData.string(
-        findDicomTagByValue('institutionName')
+        findValueByDicomTagDescription('institutionName', dicomTags)
       )
       this.vipInformation.instanceCreationDate = this.dicomImageData.string(
-        findDicomTagByValue('instanceCreationDate')
+        findValueByDicomTagDescription('instanceCreationDate', dicomTags)
       )
       this.vipInformation.instanceCreationTime = this.dicomImageData.string(
-        findDicomTagByValue('instanceCreationTime')
+        findValueByDicomTagDescription('instanceCreationTime', dicomTags)
       )
 
       this.isVipMetadataFetched = true
@@ -337,6 +339,7 @@ export default defineComponent({
       const patientInformation = extractDicomMetadata(
         this.dicomImageData,
         patientInformationTags,
+        dicomTags,
         this.$language.current
       )
       patientInformation.then((result) => {
@@ -355,6 +358,7 @@ export default defineComponent({
       const studyInformation = extractDicomMetadata(
         this.dicomImageData,
         studyInformationTags,
+        dicomTags,
         this.$language.current
       )
       studyInformation.then((result) => {
@@ -373,6 +377,7 @@ export default defineComponent({
       const seriesInformation = extractDicomMetadata(
         this.dicomImageData,
         seriesInformationTags,
+        dicomTags,
         this.$language.current
       )
       seriesInformation.then((result) => {
@@ -393,6 +398,7 @@ export default defineComponent({
       const instanceInformation = extractDicomMetadata(
         this.dicomImageData,
         instanceInformationTags,
+        dicomTags,
         this.$language.current
       )
       instanceInformation.then((result) => {
@@ -414,6 +420,7 @@ export default defineComponent({
       const imageInformation = extractDicomMetadata(
         this.dicomImageData,
         imageInformationTags,
+        dicomTags,
         this.$language.current
       )
       imageInformation.then((result) => {
@@ -449,6 +456,7 @@ export default defineComponent({
       const equipmentInformation = extractDicomMetadata(
         this.dicomImageData,
         equipmentInformationTags,
+        dicomTags,
         this.$language.current
       )
       equipmentInformation.then((result) => {
@@ -475,6 +483,7 @@ export default defineComponent({
       const scanningInformation = extractDicomMetadata(
         this.dicomImageData,
         scanningInformationTags,
+        dicomTags,
         this.$language.current
       )
       scanningInformation.then((result) => {
@@ -493,6 +502,7 @@ export default defineComponent({
       const uidsInformation = extractDicomMetadata(
         this.dicomImageData,
         uidsInformationTags,
+        dicomTags,
         this.$language.current
       )
       uidsInformation.then((result) => {
@@ -500,29 +510,11 @@ export default defineComponent({
       })
 
       // otherInformation
-      const otherInformationTags = [
-        'specificCharacterSet',
-        'referringPhysicianName',
-        'MR_AcquisitionType',
-        'numberOfAverages',
-        'percentSampling',
-        'percentPhaseFieldOfView',
-        'lowRR_Value',
-        'highRR_Value',
-        'intervalsAcquired',
-        'intervalsRejected',
-        'heartRate',
-        'receiveCoilName',
-        'transmitCoilName',
-        'inPlanePhaseEncodingDirection',
-        'flipAngle',
-        'positionReferenceIndicator',
-        'windowCenter',
-        'windowWidth'
-      ]
+      const otherInformationTags = getDicomTagDescription(additionalDicomTags)
       const otherInformation = extractDicomMetadata(
         this.dicomImageData,
         otherInformationTags,
+        additionalDicomTags,
         this.$language.current
       )
       otherInformation.then((result) => {

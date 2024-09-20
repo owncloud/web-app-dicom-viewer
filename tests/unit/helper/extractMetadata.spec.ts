@@ -1,5 +1,6 @@
 import { vi } from 'vitest'
 import * as extractMetadata from '../../../src/helper/extractMetadata'
+import { dicomTags } from '../../../src/helper/dicomTags'
 
 const mockImageData = {
   byteArray: [],
@@ -53,6 +54,7 @@ describe('Methods', () => {
           undefined,
           null
         ],
+        dicomTags,
         'en'
       )
 
