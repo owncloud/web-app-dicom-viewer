@@ -1,9 +1,11 @@
-OC_CI_NODEJS = "owncloudci/nodejs:18"
+OC_CI_ALPINE = "owncloudci/alpine:latest"
 OC_CI_BUILDIFIER = "owncloudci/bazel-buildifier:latest"
-SONARSOURCE_SONAR_SCANNER_CLI = "sonarsource/sonar-scanner-cli:11.0"
+OC_CI_NODEJS = "owncloudci/nodejs:18"
 OC_CI_WAIT_FOR = "owncloudci/wait-for:latest"
 OCIS_IMAGE = "owncloud/ocis:5.0"
 PLUGINS_DOCKER = "plugins/docker:latest"
+PLUGINS_GITHUB_RELEASE = "plugins/github-release:1"
+SONARSOURCE_SONAR_SCANNER_CLI = "sonarsource/sonar-scanner-cli:11.0"
 
 dir = {
     "webConfig": "/drone/src/tests/drone/web.config.json",
@@ -14,7 +16,8 @@ def main(ctx):
            pnpmlint(ctx) + \
            unitTestPipeline(ctx) + \
            e2eTests() + \
-           dockerRelease(ctx)
+           dockerRelease(ctx) + \
+           releaseArtifacts(ctx)
 
 def checkStarlark():
     return [{
@@ -284,3 +287,46 @@ def dockerRelease(ctx):
             },
         },
     ]
+
+def releaseArtifacts(ctx):
+    version = ctx.build.ref.replace("refs/tags/", "")
+    return [{
+        "kind": "pipeline",
+        "type": "docker",
+        "name": "publish-artifacts",
+        "steps": installPnpm() +
+                 serveExtension() +
+                 [
+                     {
+                         "name": "zip-artifacts",
+                         "image": OC_CI_ALPINE,
+                         "commands": [
+                             "apk add --no-cache zip",
+                             "mv dist dicom-viewer",
+                             "zip -r dicom-viewer-%s.zip dicom-viewer" % version,
+                         ],
+                     },
+                     {
+                         "name": "publish",
+                         "image": PLUGINS_GITHUB_RELEASE,
+                         "settings": {
+                             "overwrite": True,
+                             "files": [
+                                 "dicom-viewer-%s.zip" % version,
+                             ],
+                             "checksum": [
+                                 "md5",
+                                 "sha256",
+                             ],
+                             "api_key": {
+                                 "from_secret": "github_token",
+                             },
+                         },
+                     },
+                 ],
+        "trigger": {
+            "ref": [
+                "refs/tags/**",
+            ],
+        },
+    }]
