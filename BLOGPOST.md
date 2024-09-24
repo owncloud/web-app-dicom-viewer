@@ -26,7 +26,8 @@ This web extension was developed in collaboration between ownCloud and JankariTe
 How can I get the Dicom Viewer Web Extension?
 Get the latest release from https://github.com/owncloud/web-app-dicom-viewer/releases/
 Download the .zip file and extract it to the apps directory of your oCIS server.
-_Prerequisiste: Installation of the Dicom Viewer Web Extension App requires oCIS >= 6.0.0_
+
+_Prerequisite: Installation of the Dicom Viewer Web Extension App requires oCIS >= 6.0.0_
 
 SCREENSHOTS & CAPTIONS:
 referenced images are in this PR: https://github.com/owncloud/awesome-ocis/pull/12/
