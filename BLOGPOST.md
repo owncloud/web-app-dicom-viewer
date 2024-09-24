@@ -20,8 +20,6 @@ The oCIS Dicom Viewer web extension offers an easy way to preview medical images
 Capabilities of the Dicom Viewer App
 The current release allows to preview .dcm files and display all their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom in and out, rotation, flipping, colour inversion on the image preview.
 
-
-
 How has it been implemented?
 This web extension was developed in collaboration between ownCloud and JankariTech, a Software Development company in Nepal. The implementation is based on the open-source (MIT licensed) cornerstone3D JavaScript library (https://github.com/cornerstonejs/cornerstone3D). The app UI is implemented in a responsive manner, and guarantees optimal display on any end device you wish to use.
 
@@ -32,4 +30,10 @@ This web extension was developed in collaboration between ownCloud and JankariTe
 
 
 SCREENSHOTS & CAPTIONS:
-TBA
+referenced images are in this PR: https://github.com/owncloud/awesome-ocis/pull/12/
+
+https://github.com/owncloud/awesome-ocis/pull/12/files#diff-353010719cce63d485a5ccafe1ff16c5b1ddf0faa834f202aca663ba214a61e6
+All corresponding metadata of the DICOM file are displayed in the sidebar.
+
+https://github.com/owncloud/awesome-ocis/pull/12/files#diff-26b23f1adda50d144ff23630bf6b6a2faac6bfd4b5d8a0b742356325075e10cf
+The extension allows to zoom, rotate, flip and even invert the colours of the preview of the DICOM image.
