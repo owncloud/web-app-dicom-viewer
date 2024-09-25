@@ -301,6 +301,7 @@ def releaseArtifacts(ctx):
                          "name": "zip-artifacts",
                          "image": OC_CI_ALPINE,
                          "commands": [
+                             "pwd",
                              "apk add --no-cache zip",
                              "mv dist dicom-viewer",
                              "zip -r dicom-viewer-%s.zip dicom-viewer" % version,
@@ -310,6 +311,7 @@ def releaseArtifacts(ctx):
                          "name": "publish",
                          "image": PLUGINS_GITHUB_RELEASE,
                          "settings": {
+                             "title": version,
                              "overwrite": True,
                              "files": [
                                  "dicom-viewer-%s.zip" % version,
