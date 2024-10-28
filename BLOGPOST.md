@@ -12,7 +12,7 @@ Preview Medical Images in oCIS with the Dicom Viewer Web Extension
 Through the new oCIS web extensions system, you can now also easily preview your medial images without installing any additional software
 
 ## TEXT
-Have you ever received some medical images from your doctor or a lab after a checkup and were curious to have a sneak peak of the pics? Or has a lab technician ever handed you over a CD with your pics and asked to forward them to your GP, physiotherapist or health insurance?
+Have you ever received some medical images from your doctor or a lab after a checkup and were curious to have a sneak peak of the pics? Or has a lab technician ever handed you over a CD with your pics and asked to forward them to your general practitioner, physiotherapist or health insurance?
 
 The oCIS Dicom Viewer Web Extension offers an easy way to preview medical images such as Ultrasound, X-ray, CT, MRI, etc. plus their corresponding meta data of DICOM standard without installing any additional software. Plus the extension allows to access all of the extensive meta data attributes that are part of the .dcm file format, a distinguishing feature unique to our app - because we love data and want to make any useful information easily available to you. And of course the file can be shared securely with anyone you desire as it is integrated into the oCIS ecosystem.
 
