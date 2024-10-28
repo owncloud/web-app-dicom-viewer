@@ -29,10 +29,10 @@ This web extension was developed in collaboration between ownCloud and JankariTe
 _Prerequisite: Installation of the Dicom Viewer Web Extension App requires oCIS >= 6.2.0_
 
 ## SCREENSHOTS & CAPTIONS
-https://github.com/owncloud/awesome-ocis/webApps/owncloud/web-app-dicom-viewer/screenshots/4.png
+https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/4.png
 All corresponding metadata of the DICOM file are displayed in the sidebar.
 
-https://github.com/owncloud/awesome-ocis/webApps/owncloud/web-app-dicom-viewer/screenshots/3.png
+https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/3.png
 The extension allows to zoom, rotate, flip and even invert the colours of the preview of the DICOM image.
 
 more screenshots can be found here: https://github.com/owncloud/awesome-ocis/tree/main/webApps/owncloud/web-app-dicom-viewer/screenshots
