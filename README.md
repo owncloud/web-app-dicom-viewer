@@ -6,19 +6,28 @@
 
 The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://github.com/owncloud/web) to preview DICOM files (medical images and their corresponding metadata) in the browser. The preview of the medical images is based on MIT licensed [cornerstone3D](https://github.com/cornerstonejs/cornerstone3D).
 
-The current implementation allows to preview .dcm files and display their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom in and out, rotation, flipping, colour inversion and reset on the image preview. The app UI is implemented in a responsive manner and adapts the size of the image preview and the way how metadata is displayed to the screen size of the device.
-
-<img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/3.png" alt="app functionalities" style="width:48%; height:auto;"> &nbsp; &nbsp; <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/4.png" alt="display of metadata" style="width:48%; height:auto;">
-
-_The extension allows to zoom, rotate, flip and invert the colours of the preview of the DICOM image and all corresponding metadata of the DICOM file are displayed in the sidebar._
-
 
 ## Table of Contents
 
-* [Functionalities of the app](#)
+* [Functionalities of the app](#Functionalities of the DICOM Viewer Web Extension)
 * [Installation instructions for developers](#)
 * [Installation instructions](#)
 * [Contribution](#)
+
+TODO: update TOC!
+
+
+## Functionalities of the DICOM Viewer Web Extension
+
+The current release allows to preview .dcm files within oCIS and display their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom in and out, rotation, flipping, colour inversion and reset on the image preview. The app UI is implemented in a responsive manner and adapts the size of the image preview and the way how metadata is displayed to the screen size of the device.
+
+<img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/1.png" alt="app functionalities" style="width:48%; height:auto;"> &nbsp; &nbsp; <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/4.png" alt="display of metadata" style="width:48%; height:auto;">
+
+_The extension allows to preview a DICOM image and it's most important meta data. On request, all corresponding metadata of the file are displayed in the sidebar._
+
+<img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/2.png" alt="app functionalities" style="width:48%; height:auto;"> &nbsp; &nbsp; <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/3.png" alt="display of metadata" style="width:48%; height:auto;">
+
+_The extension allows to zoom, rotate and flip the preview of the image. Inverting the colors of the preview is also supported._
 
 
 ## Quick reference
@@ -28,6 +37,8 @@ _The extension allows to zoom, rotate, flip and invert the colours of the previe
 
 - **Supported architectures:**\
   `amd64`
+
+
 
 ## Installation
 
