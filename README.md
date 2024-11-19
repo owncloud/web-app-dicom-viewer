@@ -8,6 +8,12 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 
 The current implementation allows to preview .dcm files and display their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom in and out, rotation, flipping, colour inversion and reset on the image preview. The app UI is implemented in a responsive manner and adapts the size of the image preview and the way how metadata is displayed to the screen size of the device.
 
+![display of metadata](https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/4.png)
+All corresponding metadata of the DICOM file are displayed in the sidebar.
+
+![app functionalities](https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/3.png)
+The extension allows to zoom, rotate, flip and even invert the colours of the preview of the DICOM image.
+
 
 ## Quick reference
 
