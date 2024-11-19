@@ -13,6 +13,14 @@ The current implementation allows to preview .dcm files and display their corres
 _The extension allows to zoom, rotate, flip and invert the colours of the preview of the DICOM image and all corresponding metadata of the DICOM file are displayed in the sidebar._
 
 
+## Table of Contents
+
+* [Functionalities of the app](#)
+* [Installation instructions for developers](#)
+* [Installation instructions](#)
+* [Contribution](#)
+
+
 ## Quick reference
 
 - **Where to file issues:**\
