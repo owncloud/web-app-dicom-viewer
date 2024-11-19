@@ -6,7 +6,8 @@
 
 The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://github.com/owncloud/web) to preview DICOM files (medical images and their corresponding metadata) in the browser. The preview of the medical images is based on MIT licensed [cornerstone3D](https://github.com/cornerstonejs/cornerstone3D).
 
-The current implementation allows to preview .dcm files and display their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom, rotate, flip, invert and reset of the image preview. The UI is implemented in responsive manner and adapts the size of the image preview and the way how metadata is displayed to the screen size of the device.
+The current implementation allows to preview .dcm files and display their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom in and out, rotation, flipping, colour inversion and reset on the image preview. The app UI is implemented in a responsive manner and adapts the size of the image preview and the way how metadata is displayed to the screen size of the device.
+
 
 ## Quick reference
 
