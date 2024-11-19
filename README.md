@@ -9,10 +9,10 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 
 ## Table of Contents
 
-* [Functionalities of the app](#Functionalities-of-the-DICOM-Viewer-Web-Extension)
+* [Functionalities of the DICOM Viewer Web Extension](#Functionalities-of-the-DICOM-Viewer-Web-Extension)
+* [Adding DICOM Viewer to your oCIS installation](#)
 * [Installation instructions for developers](#)
-* [Installation instructions](#)
-* [Contribution](#)
+* [Contributing to this app](#)
 
 TODO: update TOC!
 
@@ -39,7 +39,7 @@ _The extension allows to zoom, rotate and flip the preview of the image. Inverti
   `amd64`
 
 
-## Installation instructions - Add the app to your server
+## Adding DICOM Viewer to your oCIS installation
 As administrator of an environment you can add custom web applications for your users. By adding DICOM Viewer you enable your users to take advantage of this web extension.
 
 TODO: following text is taken from general installation instructions, insert specific steps?
