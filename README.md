@@ -39,6 +39,14 @@ _The extension allows to zoom, rotate and flip the preview of the image. Inverti
   `amd64`
 
 
+## Installation instructions - Add the app to your server
+As administrator of an environment you can add custom web applications for your users. By adding DICOM Viewer you enable your users to take advantage of this web extension.
+
+TODO: following text is taken from general installation instructions, insert specific steps?
+
+Please follow the steps provided in our [developer documentation](https://owncloud.dev/services/web/#web-apps) if you want to install any of the
+  following apps and extensions. For some of them there are released artifacts, others still need to be built from source code.
+
 
 ## Installation
 
