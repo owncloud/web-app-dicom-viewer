@@ -12,8 +12,8 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 * [Functionalities of the DICOM Viewer Web Extension](#Functionalities-of-the-DICOM-Viewer-Web-Extension)
 * [Adding DICOM Viewer to your oCIS installation](#Adding-DICOM-Viewer-to-your-oCIS-installation)
 * [Prerequisites](#Prerequisites)
-* [Installation instructions](#)
-* [Development](#)
+* [App Installation](#App-Installation)
+* [Development](#Development)
 * [Contributing to this app](#Contributing-to-this-app)
 * [Copyright](#Copyright)
 
@@ -56,23 +56,37 @@ TODO:
     `amd64`
 
 
-## Installation
+## App Installation
 
-### 1. Install dependencies
+TODO
 
-```
+
+## Development
+
+### Prerequisites for development
+
+- [Node.js `v18`](https://nodejs.org/en/)
+- [pnpm `v8`](https://pnpm.io/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+TODO: taken from presentation viewer, check if this is correct
+
+
+### 1. Install dependencies:
+
+```bash
 pnpm install
 ```
 
-### 2. Build extension
+### 2. Build the extension
 
 Build the extension using watch for development.
 
-```
+```bash
 pnpm build:w
 ```
 
-### 3. Load apps
+### 3. Load the extension
 
 We can load the app into the oCIS server in two different ways, depending on the version of oCIS:
 
@@ -105,27 +119,23 @@ Configure the extension in `web.config.json`
 
 Copy `docker-compose.override.example.yml` to `docker-compose.override.yml`.
 
+
 ### 4. Run oCIS server
 
-```
+```bash
 docker compose up
 ```
 
-## Docker Tags and respective Dockerfile links
+access oCIS through the following URL: [localhost:9200](https://localhost:9200)
+
+
+### Docker Tags and respective Dockerfile links
 
 - [`latest`](https://github.com/owncloud/web-app-dicom-viewer/blob/master/docker/Dockerfile) available as `registry.owncloud.com/internal/web-app-dicom-viewer:latest`
 
-### Default volumes
-
-None
-
-### Exposed ports
-
-- 8080
-
-### Environment variables
-
-None
+- Default volumes: None
+- Exposed ports: 8080
+- Environment variables: None
 
 
 ## Contributing to this app
