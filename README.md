@@ -10,7 +10,7 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 ## Table of Contents
 
 * [Functionalities of the DICOM Viewer Web Extension](#Functionalities-of-the-DICOM-Viewer-Web-Extension)
-* [Adding DICOM Viewer to your oCIS installation](#)
+* [Adding DICOM Viewer to your oCIS installation](#Adding-DICOM-Viewer-to-your-oCIS-installation)
 * [Installation instructions for developers](#)
 * [Contributing to this app](#)
 
@@ -23,29 +23,29 @@ The current release allows to preview .dcm files within oCIS and display their c
 
 <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/1.png" alt="app functionalities" style="width:48%; height:auto;"> &nbsp; &nbsp; <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/4.png" alt="display of metadata" style="width:48%; height:auto;">
 
-_The extension allows to preview a DICOM image and it's most important meta data. On request, all corresponding metadata of the file are displayed in the sidebar._
+_The extension allows to preview a DICOM image and it's most important metadata. On request, all corresponding metadata of the file are displayed in the sidebar._
 
 <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/2.png" alt="app functionalities" style="width:48%; height:auto;"> &nbsp; &nbsp; <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/3.png" alt="display of metadata" style="width:48%; height:auto;">
 
 _The extension allows to zoom, rotate and flip the preview of the image. Inverting the colors of the preview is also supported._
 
 
-## Quick reference
-
-- **Where to file issues:**\
-  [owncloud/web-app-dicom-viewer](https://github.com/owncloud/web-app-dicom-viewer/issues)
-
-- **Supported architectures:**\
-  `amd64`
-
-
 ## Adding DICOM Viewer to your oCIS installation
-As oCIS administrator, you can add custom web applications for your users. By adding the DICOM Viewer to the oCIS WebUI, you enable your users to take advantage of this web extension.
+As oCIS administrator, you can add custom web applications for your users. By adding the DICOM Viewer to the oCIS WebUI, you enable your users to take advantage of the functionalities of this web extension.
 
 TODO: following text is taken from general installation instructions, insert specific steps?
 
 Please follow the steps provided in our [developer documentation](https://owncloud.dev/services/web/#web-apps) if you want to install any of the
   following apps and extensions. For some of them there are released artifacts, others still need to be built from source code.
+
+
+## Quick reference
+
+- **Where to file issues:**\
+    [owncloud/web-app-dicom-viewer](https://github.com/owncloud/web-app-dicom-viewer/issues)
+
+- **Supported architectures:**\
+    `amd64`
 
 
 ## Installation
