@@ -13,7 +13,8 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 * [Adding DICOM Viewer to your oCIS installation](#Adding-DICOM-Viewer-to-your-oCIS-installation)
 * [Prerequisites for installation](#)
 * [Installation instructions for developers](#)
-* [Contributing to this app](#)
+* [Contributing to this app](#Contributing-to-this-app)
+* [Copyright](#Copyright)
 
 TODO: update TOC!
 
@@ -45,9 +46,6 @@ TODO:
 
 
 ## Quick reference
-
-- **Where to file issues:**\
-    [owncloud/web-app-dicom-viewer](https://github.com/owncloud/web-app-dicom-viewer/issues)
 
 - **Supported architectures:**\
     `amd64`
@@ -113,17 +111,23 @@ docker compose up
 
 - [`latest`](https://github.com/owncloud/web-app-dicom-viewer/blob/master/docker/Dockerfile) available as `registry.owncloud.com/internal/web-app-dicom-viewer:latest`
 
-## Default volumes
+### Default volumes
 
 None
 
-## Exposed ports
+### Exposed ports
 
 - 8080
 
-## Environment variables
+### Environment variables
 
 None
+
+
+## Contributing to this app
+
+Contribution in the form of bug reports, user feedback or actual code is always welcome! Please file issues [here](https://github.com/owncloud/web-app-dicom-viewer/issues).
+
 
 ## Copyright
 
