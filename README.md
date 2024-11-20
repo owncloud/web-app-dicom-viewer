@@ -34,12 +34,16 @@ As oCIS administrator, you can add custom web applications for your users. By ad
 
 Have a look at the ownCloud Infinite Scale Deployment documentation to learn how to [extend the WebUI with apps](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#extend-web-ui-with-apps). You will find instructions how to [load custom applications](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#loading-applications) into your installation and get a better understanding of the web extension [application structure](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-structure) and [application configuration](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-configuration).
 
-DICOM Viewer's `manifest.json` can be found [here](public/manifest.json).
+---
+
+DICOM Viewer's `manifest.json` (referenced in `application structure`) can be found [here](public/manifest.json).
 
 TODO:
-- find out if apps.yaml file is needed (seems to be optional)
+- find out if `apps.yaml` file is needed (seems to be optional)
 - if so, provide corresponding file and link to it?
 - see draft PR https://github.com/owncloud/web-app-dicom-viewer/pull/67
+
+---
 
 ### Prerequisites
 
@@ -53,7 +57,7 @@ TODO:
 ### App Installation
 
 1. Download the zip file from the [releases page](https://github.com/owncloud/web-app-dicom-viewer/releases)  
-2. Extract the zip file to the `apps` directory of the oCIS server. Apps directory is set using the `WEB_ASSET_APPS_PATH` environment variable, see https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#loading-applications
+2. Extract the zip file to the `apps` directory of the oCIS server. The `apps` directory is set using the `WEB_ASSET_APPS_PATH` environment variable.
 
 
 ## Build and run DICOM Viewer for development
@@ -63,8 +67,6 @@ TODO:
 - [Node.js `v18`](https://nodejs.org/en/)
 - [pnpm `v8`](https://pnpm.io/)
 - [Docker Compose](https://docs.docker.com/compose/)
-
-TODO: taken from presentation viewer, check if this is correct
 
 
 ### 1. Install dependencies:
