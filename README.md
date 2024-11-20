@@ -40,7 +40,7 @@ _The extension allows to zoom, rotate and flip the preview of the image. Inverti
 
 
 ## Adding DICOM Viewer to your oCIS installation
-As administrator of an environment you can add custom web applications for your users. By adding DICOM Viewer you enable your users to take advantage of this web extension.
+As oCIS administrator, you can add custom web applications for your users. By adding the DICOM Viewer to the oCIS WebUI, you enable your users to take advantage of this web extension.
 
 TODO: following text is taken from general installation instructions, insert specific steps?
 
