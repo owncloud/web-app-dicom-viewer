@@ -11,6 +11,7 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 
 * [Functionalities of the DICOM Viewer Web Extension](#Functionalities-of-the-DICOM-Viewer-Web-Extension)
 * [Adding DICOM Viewer to your oCIS installation](#Adding-DICOM-Viewer-to-your-oCIS-installation)
+* [Prerequisites for installation](#)
 * [Installation instructions for developers](#)
 * [Contributing to this app](#)
 
@@ -35,15 +36,12 @@ As oCIS administrator, you can add custom web applications for your users. By ad
 
 Have a look at the ownCloud Infinite Scale Deployment documentation to learn how to [extend the WebUI with apps](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#extend-web-ui-with-apps). You will find instructions how to [load custom applications](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#loading-applications) into your installation and get a better understanding of the web extension [application structure](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-structure) and [application configuration](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-configuration).
 
-- 'WEB_ASSET_APPS_PATH' for Dicom Viewer: ?
-- 'manifest.json' for DICOM Viewer can be found [here](public/manifest.json)
+DICOM Viewer's 'manifest.json' can be found [here](public/manifest.json).
 
-TODO: provide corresponding apps.yml file and link to it? see https://github.com/owncloud/web-app-dicom-viewer/tree/yaml for draft
-
-TODO: following text is taken from general installation instructions, insert specific steps?
-
-Please follow the steps provided in our [developer documentation](https://owncloud.dev/services/web/#web-apps) if you want to install any of the
-  following apps and extensions. For some of them there are released artifacts, others still need to be built from source code.
+TODO:
+- find out if apps.yaml file is needed (seems to be optional)
+- if so, provide corresponding file and link to it?
+- see draft PR https://github.com/owncloud/web-app-dicom-viewer/pull/67
 
 
 ## Quick reference
@@ -53,6 +51,7 @@ Please follow the steps provided in our [developer documentation](https://ownclo
 
 - **Supported architectures:**\
     `amd64`
+
 
 
 ## Installation
@@ -75,7 +74,7 @@ pnpm build:w
 
 We can load the app into the oCIS server in two different ways, depending on the version of oCIS:
 
-#### 1. For oCIS 5.0.0 (Seperate extension server)
+#### 1. For oCIS 5.0.0 (Separate extension server)
 
 Configure the extension in `web.config.json`
 
