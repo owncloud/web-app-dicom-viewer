@@ -1,0 +1,3 @@
+dicom-viewer:
+  config:
+    mimeTypes: ["application/dicom", "application/octet-stream", "application/dicom+xml", "application/json"]
