@@ -35,8 +35,10 @@ As oCIS administrator, you can add custom web applications for your users. By ad
 
 Have a look at the ownCloud Infinite Scale Deployment documentation to learn how to [extend the WebUI with apps](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#extend-web-ui-with-apps). You will find instructions how to [load custom applications](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#loading-applications) into your installation and get a better understanding of the web extension [application structure](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-structure) and [application configuration](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-configuration).
 
+- 'WEB_ASSET_APPS_PATH' for Dicom Viewer: ?
+- 'manifest.json' for DICOM Viewer can be found [here](public/manifest.json), https://github.com/owncloud/web-app-dicom-viewer/blob/main/public/manifest.json
 
-
+TODO: provide corresponding apps.yml file and link to it?
 
 TODO: following text is taken from general installation instructions, insert specific steps?
 
