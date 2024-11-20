@@ -12,7 +12,7 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 * [Functionalities of DICOM Viewer Web Extension](#Functionalities-of-DICOM-Viewer-Web-Extension)
 * [Adding DICOM Viewer to your oCIS installation](#Adding-DICOM-Viewer-to-your-oCIS-installation)
 * [Build and run DICOM Viewer for development](#Build-and-run-for-development)
-* [Contributing to this app](#Contributing-to-this-app)
+* [Contributing to DICOM Viewer Web Extension](#Contributing-to-DICOM-Viewer-Web-Extension)
 * [Copyright](#Copyright)
 
 
@@ -130,7 +130,7 @@ access oCIS through the following URL: [localhost:9200](https://localhost:9200)
 - Environment variables: None
 
 
-## Contributing to this app
+## Contributing to DICOM Viewer Web Extension
 
 Contribution in the form of bug reports, user feedback or actual code is always welcome! Please file issues [here](https://github.com/owncloud/web-app-dicom-viewer/issues).
 
