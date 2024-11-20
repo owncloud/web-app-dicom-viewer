@@ -38,11 +38,6 @@ Have a look at the ownCloud Infinite Scale Deployment documentation to learn how
 
 DICOM Viewer's `manifest.json` (referenced in `application structure`) can be found [here](public/manifest.json).
 
-TODO:
-- find out if `apps.yaml` file is needed (seems to be optional)
-- if so, provide corresponding file and link to it?
-- see draft PR https://github.com/owncloud/web-app-dicom-viewer/pull/67
-
 ---
 
 ### Prerequisites
