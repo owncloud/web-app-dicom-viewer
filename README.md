@@ -10,8 +10,8 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 ## Table of Contents
 
 * [Functionalities of DICOM Viewer Web Extension](#Functionalities-of-DICOM-Viewer-Web-Extension)
-* [Adding DICOM Viewer to your oCIS installation](#Adding-DICOM-Viewer-to-your-oCIS-installation)
-* [Build and run DICOM Viewer for development](#Build-and-run-for-development)
+* [Adding DICOM Viewer to Your oCIS Installation](#Adding-DICOM-Viewer-to-Your-oCIS-Installation)
+* [Build and run DICOM Viewer for Development](#Build-and-run-for-development)
 * [Contributing to DICOM Viewer Web Extension](#Contributing-to-DICOM-Viewer-Web-Extension)
 * [Copyright](#Copyright)
 
@@ -51,7 +51,7 @@ DICOM Viewer's `manifest.json` (referenced in `application structure`) can be fo
 
 ### App Installation
 
-1. Download the zip file from the [releases page](https://github.com/owncloud/web-app-dicom-viewer/releases)  
+1. Download the zip file from the [releases page](https://github.com/owncloud/web-app-dicom-viewer/releases).
 2. Extract the zip file to the `apps` directory of the oCIS server. The `apps` directory is set using the `WEB_ASSET_APPS_PATH` environment variable.
 
 
@@ -64,7 +64,7 @@ DICOM Viewer's `manifest.json` (referenced in `application structure`) can be fo
 - [Docker Compose](https://docs.docker.com/compose/)
 
 
-### 1. Install Dependencies:
+### 1. Install Dependencies
 
 ```bash
 pnpm install
@@ -82,7 +82,7 @@ pnpm build:w
 
 We can load the app into the oCIS server in two different ways, depending on the version of oCIS:
 
-#### 1. For oCIS 5.0.0 (Separate Extension Server)
+#### For oCIS 5.0.0 (Separate Extension Server)
 
 Configure the extension in `web.config.json`
 
@@ -107,7 +107,7 @@ Configure the extension in `web.config.json`
 
 ```
 
-#### 2. For oCIS >= 5.1
+#### For oCIS >= 5.1
 
 Copy `docker-compose.override.example.yml` to `docker-compose.override.yml`.
 
@@ -118,7 +118,7 @@ Copy `docker-compose.override.example.yml` to `docker-compose.override.yml`.
 docker compose up
 ```
 
-access oCIS through the following URL: [localhost:9200](https://localhost:9200)
+You can access oCIS through the following URL: [localhost:9200](https://localhost:9200)
 
 
 ### Docker Tags and Respective Dockerfile Links
