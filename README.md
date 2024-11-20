@@ -11,12 +11,12 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 
 * [Functionalities of DICOM Viewer Web Extension](#Functionalities-of-DICOM-Viewer-Web-Extension)
 * [Adding DICOM Viewer to Your oCIS Installation](#Adding-DICOM-Viewer-to-Your-oCIS-Installation)
-* [Build and run DICOM Viewer for Development](#Build-and-run-for-development)
+* [Build and Run DICOM Viewer for Development](#Build-and-Run-DICOM-Viewer-for-Development)
 * [Contributing to DICOM Viewer Web Extension](#Contributing-to-DICOM-Viewer-Web-Extension)
 * [Copyright](#Copyright)
 
 
-## Functionalities of the DICOM Viewer Web Extension
+## Functionalities of DICOM Viewer Web Extension
 
 The current release allows to preview .dcm files within oCIS and display their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom in and out, rotation, flipping, colour inversion and reset on the image preview. The app UI is implemented in a responsive manner and adapts the size of the image preview and the way how metadata is displayed to the screen size of the device.
 
@@ -46,7 +46,7 @@ DICOM Viewer's `manifest.json` (referenced in `application structure`) can be fo
 - oCIS (>= 6.2.x)
 - Web (>= 9.x.x)
 
-#### Supported Architectures:
+#### Supported Architectures
     `amd64`
 
 ### App Installation
@@ -55,7 +55,7 @@ DICOM Viewer's `manifest.json` (referenced in `application structure`) can be fo
 2. Extract the zip file to the `apps` directory of the oCIS server. The `apps` directory is set using the `WEB_ASSET_APPS_PATH` environment variable.
 
 
-## Build and run DICOM Viewer for Development
+## Build and Run DICOM Viewer for Development
 
 ### Prerequisites
 
