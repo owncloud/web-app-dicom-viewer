@@ -29,7 +29,7 @@ _The extension allows to preview a DICOM image and it's most important metadata.
 _The extension allows to zoom, rotate and flip the preview of the image. Inverting the colors of the preview is also supported._
 
 
-## Adding DICOM Viewer to your oCIS installation
+## Adding DICOM Viewer to Your oCIS Installation
 As oCIS administrator, you can add custom web applications for your users. By adding the DICOM Viewer to the oCIS WebUI, you enable your users to take advantage of the [functionalities of this web extension](#Functionalities-of-the-DICOM-Viewer-Web-Extension).
 
 Have a look at the ownCloud Infinite Scale Deployment documentation to learn how to [extend the WebUI with apps](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#extend-web-ui-with-apps). You will find instructions how to [load custom applications](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#loading-applications) into your installation and get a better understanding of the web extension [application structure](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-structure) and [application configuration](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-configuration).
@@ -46,7 +46,7 @@ DICOM Viewer's `manifest.json` (referenced in `application structure`) can be fo
 - oCIS (>= 6.2.x)
 - Web (>= 9.x.x)
 
-#### Supported architectures:
+#### Supported Architectures:
     `amd64`
 
 ### App Installation
@@ -55,7 +55,7 @@ DICOM Viewer's `manifest.json` (referenced in `application structure`) can be fo
 2. Extract the zip file to the `apps` directory of the oCIS server. The `apps` directory is set using the `WEB_ASSET_APPS_PATH` environment variable.
 
 
-## Build and run DICOM Viewer for development
+## Build and run DICOM Viewer for Development
 
 ### Prerequisites
 
@@ -64,13 +64,13 @@ DICOM Viewer's `manifest.json` (referenced in `application structure`) can be fo
 - [Docker Compose](https://docs.docker.com/compose/)
 
 
-### 1. Install dependencies:
+### 1. Install Dependencies:
 
 ```bash
 pnpm install
 ```
 
-### 2. Build the extension
+### 2. Build the Extension
 
 Build the extension using watch for development.
 
@@ -78,11 +78,11 @@ Build the extension using watch for development.
 pnpm build:w
 ```
 
-### 3. Load the extension
+### 3. Load the Extension
 
 We can load the app into the oCIS server in two different ways, depending on the version of oCIS:
 
-#### 1. For oCIS 5.0.0 (Separate extension server)
+#### 1. For oCIS 5.0.0 (Separate Extension Server)
 
 Configure the extension in `web.config.json`
 
@@ -112,7 +112,7 @@ Configure the extension in `web.config.json`
 Copy `docker-compose.override.example.yml` to `docker-compose.override.yml`.
 
 
-### 4. Run oCIS server
+### 4. Run oCIS Server
 
 ```bash
 docker compose up
@@ -121,7 +121,7 @@ docker compose up
 access oCIS through the following URL: [localhost:9200](https://localhost:9200)
 
 
-### Docker Tags and respective Dockerfile links
+### Docker Tags and Respective Dockerfile Links
 
 - [`latest`](https://github.com/owncloud/web-app-dicom-viewer/blob/master/docker/Dockerfile) available as `registry.owncloud.com/internal/web-app-dicom-viewer:latest`
 
