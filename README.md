@@ -9,11 +9,11 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 
 ## Table of Contents
 
-* [Functionalities of DICOM Viewer Web Extension](#Functionalities-of-DICOM-Viewer-Web-Extension)
-* [Adding DICOM Viewer to Your oCIS Installation](#Adding-DICOM-Viewer-to-Your-oCIS-Installation)
-* [Build and Run DICOM Viewer for Development](#Build-and-Run-DICOM-Viewer-for-Development)
-* [Contributing to DICOM Viewer Web Extension](#Contributing-to-DICOM-Viewer-Web-Extension)
-* [Copyright](#Copyright)
+* [Functionalities of DICOM Viewer Web Extension](#functionalities-of-dicom-viewer-web-extension)
+* [Adding DICOM Viewer to Your oCIS Installation](#adding-dicom-viewer-to-your-ocis-installation)
+* [Build and Run DICOM Viewer for Development](#build-and-run-dicom-viewer-for-development)
+* [Contributing to DICOM Viewer Web Extension](#contributing-to-dicom-viewer-web-extension)
+* [Copyright](#copyright)
 
 
 ## Functionalities of DICOM Viewer Web Extension
