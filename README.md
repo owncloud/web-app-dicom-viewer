@@ -70,7 +70,13 @@ DICOM Viewer's `manifest.json` (referenced in `application structure`) can be fo
 pnpm install
 ```
 
-### 2. Build the Extension
+### 2. Run oCIS Server
+
+```bash
+docker compose up
+```
+
+### 3. Build the Extension
 
 Build the extension using watch for development.
 
@@ -78,7 +84,7 @@ Build the extension using watch for development.
 pnpm build:w
 ```
 
-### 3. Load the Extension
+### 4. Load the Extension
 
 We can load the app into the oCIS server in two different ways, depending on the version of oCIS:
 
@@ -112,13 +118,9 @@ Configure the extension in `web.config.json`
 Copy `docker-compose.override.example.yml` to `docker-compose.override.yml`.
 
 
-### 4. Run oCIS Server
+### 5. Have Fun
 
-```bash
-docker compose up
-```
-
-You can access oCIS through the following URL: [localhost:9200](https://localhost:9200)
+You can access oCIS WebUI with the DICOM Viewer extension through [localhost:9200](https://localhost:9200).
 
 
 ### Docker Tags and Respective Dockerfile Links
@@ -126,7 +128,7 @@ You can access oCIS through the following URL: [localhost:9200](https://localhos
 - [`latest`](https://github.com/owncloud/web-app-dicom-viewer/blob/master/docker/Dockerfile) available as `registry.owncloud.com/internal/web-app-dicom-viewer:latest`
 
 - Default volumes: None
-- Exposed ports: 8080
+- Exposed ports: `8080`
 - Environment variables: None
 
 
