@@ -11,6 +11,8 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 
 * [Functionalities of DICOM Viewer Web Extension](#functionalities-of-dicom-viewer-web-extension)
 * [Adding DICOM Viewer to Your oCIS Installation](#adding-dicom-viewer-to-your-ocis-installation)
+  * [Adding DICOM Viewer to the oCIS Deployment Example](#adding-dicom-viewer-to-the-ocis-deployment-example)
+  * [Manual App Installation](#manual-app-installation)
 * [Build and Run DICOM Viewer for Development](#build-and-run-dicom-viewer-for-development)
 * [Contributing to DICOM Viewer Web Extension](#contributing-to-dicom-viewer-web-extension)
 * [Copyright](#copyright)
@@ -32,22 +34,59 @@ _The extension allows to zoom, rotate and flip the preview of the image. Inverti
 ## Adding DICOM Viewer to Your oCIS Installation
 As oCIS administrator, you can add custom web applications for your users. By adding the DICOM Viewer to the oCIS WebUI, you enable your users to take advantage of the [functionalities of this web extension](#Functionalities-of-the-DICOM-Viewer-Web-Extension).
 
-Have a look at the ownCloud Infinite Scale Deployment documentation to learn how to [extend the WebUI with apps](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#extend-web-ui-with-apps). You will find instructions how to [load custom applications](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#loading-applications) into your installation and get a better understanding of the web extension [application structure](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-structure) and [application configuration](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-configuration).
+
+### Adding DICOM Viewer to the oCIS Deployment Example
+oCIS provides some [Deployment Examples](https://github.com/owncloud/ocis/tree/master/deployments/examples/) including detailed configuration step by step guides for [local production setup](https://doc.owncloud.com/ocis/next/depl-examples/ubuntu-compose/ubuntu-compose-prod.html) and [deployment of Infinite Scale on the Hetzner Cloud](https://doc.owncloud.com/ocis/next/depl-examples/ubuntu-compose/ubuntu-compose-hetzner.html).
+In both cases, it only takes three very small and simple steps to add the DICOM Viewer Web Extension to the [oCIS Deployment Example](https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_full/) of your own installation:
+
+1. Navigate to the `/opt/compose/ocis/ocis_full` folder of your installation and copy [`dicom-viewer.yml`](TODO: insert path to file!!!) into the [`web_extensions`](https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_full/web_extensions) subfolder.
+
+2. Add `DICOMVIEWER=:web_extensions/dicom-viewer.yml` to the `## oCIS Web Extensions ##` section of the `.env` file (file is located in `/opt/compose/ocis/ocis_full`) of your own installation.
+
+Your `.env` file should look like this:
+
+```
+## oCIS Web Extensions ##
+# It is possible to use the oCIS Web Extensions to add custom functionality to the oCIS frontend.
+# For more details see https://github.com/owncloud/web-extensions/blob/main/README.md
+
+<list of all web extensions>
+
+DICOMVIEWER=:web_extensions/dicom-viewer.yml
+
+```
+
+3. Append `${DICOMVIEWER:-}` to the `COMPOSE_FILE` variable at the very end of the last line of the `.env` file. This variable combines the configs of all the components that need to be loaded.
+
+`COMPOSE_FILE=docker-compose.yml${OCIS:-} ... <variables of lots of other configs that are added to docker compose> ... ${DICOMVIEWER:-}`
+
+After appending, your `.env` file should look like this:
+
+```
+## IMPORTANT ##
+# This MUST be the last line as it assembles the supplemental compose files to be used.
+# ALL supplemental configs must be added here, whether commented or not.
+# Each var must either be empty or contain :path/file.yml
+COMPOSE_FILE=docker-compose.yml${OCIS:-}${TIKA:-}${S3NG:-}${S3NG_MINIO:-}${COLLABORA:-}${MONITORING:-}${IMPORTER:-}${CLAMAV:-}${ONLYOFFICE:-}${INBUCKET:-}${EXTENSIONS:-}${UNZIP:-}${DRAWIO:-}${JSONVIEWER:-}${PROGRESSBARS:-}${EXTERNALSITES:-}${DICOMVIEWER:-}
+
+```
+
+Done! Have fun using the [functionalities of the DICOM Viewer web extension](#Functionalities-of-the-DICOM-Viewer-Web-Extension) on your installation!
 
 
-### Prerequisites
-
-#### Supported oCIS and Web Versions
-- oCIS (>= 6.2.x)
-- Web (>= 9.x.x)
-
-#### Supported Architectures
-- `amd64`
-
-### App Installation
+### Manual App Installation
 
 1. Download the zip file from the [releases page](https://github.com/owncloud/web-app-dicom-viewer/releases).
-2. Extract the zip file to the `apps` directory of the oCIS server. The `apps` directory is set using the `WEB_ASSET_APPS_PATH` environment variable.
+2. Extract the zip file to the `apps` directory of your oCIS server. The `apps` directory is set using the `WEB_ASSET_APPS_PATH` environment variable.
+
+#### Prerequisites
+
+- Supported oCIS and Web Versions: oCIS (>= 6.2.x), Web (>= 9.x.x)
+- Supported Architectures: `amd64`
+
+#### Additional Information
+
+Have a look at the ownCloud Infinite Scale Deployment documentation to learn how to [extend the WebUI with apps](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#extend-web-ui-with-apps). You will find instructions how to [load custom applications](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#loading-applications) into your installation and get a better understanding of the web extension [application structure](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-structure) and [application configuration](https://doc.owncloud.com/ocis/next/deployment/webui/webui-customisation.html#application-configuration).
 
 
 ## Build and Run DICOM Viewer for Development
@@ -121,7 +160,6 @@ You can access oCIS WebUI with the DICOM Viewer extension through [localhost:920
 ### Docker Tags and Respective Dockerfile Links
 
 - [`latest`](https://github.com/owncloud/web-app-dicom-viewer/blob/master/docker/Dockerfile) available as `registry.owncloud.com/internal/web-app-dicom-viewer:latest`
-
 - Default volumes: None
 - Exposed ports: `8080`
 - Environment variables: None
