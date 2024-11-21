@@ -41,35 +41,30 @@ In both cases, it only takes three very small and simple steps to add the DICOM 
 
 1. Navigate to the `/opt/compose/ocis/ocis_full` folder of your installation and copy [`dicom-viewer.yml`](https://github.com/owncloud/web-app-dicom-viewer/blob/main/dicom-viewer.yml) into the [`web_extensions`](https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_full/web_extensions) subfolder.
 
-2. Add `DICOMVIEWER=:web_extensions/dicom-viewer.yml` to the `## oCIS Web Extensions ##` section of the `.env` file of your installation (file is located in `/opt/compose/ocis/ocis_full`).
-
+2. Add `DICOMVIEWER=:web_extensions/dicom-viewer.yml` to the `## oCIS Web Extensions ##` section of the `.env` file of your installation (file is located in `/opt/compose/ocis/ocis_full`).\
 Your `.env` file should now look like this:
-
-```
-## oCIS Web Extensions ##
-# It is possible to use the oCIS Web Extensions to add custom functionality to the oCIS frontend.
-# For more details see https://github.com/owncloud/web-extensions/blob/main/README.md
-
-<list of all web extensions>
-
-DICOMVIEWER=:web_extensions/dicom-viewer.yml
-
-```
+   ```
+   ## oCIS Web Extensions ##
+   # It is possible to use the oCIS Web Extensions to add custom functionality to the oCIS frontend.
+   # For more details see https://github.com/owncloud/web-extensions/blob/main/README.md
+   
+   <list of all web extensions>
+   
+   DICOMVIEWER=:web_extensions/dicom-viewer.yml
+   ```
 
 3. Append `${DICOMVIEWER:-}` to the `COMPOSE_FILE` variable at the very end of the last line of the `.env` file. This variable combines the configs of all the components that need to be loaded.
 
-`COMPOSE_FILE=docker-compose.yml${OCIS:-} ... <variables of lots of other configs that are added to docker compose> ... ${DICOMVIEWER:-}`
+   `COMPOSE_FILE=docker-compose.yml${OCIS:-} ... <variables of lots of other configs that are added to docker compose> ... ${DICOMVIEWER:-}`
 
-After appending `${DICOMVIEWER:-}`, your `.env` file should look like this:
-
-```
-## IMPORTANT ##
-# This MUST be the last line as it assembles the supplemental compose files to be used.
-# ALL supplemental configs must be added here, whether commented or not.
-# Each var must either be empty or contain :path/file.yml
-COMPOSE_FILE=docker-compose.yml${OCIS:-}${TIKA:-}${S3NG:-}${S3NG_MINIO:-}${COLLABORA:-}${MONITORING:-}${IMPORTER:-}${CLAMAV:-}${ONLYOFFICE:-}${INBUCKET:-}${EXTENSIONS:-}${UNZIP:-}${DRAWIO:-}${JSONVIEWER:-}${PROGRESSBARS:-}${EXTERNALSITES:-}${DICOMVIEWER:-}
-
-```
+   After appending `${DICOMVIEWER:-}`, your `.env` file should look like this:
+   ```
+   ## IMPORTANT ##
+   # This MUST be the last line as it assembles the supplemental compose files to be used.
+   # ALL supplemental configs must be added here, whether commented or not.
+   # Each var must either be empty or contain :path/file.yml
+   COMPOSE_FILE=docker-compose.yml${OCIS:-}${TIKA:-}${S3NG:-}${S3NG_MINIO:-}${COLLABORA:-}${MONITORING:-}${IMPORTER:-}${CLAMAV:-}${ONLYOFFICE:-}${INBUCKET:-}${EXTENSIONS:-}${UNZIP:-}${DRAWIO:-}${JSONVIEWER:-}${PROGRESSBARS:-}${EXTERNALSITES:-}${DICOMVIEWER:-}
+   ```
 
 Done! Have fun using the [functionalities of the DICOM Viewer web extension](#functionalities-of-dicom-viewer-web-extension) on your installation!
 
