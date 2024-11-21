@@ -32,18 +32,18 @@ _The extension allows to zoom, rotate and flip the preview of the image. Inverti
 
 
 ## Adding DICOM Viewer to Your oCIS Installation
-As oCIS administrator, you can add custom web applications for your users. By adding the DICOM Viewer to the oCIS WebUI, you enable your users to take advantage of the [functionalities of this web extension](#Functionalities-of-the-DICOM-Viewer-Web-Extension).
+As oCIS administrator, you can add custom web applications for your users. By adding the DICOM Viewer to the oCIS WebUI, you enable your users to take advantage of the [functionalities of this web extension](#functionalities-of-dicom-viewer-web-extension).
 
 
 ### Adding DICOM Viewer to the oCIS Deployment Example
-oCIS provides some [Deployment Examples](https://github.com/owncloud/ocis/tree/master/deployments/examples/) including detailed configuration step by step guides for [local production setup](https://doc.owncloud.com/ocis/next/depl-examples/ubuntu-compose/ubuntu-compose-prod.html) and [deployment of Infinite Scale on the Hetzner Cloud](https://doc.owncloud.com/ocis/next/depl-examples/ubuntu-compose/ubuntu-compose-hetzner.html).
-In both cases, it only takes three very small and simple steps to add the DICOM Viewer Web Extension to the [oCIS Deployment Example](https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_full/) of your own installation:
+oCIS provides some [deployment examples](https://github.com/owncloud/ocis/tree/master/deployments/examples/) including detailed configuration step by step guides for [local production setup](https://doc.owncloud.com/ocis/next/depl-examples/ubuntu-compose/ubuntu-compose-prod.html) and [deployment of Infinite Scale on the Hetzner Cloud](https://doc.owncloud.com/ocis/next/depl-examples/ubuntu-compose/ubuntu-compose-hetzner.html).
+In both cases, it only takes three very small and simple steps to add the DICOM Viewer Web Extension to the [`ocis_full` deployment example](https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_full/) of your own installation:
 
 1. Navigate to the `/opt/compose/ocis/ocis_full` folder of your installation and copy [`dicom-viewer.yml`](https://github.com/owncloud/web-app-dicom-viewer/blob/main/dicom-viewer.yml) into the [`web_extensions`](https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_full/web_extensions) subfolder.
 
-2. Add `DICOMVIEWER=:web_extensions/dicom-viewer.yml` to the `## oCIS Web Extensions ##` section of the `.env` file (file is located in `/opt/compose/ocis/ocis_full`) of your own installation.
+2. Add `DICOMVIEWER=:web_extensions/dicom-viewer.yml` to the `## oCIS Web Extensions ##` section of the `.env` file of your installation (file is located in `/opt/compose/ocis/ocis_full`).
 
-Your `.env` file should look like this:
+Your `.env` file should now look like this:
 
 ```
 ## oCIS Web Extensions ##
@@ -60,7 +60,7 @@ DICOMVIEWER=:web_extensions/dicom-viewer.yml
 
 `COMPOSE_FILE=docker-compose.yml${OCIS:-} ... <variables of lots of other configs that are added to docker compose> ... ${DICOMVIEWER:-}`
 
-After appending, your `.env` file should look like this:
+After appending `${DICOMVIEWER:-}`, your `.env` file should look like this:
 
 ```
 ## IMPORTANT ##
@@ -71,7 +71,7 @@ COMPOSE_FILE=docker-compose.yml${OCIS:-}${TIKA:-}${S3NG:-}${S3NG_MINIO:-}${COLLA
 
 ```
 
-Done! Have fun using the [functionalities of the DICOM Viewer web extension](#Functionalities-of-the-DICOM-Viewer-Web-Extension) on your installation!
+Done! Have fun using the [functionalities of the DICOM Viewer web extension](#functionalities-of-dicom-viewer-web-extension) on your installation!
 
 
 ### Manual App Installation
