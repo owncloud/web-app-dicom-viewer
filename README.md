@@ -47,7 +47,7 @@ DICOM Viewer's `manifest.json` (referenced in `application structure`) can be fo
 - Web (>= 9.x.x)
 
 #### Supported Architectures
-    `amd64`
+- `amd64`
 
 ### App Installation
 
