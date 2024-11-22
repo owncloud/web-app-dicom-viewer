@@ -1,3 +1,15 @@
-dicom-viewer:
-  config:
-    mimeTypes: ["application/dicom", "application/octet-stream", "application/dicom+xml", "application/json"]
+---
+services:
+  ocis:
+    depends_on:
+      dicomviewer-init:
+        condition: service_completed_successfully
+
+  dicomviewer-init:
+    image: owncloud/web-app-dicom-viewer/dicom-viewer-1.0.0
+    user: root
+    volumes:
+      - ocis-apps:/apps
+    entrypoint:
+      - /bin/sh
+    command: ["-c", "cp -R /var/lib/nginx/html/dicom-viewer/ /apps"]
