@@ -20,15 +20,15 @@ The ownCloud Web DICOM Viewer app is an extension of [ownCloud Web](https://gith
 
 ## Functionalities of DICOM Viewer Web Extension
 
-The current release allows to preview .dcm files within oCIS and display their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom in and out, rotation, flipping, colour inversion and reset on the image preview. The app UI is implemented in a responsive manner and adapts the size of the image preview and the way how metadata is displayed to the screen size of the device.
+The current release allows previewing .dcm files within oCIS and displaying their corresponding metadata in a sidebar on request. It offers image manipulation operations such as zoom in and out, rotation, flipping, colour inversion and reset on the image preview. The app UI is implemented in a responsive manner and adapts the size of the image preview and the way that metadata is displayed to the screen size of the device.
 
 <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/1.png" alt="app functionalities" style="width:48%; height:auto;"> &nbsp; &nbsp; <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/4.png" alt="display of metadata" style="width:48%; height:auto;">
 
-_The extension allows to preview a DICOM image and it's most important metadata. On request, all corresponding metadata of the file are displayed in the sidebar._
+_The extension allows previewing a DICOM image and it's most important metadata. On request, all corresponding metadata of the file are displayed in the sidebar._
 
 <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/2.png" alt="app functionalities" style="width:48%; height:auto;"> &nbsp; &nbsp; <img src="https://github.com/owncloud/awesome-ocis/blob/main/webApps/owncloud/web-app-dicom-viewer/screenshots/3.png" alt="display of metadata" style="width:48%; height:auto;">
 
-_The extension allows to zoom, rotate and flip the preview of the image. Inverting the colors of the preview is also supported._
+_The extension allows the user to zoom, rotate and flip the preview of the image. Inverting the colors of the preview is also supported._
 
 
 ## Adding DICOM Viewer to Your oCIS Installation
