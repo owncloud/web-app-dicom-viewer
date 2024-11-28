@@ -12,5 +12,12 @@ export default defineConfig({
       key: readFileSync(join(certsDir, 'server.key')),
       cert: readFileSync(join(certsDir, 'server.crt'))
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: 'js/web-app-dicom-viewer.js'
+      }
+    }
   }
 })
