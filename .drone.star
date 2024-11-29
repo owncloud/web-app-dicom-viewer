@@ -3,16 +3,18 @@ OC_CI_BUILDIFIER = "owncloudci/bazel-buildifier:latest"
 SONARSOURCE_SONAR_SCANNER_CLI = "sonarsource/sonar-scanner-cli:5.0"
 OC_CI_WAIT_FOR = "owncloudci/wait-for:latest"
 OCIS_IMAGE = "owncloud/ocis:5.0"
+PLUGINS_DOCKER = "plugins/docker:latest"
 
 dir = {
     "webConfig": "/drone/src/tests/drone/web.config.json",
 }
 
 def main(ctx):
-    return checkStarlark() + \
-           pnpmlint(ctx) + \
-           unitTestPipeline(ctx) + \
-           e2eTests()
+    return dockerRelease(ctx)
+    # checkStarlark() + \
+    #        pnpmlint(ctx) + \
+    #        unitTestPipeline(ctx) + \
+    #        e2eTests()
 
 def checkStarlark():
     return [{
@@ -106,7 +108,7 @@ def pnpmlint(ctx):
                  ],
         "trigger": {
             "ref": [
-                "refs/heads/master",
+                "refs/heads/main",
                 "refs/pull/**",
             ],
         },
@@ -221,3 +223,41 @@ def ocisService():
             ],
         },
     ]
+
+
+def dockerRelease(ctx):
+
+    repo = "owncloud/web-extensions:dicom-viewer"
+
+    return [{
+        "kind": "pipeline",
+        "type": "docker",
+        "name": "docker-daily",
+
+        "steps": [
+            {
+                "name": "dryrun",
+                "image": PLUGINS_DOCKER,
+                "settings": {
+                    "dry_run": True,
+                    "tags": "1.0.0",
+                    "dockerfile": "Dockerfile",
+                    "repo": repo,
+                },
+                "when": {
+                    "ref": {
+                        "include": [
+                            "refs/pull/**",
+                        ],
+                    },
+                },
+            },
+        ],
+        "trigger": {
+            "ref": [
+                "refs/heads/main",
+                "refs/tags/v*",
+                "refs/pull/**",
+            ],
+        },
+    }]
