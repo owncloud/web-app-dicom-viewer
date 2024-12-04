@@ -10,11 +10,11 @@ dir = {
 }
 
 def main(ctx):
-    return dockerRelease(ctx)
-    # checkStarlark() + \
-    #        pnpmlint(ctx) + \
-    #        unitTestPipeline(ctx) + \
-    #        e2eTests()
+    return checkStarlark() + \
+           pnpmlint(ctx) + \
+           unitTestPipeline(ctx) + \
+           e2eTests() + \
+           dockerRelease(ctx)
 
 def checkStarlark():
     return [{
@@ -224,40 +224,63 @@ def ocisService():
         },
     ]
 
-
 def dockerRelease(ctx):
+    tag = ctx.build.ref.replace("refs/tags/", "") if ctx.build.event == "tag" else "latest"
 
-    repo = "owncloud/web-extensions:dicom-viewer"
-
-    return [{
-        "kind": "pipeline",
-        "type": "docker",
-        "name": "docker-daily",
-
-        "steps": [
-            {
-                "name": "dryrun",
-                "image": PLUGINS_DOCKER,
-                "settings": {
-                    "dry_run": True,
-                    "tags": "1.0.0",
-                    "dockerfile": "Dockerfile",
-                    "repo": repo,
-                },
-                "when": {
-                    "ref": {
-                        "include": [
-                            "refs/pull/**",
-                        ],
+    repo = "owncloud/web-app-dicom-viewer"
+    return [
+        {
+            "kind": "pipeline",
+            "type": "docker",
+            "name": "docker-daily",
+            "depends_on": ["e2e-tests"],
+            "steps": [
+                {
+                    "name": "dryrun",
+                    "image": PLUGINS_DOCKER,
+                    "settings": {
+                        "dry_run": True,
+                        "tags": tag,
+                        "dockerfile": "Dockerfile",
+                        "repo": repo,
+                    },
+                    "when": {
+                        "ref": {
+                            "include": [
+                                "refs/pull/**",
+                            ],
+                        },
                     },
                 },
-            },
-        ],
-        "trigger": {
-            "ref": [
-                "refs/heads/main",
-                "refs/tags/v*",
-                "refs/pull/**",
+                {
+                    "name": "docker",
+                    "image": PLUGINS_DOCKER,
+                    "settings": {
+                        "username": {
+                            "from_secret": "docker_username",
+                        },
+                        "password": {
+                            "from_secret": "docker_password",
+                        },
+                        "tags": tag,
+                        "dockerfile": "Dockerfile",
+                        "repo": repo,
+                    },
+                    "when": {
+                        "ref": {
+                            "exclude": [
+                                "refs/pull/**",
+                            ],
+                        },
+                    },
+                },
             ],
+            "trigger": {
+                "ref": [
+                    "refs/heads/main",
+                    "refs/tags/v*",
+                    "refs/pull/**",
+                ],
+            },
         },
-    }]
+    ]

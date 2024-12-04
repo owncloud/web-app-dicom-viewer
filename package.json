@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "lint": "eslint './*.{ts,js}' '{src,tests}/**/*.{js,ts,vue}' --color",
-    "build": "pnpm vite build",
-    "build:w": "pnpm vite build --watch --mode development",
+    "build": "vite build",
+    "build:w": "pnpm build --watch --mode development",
+    "build:prod": "PRODUCTION=true pnpm build",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "test:e2e": "NODE_TLS_REJECT_UNAUTHORIZED=0 TS_NODE_PROJECT=./tests/e2e/tsconfig.json cucumber-js"
