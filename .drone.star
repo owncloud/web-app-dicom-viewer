@@ -3,6 +3,7 @@ OC_CI_BUILDIFIER = "owncloudci/bazel-buildifier:latest"
 SONARSOURCE_SONAR_SCANNER_CLI = "sonarsource/sonar-scanner-cli:5.0"
 OC_CI_WAIT_FOR = "owncloudci/wait-for:latest"
 OCIS_IMAGE = "owncloud/ocis:5.0"
+PLUGINS_DOCKER = "plugins/docker:latest"
 
 dir = {
     "webConfig": "/drone/src/tests/drone/web.config.json",
@@ -12,7 +13,8 @@ def main(ctx):
     return checkStarlark() + \
            pnpmlint(ctx) + \
            unitTestPipeline(ctx) + \
-           e2eTests()
+           e2eTests() + \
+           dockerRelease(ctx)
 
 def checkStarlark():
     return [{
@@ -106,7 +108,7 @@ def pnpmlint(ctx):
                  ],
         "trigger": {
             "ref": [
-                "refs/heads/master",
+                "refs/heads/main",
                 "refs/pull/**",
             ],
         },
@@ -219,5 +221,66 @@ def ocisService():
             "commands": [
                 "wait-for -it ocis:9200 -t 300",
             ],
+        },
+    ]
+
+def dockerRelease(ctx):
+    tag = ctx.build.ref.replace("refs/tags/", "") if ctx.build.event == "tag" else "latest"
+
+    repo = "owncloud/web-app-dicom-viewer"
+    return [
+        {
+            "kind": "pipeline",
+            "type": "docker",
+            "name": "docker-daily",
+            "depends_on": ["e2e-tests"],
+            "steps": [
+                {
+                    "name": "dryrun",
+                    "image": PLUGINS_DOCKER,
+                    "settings": {
+                        "dry_run": True,
+                        "tags": tag,
+                        "dockerfile": "Dockerfile",
+                        "repo": repo,
+                    },
+                    "when": {
+                        "ref": {
+                            "include": [
+                                "refs/pull/**",
+                            ],
+                        },
+                    },
+                },
+                {
+                    "name": "docker",
+                    "image": PLUGINS_DOCKER,
+                    "settings": {
+                        "username": {
+                            "from_secret": "docker_username",
+                        },
+                        "password": {
+                            "from_secret": "docker_password",
+                        },
+                        "tags": tag,
+                        "dockerfile": "Dockerfile",
+                        "repo": repo,
+                    },
+                    "when": {
+                        "ref": {
+                            "exclude": [
+                                "refs/pull/**",
+                            ],
+                        },
+                    },
+                },
+            ],
+            "trigger": {
+                "ref": [
+                    "refs/heads/main",
+                    "refs/tags/v*",
+                    "refs/pull/**",
+                ],
+            },
         },
     ]

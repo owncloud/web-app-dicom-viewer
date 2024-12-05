@@ -4,7 +4,7 @@ WORKDIR /extension
 
 COPY . .
 RUN pnpm install
-RUN pnpm build
+RUN pnpm build:prod
 
 FROM alpine:3.20
 WORKDIR /app
