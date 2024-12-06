@@ -37,7 +37,7 @@ As oCIS administrator, you can add custom web applications for your users. By ad
 
 ### Adding DICOM Viewer to the oCIS Deployment Example
 oCIS provides some [deployment examples](https://github.com/owncloud/ocis/tree/master/deployments/examples/) including detailed configuration step by step guides for [local production setup](https://doc.owncloud.com/ocis/next/depl-examples/ubuntu-compose/ubuntu-compose-prod.html) and [deployment of Infinite Scale on the Hetzner Cloud](https://doc.owncloud.com/ocis/next/depl-examples/ubuntu-compose/ubuntu-compose-hetzner.html).
-In both cases, it only takes three very small and simple steps to add the DICOM Viewer Web Extension to the [`ocis_full` deployment example](https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_full/) of your own installation:
+In both cases, it only takes a few very small and simple steps to add the DICOM Viewer Web Extension to the [`ocis_full` deployment example](https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_full/) of your own installation:
 
 1. Navigate to the `/opt/compose/ocis/ocis_full` folder of your installation and copy [`dicom-viewer.yml`](https://github.com/owncloud/web-app-dicom-viewer/blob/main/dicom-viewer.yml) into the [`web_extensions`](https://github.com/owncloud/ocis/tree/master/deployments/examples/ocis_full/web_extensions) subfolder.
 
@@ -65,6 +65,7 @@ Your `.env` file should now look like this:
    # Each var must either be empty or contain :path/file.yml
    COMPOSE_FILE=docker-compose.yml${OCIS:-}${TIKA:-}${S3NG:-}${S3NG_MINIO:-}${COLLABORA:-}${MONITORING:-}${IMPORTER:-}${CLAMAV:-}${ONLYOFFICE:-}${INBUCKET:-}${EXTENSIONS:-}${UNZIP:-}${DRAWIO:-}${JSONVIEWER:-}${PROGRESSBARS:-}${EXTERNALSITES:-}${DICOMVIEWER:-}
    ```
+4. Update the `csp.yaml` file located in `/config/ocis/csp.yaml` according to the description in https://github.com/owncloud/awesome-ocis/blob/main/webApps/apps.json#L374 
 
 Done! Have fun using the [functionalities of the DICOM Viewer web extension](#functionalities-of-dicom-viewer-web-extension) on your installation!
 
