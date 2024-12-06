@@ -65,6 +65,7 @@ Your `.env` file should now look like this:
    # Each var must either be empty or contain :path/file.yml
    COMPOSE_FILE=docker-compose.yml${OCIS:-}${TIKA:-}${S3NG:-}${S3NG_MINIO:-}${COLLABORA:-}${MONITORING:-}${IMPORTER:-}${CLAMAV:-}${ONLYOFFICE:-}${INBUCKET:-}${EXTENSIONS:-}${UNZIP:-}${DRAWIO:-}${JSONVIEWER:-}${PROGRESSBARS:-}${EXTERNALSITES:-}${DICOMVIEWER:-}
    ```
+
 4. Update the `csp.yaml` file located in `/config/ocis/csp.yaml` according to the description in https://github.com/owncloud/awesome-ocis/blob/main/webApps/apps.json#L374 
 
 Done! Have fun using the [functionalities of the DICOM Viewer web extension](#functionalities-of-dicom-viewer-web-extension) on your installation!
