@@ -1,6 +1,6 @@
 OC_CI_NODEJS = "owncloudci/nodejs:18"
 OC_CI_BUILDIFIER = "owncloudci/bazel-buildifier:latest"
-SONARSOURCE_SONAR_SCANNER_CLI = "sonarsource/sonar-scanner-cli:5.0"
+SONARSOURCE_SONAR_SCANNER_CLI = "sonarsource/sonar-scanner-cli:11.0"
 OC_CI_WAIT_FOR = "owncloudci/wait-for:latest"
 OCIS_IMAGE = "owncloud/ocis:5.0"
 PLUGINS_DOCKER = "plugins/docker:latest"
