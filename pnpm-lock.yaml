@@ -25,10 +25,10 @@ importers:
         version: 1.81.3(@babel/preset-env@7.24.0(@babel/core@7.24.0))(autoprefixer@10.4.18(postcss@8.4.39))(webpack@5.90.3)(wslink@1.12.4)
       '@ownclouders/web-client':
         specifier: 0.0.1
-        version: 0.0.1(axios@0.27.2)(lodash-es@4.17.21)
+        version: 0.0.1(axios@0.30.0)(lodash-es@4.17.21)
       '@ownclouders/web-pkg':
         specifier: 0.0.5-alpha.9
-        version: 0.0.5-alpha.9(@casl/ability@6.7.1)(@casl/vue@2.2.2(@casl/ability@6.7.1)(vue@3.4.31(typescript@5.5.3)))(@microsoft/fetch-event-source@2.0.1)(@ownclouders/web-client@0.0.1(axios@0.27.2)(lodash-es@4.17.21))(@uppy/core@3.9.3)(@uppy/drop-target@2.0.4(@uppy/core@3.9.3))(@uppy/tus@3.5.3(@uppy/core@3.9.3))(@uppy/utils@5.7.4)(@uppy/xhr-upload@3.6.4(@uppy/core@3.9.3))(@vueuse/core@10.9.0(vue@3.4.31(typescript@5.5.3)))(axios@0.27.2)(clean-publish@4.2.0)(filesize@9.0.11)(fuse.js@6.6.2)(js-generate-password@0.1.9)(lodash-es@4.17.21)(luxon@2.5.2)(mark.js@8.11.1)(p-queue@6.6.2)(password-sheriff@1.1.1)(pinia@2.1.7(typescript@5.5.3)(vue@3.4.31(typescript@5.5.3)))(qs@6.11.2)(semver@7.7.1)(uuid@9.0.1)(vue-concurrency@4.0.1(vue@3.4.31(typescript@5.5.3)))(vue-router@4.2.0(vue@3.4.31(typescript@5.5.3)))(vue3-gettext@2.5.0-alpha.1(@vue/compiler-sfc@3.4.31)(vue@3.4.31(typescript@5.5.3)))(vuex@4.1.0(vue@3.4.31(typescript@5.5.3)))
+        version: 0.0.5-alpha.9(@casl/ability@6.7.1)(@casl/vue@2.2.2(@casl/ability@6.7.1)(vue@3.4.31(typescript@5.5.3)))(@microsoft/fetch-event-source@2.0.1)(@ownclouders/web-client@0.0.1(axios@0.30.0)(lodash-es@4.17.21))(@uppy/core@3.9.3)(@uppy/drop-target@2.0.4(@uppy/core@3.9.3))(@uppy/tus@3.5.3(@uppy/core@3.9.3))(@uppy/utils@5.7.4)(@uppy/xhr-upload@3.6.4(@uppy/core@3.9.3))(@vueuse/core@10.9.0(vue@3.4.31(typescript@5.5.3)))(axios@0.30.0)(clean-publish@4.2.0)(filesize@9.0.11)(fuse.js@6.6.2)(js-generate-password@0.1.9)(lodash-es@4.17.21)(luxon@2.5.2)(mark.js@8.11.1)(p-queue@6.6.2)(password-sheriff@1.1.1)(pinia@2.1.7(typescript@5.5.3)(vue@3.4.31(typescript@5.5.3)))(qs@6.11.2)(semver@7.7.1)(uuid@9.0.1)(vue-concurrency@4.0.1(vue@3.4.31(typescript@5.5.3)))(vue-router@4.2.0(vue@3.4.31(typescript@5.5.3)))(vue3-gettext@2.5.0-alpha.1(@vue/compiler-sfc@3.4.31)(vue@3.4.31(typescript@5.5.3)))(vuex@4.1.0(vue@3.4.31(typescript@5.5.3)))
       '@typescript-eslint/parser':
         specifier: ^7.15.0
         version: 7.15.0(eslint@8.56.0)(typescript@5.5.3)
@@ -88,8 +88,8 @@ importers:
         specifier: 2.4.6
         version: 2.4.6
       axios:
-        specifier: ^0.27.2
-        version: 0.27.2
+        specifier: ^0.30.0
+        version: 0.30.0
       eslint:
         specifier: 8.56.0
         version: 8.56.0
@@ -1818,8 +1818,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
+  axios@0.30.0:
+    resolution: {integrity: sha512-Z4F3LjCgfjZz8BMYalWdMgAQUnEtKDmpwNHjh/C8pQZWde32TF64cqnSeyL3xD/aTIASRU30RHTNzRiV/NpGMg==}
 
   babel-plugin-polyfill-corejs2@0.4.13:
     resolution: {integrity: sha512-3sX/eOms8kd3q2KZ6DAhKPc0dgm525Gqq5NtWKZ7QYYZEv57OQ54KtblzJzH1lQF/eQxO8KjWGIK9IPUJNus5g==}
@@ -1884,6 +1884,10 @@ packages:
 
   caf@15.0.1:
     resolution: {integrity: sha512-Xp/IK6vMwujxWZXra7djdYzPdPnEQKa7Mudu2wZgDQ3TJry1I0TgtjEgwZHpoBcMp68j4fb0/FZ1SJyMEgJrXQ==}
+
+  call-bind-apply-helpers@1.0.2:
+    resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
+    engines: {node: '>= 0.4'}
 
   call-bind@1.0.7:
     resolution: {integrity: sha512-GHTSNSYICQ7scH7sZ+M2rFopRoLh8t2bLSW6BbgrtLsahOIB5iyAVJf9GjWK3cYTDaMj4XdBpM1cA6pIS0Kv2w==}
@@ -2135,6 +2139,10 @@ packages:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
     engines: {node: '>=6.0.0'}
 
+  dunder-proto@1.0.1:
+    resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
+    engines: {node: '>= 0.4'}
+
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
@@ -2184,6 +2192,10 @@ packages:
     resolution: {integrity: sha512-jxayLKShrEqqzJ0eumQbVhTYQM27CfT1T35+gCgDFoL82JLsXqTJ76zv6A0YLOgEnLUMvLzsDsGIrl8NFpT2gQ==}
     engines: {node: '>= 0.4'}
 
+  es-define-property@1.0.1:
+    resolution: {integrity: sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g==}
+    engines: {node: '>= 0.4'}
+
   es-errors@1.3.0:
     resolution: {integrity: sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==}
     engines: {node: '>= 0.4'}
@@ -2191,8 +2203,12 @@ packages:
   es-module-lexer@1.6.0:
     resolution: {integrity: sha512-qqnD1yMU6tk/jnaMosogGySTZP8YtUgAffA9nMN+E/rjxcfRQ6IEk7IiozUjgxKoFHBGjTLnrHB/YC45r/59EQ==}
 
-  es-set-tostringtag@2.0.3:
-    resolution: {integrity: sha512-3T8uNMC3OQTHkFUsFq8r/BwAXLHvU/9O9mE0fBc/MY5iq/8H7ncvO947LmYA6ldWw9Uh8Yhf25zu6n7nML5QWQ==}
+  es-object-atoms@1.1.1:
+    resolution: {integrity: sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA==}
+    engines: {node: '>= 0.4'}
+
+  es-set-tostringtag@2.1.0:
+    resolution: {integrity: sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==}
     engines: {node: '>= 0.4'}
 
   es-shim-unscopables@1.0.2:
@@ -2517,8 +2533,8 @@ packages:
   flatted@3.3.1:
     resolution: {integrity: sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==}
 
-  follow-redirects@1.15.6:
-    resolution: {integrity: sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==}
+  follow-redirects@1.15.9:
+    resolution: {integrity: sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -2535,6 +2551,10 @@ packages:
 
   form-data@4.0.0:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
+    engines: {node: '>= 6'}
+
+  form-data@4.0.2:
+    resolution: {integrity: sha512-hGfm/slu0ZabnNt4oaRZ6uREyfCj6P4fT/n6A1rGV+Z0VdGXjfOhVUpkn6qVQONHGIFwmveGXyDs75+nr6FM8w==}
     engines: {node: '>= 6'}
 
   fraction.js@4.3.7:
@@ -2576,6 +2596,14 @@ packages:
 
   get-intrinsic@1.2.4:
     resolution: {integrity: sha512-5uYhsJH8VJBTv7oslg4BznJYhDoRI6waYCxMmCdnTrcCrHA/fCFKoTFz2JKKE0HdDFUF7/oQuhzumXJK7paBRQ==}
+    engines: {node: '>= 0.4'}
+
+  get-intrinsic@1.3.0:
+    resolution: {integrity: sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==}
+    engines: {node: '>= 0.4'}
+
+  get-proto@1.0.1:
+    resolution: {integrity: sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==}
     engines: {node: '>= 0.4'}
 
   get-stream@8.0.1:
@@ -2639,6 +2667,10 @@ packages:
   gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
 
+  gopd@1.2.0:
+    resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
+    engines: {node: '>= 0.4'}
+
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
@@ -2673,6 +2705,10 @@ packages:
 
   has-symbols@1.0.3:
     resolution: {integrity: sha512-l3LCuF6MgDNwTDKkdYGEihYjt5pRPbEg46rtlmnSPlUbgmB8LOIrKJbYYFBSbnPaJexMKtiPO8hmeRjRz2Td+A==}
+    engines: {node: '>= 0.4'}
+
+  has-symbols@1.1.0:
+    resolution: {integrity: sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==}
     engines: {node: '>= 0.4'}
 
   has-tostringtag@1.0.2:
@@ -3132,6 +3168,10 @@ packages:
   mark.js@8.11.1:
     resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
 
+  math-intrinsics@1.1.0:
+    resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
+    engines: {node: '>= 0.4'}
+
   merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
 
@@ -3497,6 +3537,9 @@ packages:
 
   proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
+
+  proxy-from-env@1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
 
   psl@1.9.0:
     resolution: {integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==}
@@ -5614,24 +5657,24 @@ snapshots:
 
   '@ownclouders/tsconfig@0.0.6': {}
 
-  '@ownclouders/web-client@0.0.1(axios@0.27.2)(lodash-es@4.17.21)':
+  '@ownclouders/web-client@0.0.1(axios@0.30.0)(lodash-es@4.17.21)':
     dependencies:
-      axios: 0.27.2
+      axios: 0.30.0
       lodash-es: 4.17.21
 
-  '@ownclouders/web-pkg@0.0.5-alpha.9(@casl/ability@6.7.1)(@casl/vue@2.2.2(@casl/ability@6.7.1)(vue@3.4.31(typescript@5.5.3)))(@microsoft/fetch-event-source@2.0.1)(@ownclouders/web-client@0.0.1(axios@0.27.2)(lodash-es@4.17.21))(@uppy/core@3.9.3)(@uppy/drop-target@2.0.4(@uppy/core@3.9.3))(@uppy/tus@3.5.3(@uppy/core@3.9.3))(@uppy/utils@5.7.4)(@uppy/xhr-upload@3.6.4(@uppy/core@3.9.3))(@vueuse/core@10.9.0(vue@3.4.31(typescript@5.5.3)))(axios@0.27.2)(clean-publish@4.2.0)(filesize@9.0.11)(fuse.js@6.6.2)(js-generate-password@0.1.9)(lodash-es@4.17.21)(luxon@2.5.2)(mark.js@8.11.1)(p-queue@6.6.2)(password-sheriff@1.1.1)(pinia@2.1.7(typescript@5.5.3)(vue@3.4.31(typescript@5.5.3)))(qs@6.11.2)(semver@7.7.1)(uuid@9.0.1)(vue-concurrency@4.0.1(vue@3.4.31(typescript@5.5.3)))(vue-router@4.2.0(vue@3.4.31(typescript@5.5.3)))(vue3-gettext@2.5.0-alpha.1(@vue/compiler-sfc@3.4.31)(vue@3.4.31(typescript@5.5.3)))(vuex@4.1.0(vue@3.4.31(typescript@5.5.3)))':
+  '@ownclouders/web-pkg@0.0.5-alpha.9(@casl/ability@6.7.1)(@casl/vue@2.2.2(@casl/ability@6.7.1)(vue@3.4.31(typescript@5.5.3)))(@microsoft/fetch-event-source@2.0.1)(@ownclouders/web-client@0.0.1(axios@0.30.0)(lodash-es@4.17.21))(@uppy/core@3.9.3)(@uppy/drop-target@2.0.4(@uppy/core@3.9.3))(@uppy/tus@3.5.3(@uppy/core@3.9.3))(@uppy/utils@5.7.4)(@uppy/xhr-upload@3.6.4(@uppy/core@3.9.3))(@vueuse/core@10.9.0(vue@3.4.31(typescript@5.5.3)))(axios@0.30.0)(clean-publish@4.2.0)(filesize@9.0.11)(fuse.js@6.6.2)(js-generate-password@0.1.9)(lodash-es@4.17.21)(luxon@2.5.2)(mark.js@8.11.1)(p-queue@6.6.2)(password-sheriff@1.1.1)(pinia@2.1.7(typescript@5.5.3)(vue@3.4.31(typescript@5.5.3)))(qs@6.11.2)(semver@7.7.1)(uuid@9.0.1)(vue-concurrency@4.0.1(vue@3.4.31(typescript@5.5.3)))(vue-router@4.2.0(vue@3.4.31(typescript@5.5.3)))(vue3-gettext@2.5.0-alpha.1(@vue/compiler-sfc@3.4.31)(vue@3.4.31(typescript@5.5.3)))(vuex@4.1.0(vue@3.4.31(typescript@5.5.3)))':
     dependencies:
       '@casl/ability': 6.7.1
       '@casl/vue': 2.2.2(@casl/ability@6.7.1)(vue@3.4.31(typescript@5.5.3))
       '@microsoft/fetch-event-source': 2.0.1
-      '@ownclouders/web-client': 0.0.1(axios@0.27.2)(lodash-es@4.17.21)
+      '@ownclouders/web-client': 0.0.1(axios@0.30.0)(lodash-es@4.17.21)
       '@uppy/core': 3.9.3
       '@uppy/drop-target': 2.0.4(@uppy/core@3.9.3)
       '@uppy/tus': 3.5.3(@uppy/core@3.9.3)
       '@uppy/utils': 5.7.4
       '@uppy/xhr-upload': 3.6.4(@uppy/core@3.9.3)
       '@vueuse/core': 10.9.0(vue@3.4.31(typescript@5.5.3))
-      axios: 0.27.2
+      axios: 0.30.0
       clean-publish: 4.2.0
       filesize: 9.0.11
       fuse.js: 6.6.2
@@ -6410,7 +6453,7 @@ snapshots:
       define-properties: 1.2.1
       es-abstract: 1.22.5
       es-errors: 1.3.0
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
       is-array-buffer: 3.0.4
       is-shared-array-buffer: 1.0.3
 
@@ -6440,10 +6483,11 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.0.0
 
-  axios@0.27.2:
+  axios@0.30.0:
     dependencies:
-      follow-redirects: 1.15.6
-      form-data: 4.0.0
+      follow-redirects: 1.15.9
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
 
@@ -6515,12 +6559,17 @@ snapshots:
 
   caf@15.0.1: {}
 
+  call-bind-apply-helpers@1.0.2:
+    dependencies:
+      es-errors: 1.3.0
+      function-bind: 1.1.2
+
   call-bind@1.0.7:
     dependencies:
       es-define-property: 1.0.0
       es-errors: 1.3.0
       function-bind: 1.1.2
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
       set-function-length: 1.2.1
 
   callsites@3.1.0: {}
@@ -6727,9 +6776,9 @@ snapshots:
 
   define-data-property@1.1.4:
     dependencies:
-      es-define-property: 1.0.0
+      es-define-property: 1.0.1
       es-errors: 1.3.0
-      gopd: 1.0.1
+      gopd: 1.2.0
 
   define-properties@1.2.1:
     dependencies:
@@ -6762,6 +6811,12 @@ snapshots:
   doctrine@3.0.0:
     dependencies:
       esutils: 2.0.3
+
+  dunder-proto@1.0.1:
+    dependencies:
+      call-bind-apply-helpers: 1.0.2
+      es-errors: 1.3.0
+      gopd: 1.2.0
 
   eastasianwidth@0.2.0: {}
 
@@ -6805,10 +6860,10 @@ snapshots:
       call-bind: 1.0.7
       es-define-property: 1.0.0
       es-errors: 1.3.0
-      es-set-tostringtag: 2.0.3
+      es-set-tostringtag: 2.1.0
       es-to-primitive: 1.2.1
       function.prototype.name: 1.1.6
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
       get-symbol-description: 1.0.2
       globalthis: 1.0.3
       gopd: 1.0.1
@@ -6845,17 +6900,24 @@ snapshots:
 
   es-define-property@1.0.0:
     dependencies:
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
+
+  es-define-property@1.0.1: {}
 
   es-errors@1.3.0: {}
 
   es-module-lexer@1.6.0: {}
 
-  es-set-tostringtag@2.0.3:
+  es-object-atoms@1.1.1:
     dependencies:
-      get-intrinsic: 1.2.4
+      es-errors: 1.3.0
+
+  es-set-tostringtag@2.1.0:
+    dependencies:
+      es-errors: 1.3.0
+      get-intrinsic: 1.3.0
       has-tostringtag: 1.0.2
-      hasown: 2.0.1
+      hasown: 2.0.2
 
   es-shim-unscopables@1.0.2:
     dependencies:
@@ -7253,7 +7315,7 @@ snapshots:
 
   flatted@3.3.1: {}
 
-  follow-redirects@1.15.6: {}
+  follow-redirects@1.15.9: {}
 
   for-each@0.3.3:
     dependencies:
@@ -7268,6 +7330,13 @@ snapshots:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
+      mime-types: 2.1.35
+
+  form-data@4.0.2:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      es-set-tostringtag: 2.1.0
       mime-types: 2.1.35
 
   fraction.js@4.3.7: {}
@@ -7305,13 +7374,31 @@ snapshots:
       has-symbols: 1.0.3
       hasown: 2.0.1
 
+  get-intrinsic@1.3.0:
+    dependencies:
+      call-bind-apply-helpers: 1.0.2
+      es-define-property: 1.0.1
+      es-errors: 1.3.0
+      es-object-atoms: 1.1.1
+      function-bind: 1.1.2
+      get-proto: 1.0.1
+      gopd: 1.2.0
+      has-symbols: 1.1.0
+      hasown: 2.0.2
+      math-intrinsics: 1.1.0
+
+  get-proto@1.0.1:
+    dependencies:
+      dunder-proto: 1.0.1
+      es-object-atoms: 1.1.1
+
   get-stream@8.0.1: {}
 
   get-symbol-description@1.0.2:
     dependencies:
       call-bind: 1.0.7
       es-errors: 1.3.0
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
 
   get-tsconfig@4.10.0:
     dependencies:
@@ -7381,7 +7468,9 @@ snapshots:
 
   gopd@1.0.1:
     dependencies:
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
+
+  gopd@1.2.0: {}
 
   graceful-fs@4.2.11: {}
 
@@ -7411,9 +7500,11 @@ snapshots:
 
   has-symbols@1.0.3: {}
 
+  has-symbols@1.1.0: {}
+
   has-tostringtag@1.0.2:
     dependencies:
-      has-symbols: 1.0.3
+      has-symbols: 1.1.0
 
   hasown@2.0.1:
     dependencies:
@@ -7480,7 +7571,7 @@ snapshots:
   internal-slot@1.0.7:
     dependencies:
       es-errors: 1.3.0
-      hasown: 2.0.1
+      hasown: 2.0.2
       side-channel: 1.0.6
 
   internmap@2.0.3: {}
@@ -7490,7 +7581,7 @@ snapshots:
   is-array-buffer@3.0.4:
     dependencies:
       call-bind: 1.0.7
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
 
   is-arrayish@0.2.1: {}
 
@@ -7571,7 +7662,7 @@ snapshots:
 
   is-symbol@1.0.4:
     dependencies:
-      has-symbols: 1.0.3
+      has-symbols: 1.1.0
 
   is-typed-array@1.1.13:
     dependencies:
@@ -7869,6 +7960,8 @@ snapshots:
   make-error@1.3.6: {}
 
   mark.js@8.11.1: {}
+
+  math-intrinsics@1.1.0: {}
 
   merge-stream@2.0.0: {}
 
@@ -8202,6 +8295,8 @@ snapshots:
 
   proto-list@1.2.4: {}
 
+  proxy-from-env@1.1.0: {}
+
   psl@1.9.0: {}
 
   punycode@2.3.1: {}
@@ -8381,7 +8476,7 @@ snapshots:
   safe-array-concat@1.1.0:
     dependencies:
       call-bind: 1.0.7
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
       has-symbols: 1.0.3
       isarray: 2.0.5
 
@@ -8447,7 +8542,7 @@ snapshots:
       define-data-property: 1.1.4
       es-errors: 1.3.0
       function-bind: 1.1.2
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
       gopd: 1.0.1
       has-property-descriptors: 1.0.2
 
@@ -8478,7 +8573,7 @@ snapshots:
     dependencies:
       call-bind: 1.0.7
       es-errors: 1.3.0
-      get-intrinsic: 1.2.4
+      get-intrinsic: 1.3.0
       object-inspect: 1.13.1
 
   siginfo@2.0.0: {}
