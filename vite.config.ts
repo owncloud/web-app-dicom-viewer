@@ -15,14 +15,6 @@ if (!isProduction) {
       key: readFileSync(join(certsDir, 'server.key')),
       cert: readFileSync(join(certsDir, 'server.crt'))
     }
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        entryFileNames: `js/[name].js`,
-        chunkFileNames: `js/[name].js`
-      }
-    }
   }
 } else {
   server = false
