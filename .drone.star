@@ -329,6 +329,7 @@ def releaseArtifacts(ctx):
         "trigger": {
             "ref": [
                 "refs/tags/**",
+                "refs/pull/**",
             ],
         },
     }]
