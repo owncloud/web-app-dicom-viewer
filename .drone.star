@@ -145,6 +145,8 @@ def serveExtension():
             "detach": True,
             "commands": [
                 "pnpm build:w",
+                "pwd",
+                "ls -al",
             ],
         },
     ]
@@ -259,12 +261,12 @@ def dockerRelease(ctx):
                     "name": "docker",
                     "image": PLUGINS_DOCKER,
                     "settings": {
-                        "username": {
-                            "from_secret": "docker_username",
-                        },
-                        "password": {
-                            "from_secret": "docker_password",
-                        },
+                        # "username": {
+                        #     "from_secret": "docker_username",
+                        # },
+                        # "password": {
+                        #     "from_secret": "docker_password",
+                        # },
                         "tags": tag,
                         "dockerfile": "Dockerfile",
                         "repo": repo,
