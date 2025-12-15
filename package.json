@@ -65,7 +65,9 @@
   },
   "pnpm": {
     "overrides": {
-      "mime": "^3.0.0"
+      "mime": "^3.0.0",
+      "glob": "^10.5.0",
+      "test-exclude": "^7.0.1"
     },
     "peerDependencyRules": {
       "ignoreMissing": [
