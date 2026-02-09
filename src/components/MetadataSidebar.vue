@@ -25,7 +25,8 @@
       </oc-button>
     </div>
     <div v-if="isMetadataExtracted" id="dicom-metadata-sidebar-content" class="oc-p-s">
-      <table class="details-table">
+      <p id="mydesc">DICOM metadata details table</p>
+      <table class="details-table" aria-describedby="mydesc">
         <metadata-sidebar-table-row
           v-bind="$props.patientInformation"
           :metadata-section-name="'Patient Information'"
