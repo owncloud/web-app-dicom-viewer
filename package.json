@@ -35,7 +35,7 @@
     "eslint-plugin-vue": "^9.27.0",
     "happy-dom": "15.10.2",
     "join-path": "^1.1.1",
-    "jsdom": "24.1.0",
+    "jsdom": "29.1.1",
     "lodash": "^4.18.1",
     "prettier": "3.8.3",
     "ts-node": "^10.9.2",
