@@ -39,7 +39,7 @@ services:
       - traefik
 
   traefik:
-    image: traefik:v2.10.1
+    image: traefik:v3.7.1
     restart: unless-stopped
     entrypoint:
       [
@@ -48,7 +48,6 @@ services:
         "[ -f /certificates/server.key ] && ./entrypoint.sh $$@ || (apk add openssl && openssl req -subj '/CN=host.docker.internal' -x509 -sha256 -nodes -days 3650 -newkey rsa:2048 -keyout /certificates/server.key -out /certificates/server.crt && chmod -R 777 /certificates && ./entrypoint.sh $$@)"
       ]
     command:
-      - '--pilot.dashboard=false'
       - '--log.level=DEBUG'
       - '--api.dashboard=true'
       - '--api.insecure=true'
@@ -62,7 +61,7 @@ services:
       - '--entrypoints.websecure.http.tls.options=default'
     labels:
       traefik.enable: true
-      traefik.http.routers.http_catchall.rule: HostRegexp(`{any:.+}`)
+      traefik.http.routers.http_catchall.rule: HostRegexp(`.+`)
       traefik.http.routers.http_catchall.entrypoints: web
       traefik.http.routers.http_catchall.middlewares: https_config
       traefik.http.middlewares.https_config.headers.sslRedirect: true
