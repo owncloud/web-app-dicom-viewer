@@ -1,4 +1,4 @@
-# agents.md — web-app-dicom-viewer
+# AGENTS.md — web-app-dicom-viewer
 
 ## Repository Overview
 
